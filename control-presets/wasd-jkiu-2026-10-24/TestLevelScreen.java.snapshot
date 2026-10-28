@@ -1,0 +1,410 @@
+package io.github.some_example_name;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+/** Visor del escenario 00. Las medidas del mapa usan una altura de jugador como unidad. */
+public class TestLevelScreen extends ScreenAdapter {
+    private final Game game;
+    private final MenuScreen menu;
+    private SpriteBatch batch;
+    private Stage hud;
+    private BitmapFont font;
+    private Label movementStatus, hookStatus, hookInputStatus, debugSummary;
+    private Table helpPanel, debugPanel;
+    private final HookControls hookControls = new HookControls();
+    private float shotTime, shotX, shotY, shotEndX, shotEndY;
+    private float aimX = 1, aimY, hookMissTimer;
+    private float commandFeedbackTime;
+    private String lastHookDirection = "SIN COMANDO";
+    private String lastHookMode = "I / U";
+    private Texture platformTexture, wallTexture, backgroundTexture, pixel, playerTexture;
+    private TextureRegion platform, wall;
+    private JsonValue map;
+    private final OrthographicCamera camera = new OrthographicCamera();
+    private InputMultiplexer input;
+    private boolean overview;
+    private float inspectionZoom = 1;
+    private float worldWidth, worldHeight;
+    private final PlayerBody player = new PlayerBody();
+
+    public TestLevelScreen(Game game, MenuScreen menu) {
+        this.game = game;
+        this.menu = menu;
+    }
+
+    @Override public void show() {
+        batch = new SpriteBatch();
+        map = new JsonReader().parse(Gdx.files.internal("levels/test_level_00.json"));
+        worldWidth = map.getFloat("width");
+        worldHeight = map.getFloat("height");
+        for (JsonValue piece = map.get("pieces").child; piece != null; piece = piece.next) {
+            player.addSolid(piece.getFloat("x"), piece.getFloat("y"), piece.getFloat("width"), piece.getFloat("height"));
+        }
+        player.reset(map.get("spawn").getFloat("x"), map.get("spawn").getFloat("y"));
+        String root = "environments/industrial_v1/";
+        platformTexture = new Texture(Gdx.files.internal(root + "platform_metal_orange_v1.png"));
+        wallTexture = new Texture(Gdx.files.internal(root + "wall_metal_conduit_v1.png"));
+        backgroundTexture = new Texture(Gdx.files.internal(root + "background_hangar_v1.png"));
+        playerTexture = new Texture(Gdx.files.internal("players/prototype/player_yellow_v1.png"));
+        platform = trim(platformTexture);
+        wall = trim(wallTexture);
+        for (Texture texture : new Texture[]{platformTexture, wallTexture, backgroundTexture}) {
+            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        }
+        Pixmap p = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        p.setColor(Color.WHITE);
+        p.fill();
+        pixel = new Texture(p);
+        p.dispose();
+        createHud();
+        input = new InputMultiplexer(hud, new InputAdapter() {
+            @Override public boolean scrolled(float x, float y) {
+                if (!overview) inspectionZoom = MathUtils.clamp(inspectionZoom + y * 0.1f, 0.6f, 2f);
+                return true;
+            }
+            @Override public boolean touchDragged(int x, int y, int pointer) {
+                if (!overview) {
+                    camera.position.x -= Gdx.input.getDeltaX(pointer) * camera.viewportWidth * camera.zoom / Gdx.graphics.getWidth();
+                    camera.position.y += Gdx.input.getDeltaY(pointer) * camera.viewportHeight * camera.zoom / Gdx.graphics.getHeight();
+                }
+                return true;
+            }
+        });
+        Gdx.input.setInputProcessor(input);
+        camera.position.set(worldWidth / 2f, 7, 0);
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    /** Elimina el margen transparente al dibujar, conservando intacto el PNG original. */
+    private TextureRegion trim(Texture texture) {
+        texture.getTextureData().prepare();
+        Pixmap p = texture.getTextureData().consumePixmap();
+        int minX = p.getWidth(), minY = p.getHeight(), maxX = -1, maxY = -1;
+        for (int y = 0; y < p.getHeight(); y++) for (int x = 0; x < p.getWidth(); x++) {
+            if ((p.getPixel(x, y) & 255) > 32) {
+                minX = Math.min(minX, x); minY = Math.min(minY, y);
+                maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+            }
+        }
+        if (texture.getTextureData().disposePixmap()) p.dispose();
+        return maxX < 0 ? new TextureRegion(texture) : new TextureRegion(texture, minX, minY, maxX - minX + 1, maxY - minY + 1);
+    }
+
+    private void createHud() {
+        hud = new Stage(new ScreenViewport());
+        font = new BitmapFont();
+        Label.LabelStyle text = new Label.LabelStyle(font, Color.WHITE);
+        Label.LabelStyle muted = new Label.LabelStyle(font, Color.valueOf("A8BAC8"));
+        TextureRegionDrawable white = new TextureRegionDrawable(new TextureRegion(pixel));
+        TextButton.TextButtonStyle buttons = new TextButton.TextButtonStyle();
+        buttons.font = font;
+        buttons.fontColor = Color.WHITE;
+        buttons.up = white.tint(new Color(0.025f, 0.04f, 0.065f, 0.8f));
+        buttons.over = white.tint(new Color(0.55f, 0.23f, 0.04f, 0.95f));
+        buttons.down = white.tint(new Color(0.32f, 0.14f, 0.02f, 0.95f));
+
+        Table top = new Table();
+        top.setFillParent(true);
+        top.top().pad(14);
+        top.setTouchable(Touchable.childrenOnly);
+        Label level = new Label("00 / PRUEBAS", text);
+        level.setColor(Color.valueOf("FFC94D"));
+        top.add(level).expandX().left();
+        top.add(hudButton("AYUDA F1", buttons, () -> toggleHelp())).width(88).height(34).padLeft(6);
+        top.add(hudButton("DATOS F2", buttons, () -> toggleDebug())).width(88).height(34).padLeft(6);
+        top.add(hudButton("MAPA M", buttons, () -> overview = !overview)).width(80).height(34).padLeft(6);
+        top.add(hudButton("MENU ESC", buttons, () -> returnToMenu())).width(88).height(34).padLeft(6);
+        hud.addActor(top);
+
+        // Solo dos estados compactos en los extremos inferiores: el centro queda libre.
+        Table footer = new Table();
+        footer.setFillParent(true);
+        footer.bottom().pad(14);
+        footer.setTouchable(Touchable.disabled);
+        movementStatus = new Label("K | DASH LISTO", text);
+        hookStatus = new Label("I / U | GANCHO LISTO", text);
+        Table dashCard = new Table();
+        dashCard.setBackground(white.tint(new Color(0.025f, 0.04f, 0.065f, 0.78f)));
+        dashCard.pad(10);
+        dashCard.add(movementStatus).left();
+        Table hookCard = new Table();
+        hookCard.setBackground(white.tint(new Color(0.025f, 0.04f, 0.065f, 0.78f)));
+        hookCard.pad(10);
+        hookCard.add(hookStatus).left();
+        footer.add(dashCard).width(200).left();
+        footer.add().expandX();
+        footer.add(hookCard).width(200).right();
+        hud.addActor(footer);
+
+        helpPanel = new Table();
+        helpPanel.setBackground(white.tint(new Color(0.02f, 0.035f, 0.055f, 0.94f)));
+        helpPanel.pad(16);
+        helpPanel.defaults().left().padBottom(10);
+        helpPanel.add(new Label("CONTROLES / F1 PARA CERRAR", text));
+        helpPanel.row();
+        helpPanel.add(new Label("A / D: moverse\nW / S: apuntar arriba / abajo\nJ: saltar\nK: dash; mantener para sprint x2.3\nI + WASD: propulsion lineal\nU + WASD: pendulo\nMantener U: balancearse\nSoltar U: conservar impulso\nO / L: reservadas", muted));
+        helpPanel.row();
+        helpPanel.add(new Label("M: vista general / seguimiento\nRueda: zoom\nR: reiniciar jugador\nEsc: volver al menu\nF2: diagnostico de teclado y fisica", muted));
+        helpPanel.row();
+        helpPanel.add(new Label("Mira cian: exacto / verde: ayuda\nNaranja: sin objetivo", muted));
+        helpPanel.pack();
+        helpPanel.setVisible(false);
+        helpPanel.setTouchable(Touchable.disabled);
+        hud.addActor(helpPanel);
+
+        debugPanel = new Table();
+        debugPanel.setBackground(white.tint(new Color(0.02f, 0.035f, 0.055f, 0.94f)));
+        debugPanel.pad(16);
+        debugPanel.defaults().left().padBottom(12);
+        debugPanel.add(new Label("DIAGNOSTICO / F2 PARA CERRAR", text));
+        debugPanel.row();
+        hookInputStatus = new Label("", muted);
+        hookInputStatus.setWrap(true);
+        debugPanel.add(hookInputStatus).width(330).height(38);
+        debugPanel.row();
+        debugSummary = new Label("", muted);
+        debugSummary.setWrap(true);
+        debugPanel.add(debugSummary).width(330).height(112);
+        debugPanel.row();
+        debugPanel.add(new Label("Si una tecla no aparece, su entrada\nno esta llegando al juego.", muted));
+        debugPanel.pack();
+        debugPanel.setVisible(false);
+        debugPanel.setTouchable(Touchable.disabled);
+        hud.addActor(debugPanel);
+    }
+
+    private TextButton hudButton(String title, TextButton.TextButtonStyle style, final Runnable action) {
+        TextButton button = new TextButton(title, style);
+        button.addListener(new ClickListener() {
+            @Override public void clicked(InputEvent event, float x, float y) { action.run(); }
+        });
+        return button;
+    }
+
+    private void toggleHelp() {
+        helpPanel.setVisible(!helpPanel.isVisible());
+        debugPanel.setVisible(false);
+    }
+
+    private void toggleDebug() {
+        debugPanel.setVisible(!debugPanel.isVisible());
+        helpPanel.setVisible(false);
+    }
+    @Override public void render(float delta) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) { returnToMenu(); return; }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F1)) toggleHelp();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F2)) toggleDebug();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) overview = !overview;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            hookControls.reset(); shotTime = 0; hookMissTimer = 0;
+            overview = false; inspectionZoom = 1; player.reset(map.get("spawn").getFloat("x"), map.get("spawn").getFloat("y"));
+        }
+        float direction = 0;
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) direction--;
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) direction++;
+        boolean dash = Gdx.input.isKeyJustPressed(Input.Keys.K);
+        boolean sprintHeld = Gdx.input.isKeyPressed(Input.Keys.K);
+        boolean left = Gdx.input.isKeyPressed(Input.Keys.A);
+        boolean right = Gdx.input.isKeyPressed(Input.Keys.D);
+        boolean up = Gdx.input.isKeyPressed(Input.Keys.W);
+        boolean down = Gdx.input.isKeyPressed(Input.Keys.S);
+        boolean propulsionHeld = Gdx.input.isKeyPressed(Input.Keys.I);
+        boolean pendulumHeld = Gdx.input.isKeyPressed(Input.Keys.U);
+        HookControls.Command hookCommand = hookControls.update(delta,left,right,up,down,
+            Gdx.input.isKeyJustPressed(Input.Keys.I),propulsionHeld,
+            Gdx.input.isKeyJustPressed(Input.Keys.U),pendulumHeld,player.getFacing());
+        boolean fireHook = hookCommand != HookControls.Command.NONE;
+        boolean firePendulum = hookCommand == HookControls.Command.PENDULUM;
+        aimX = hookControls.getAimX(); aimY = hookControls.getAimY();
+        shotTime = Math.max(0, shotTime - delta);
+        commandFeedbackTime = Math.max(0, commandFeedbackTime - delta);
+        if (fireHook) {
+            lastHookDirection = hookDirectionName(aimX, aimY);
+            commandFeedbackTime = 1.5f;
+            lastHookMode = firePendulum ? "U" : "I";
+            boolean attached = firePendulum ? player.launchPendulum(aimX,aimY)
+                : player.launchPropulsion(aimX,aimY);
+            hookMissTimer = attached ? 0 : 1.5f;
+            shotTime = 0.22f;
+            shotX = player.x + PlayerBody.WIDTH / 2;
+            shotY = player.y + PlayerBody.HEIGHT / 2;
+            float length = (float) Math.hypot(aimX, aimY);
+            shotEndX = attached ? player.getAnchorX() : shotX + aimX / length * PlayerBody.HOOK_RANGE;
+            shotEndY = attached ? player.getAnchorY() : shotY + aimY / length * PlayerBody.HOOK_RANGE;
+            Gdx.app.log("GANCHO", lastHookMode + " / " + lastHookDirection + (attached ? " / ANCLADO" : " / SIN SUPERFICIE ALCANZABLE"));
+        }
+        // Soltar U solo libera el pendulo; nunca cancela la propulsion activada con I.
+        if (!pendulumHeld && !firePendulum) player.releaseHook();
+        hookInputStatus.setText("TECLAS: " + (left ? "A " : "") + (right ? "D " : "")
+            + (up ? "W " : "") + (down ? "S " : "")
+            + (Gdx.input.isKeyPressed(Input.Keys.J) ? "J " : "") + (sprintHeld ? "K " : "")
+            + (propulsionHeld ? "I " : "") + (pendulumHeld ? "U" : "")
+            + "\nULTIMO: " + lastHookMode + " / " + lastHookDirection);
+        player.update(delta,direction,Gdx.input.isKeyJustPressed(Input.Keys.J),dash,sprintHeld);
+        if (!pendulumHeld && firePendulum) player.releaseHook();
+        hookMissTimer = Math.max(0, hookMissTimer - delta);
+        hookStatus.setText(player.isPropelling() ? "I | PROPULSION"
+            : player.isHooked() ? ("U | " + lastHookDirection + ": PENDULO")
+            : commandFeedbackTime > 0 ? (lastHookMode + " | " + lastHookDirection + (hookMissTimer > 0 ? ": VACIO" : ": OK"))
+            : "I / U | GANCHO LISTO");
+        hookStatus.setColor(hookMissTimer > 0 && !player.isHooked()
+            ? Color.valueOf("FFAB57") : Color.CYAN);
+        movementStatus.setText(player.isDashing() ? "K | DASH"
+            : player.isBoosted() ? "K | SPRINT x2.3"
+            : player.canDash() ? "K | DASH LISTO" : "K | RECARGANDO");
+        movementStatus.setColor(player.canDash() ? Color.valueOf("FFE066") : Color.valueOf("FFAB57"));
+        if (debugPanel.isVisible()) {
+            debugSummary.setText(String.format(java.util.Locale.ROOT,
+                "Velocidad: %.1f\nGancho: %.0f / Ayuda: %.2f\nCuerda: %.1f / Contactos: %d\nDash: %s / Camara: %s",
+                Math.hypot(player.getVelocityX(), player.getVelocityY()),
+                PlayerBody.HOOK_RANGE, PlayerBody.HOOK_ASSIST_RADIUS,
+                player.isHooked() ? player.getRopeUsedLength() : 0,
+                player.isHooked() ? Math.max(0, player.getRopePointCount() - 1) : 0,
+                player.canDash() ? "listo" : "recargando", overview ? "general" : "seguimiento"));
+        }        if (player.y < -10) player.reset(map.get("spawn").getFloat("x"), map.get("spawn").getFloat("y"));
+        if (!overview) {
+            float follow = 1f - (float) Math.exp(-8f * Math.min(delta, 0.1f));
+            camera.position.x = MathUtils.lerp(camera.position.x, player.x + PlayerBody.WIDTH / 2f, follow);
+            camera.position.y = MathUtils.lerp(camera.position.y, player.y + 3.5f, follow);
+        }
+        camera.zoom = overview ? Math.max((worldWidth + 8) / camera.viewportWidth, (worldHeight + 8) / camera.viewportHeight) : inspectionZoom;
+        float halfW = camera.viewportWidth * camera.zoom / 2;
+        float halfH = camera.viewportHeight * camera.zoom / 2;
+        camera.position.x = halfW * 2 >= worldWidth + 6 ? worldWidth / 2 : MathUtils.clamp(camera.position.x, -3 + halfW, worldWidth + 3 - halfW);
+        camera.position.y = halfH * 2 >= worldHeight + 4 ? worldHeight / 2 - 1 : MathUtils.clamp(camera.position.y, -2 + halfH, worldHeight + 2 - halfH);
+        camera.update();
+        ScreenUtils.clear(0.025f, 0.04f, 0.07f, 1);
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        float bgScale = Math.max(halfW * 2 / backgroundTexture.getWidth(), halfH * 2 / backgroundTexture.getHeight()) * 1.12f;
+        float bgW = backgroundTexture.getWidth() * bgScale, bgH = backgroundTexture.getHeight() * bgScale;
+        batch.draw(backgroundTexture, camera.position.x - bgW / 2, camera.position.y - bgH / 2, bgW, bgH);
+        for (JsonValue piece = map.get("pieces").child; piece != null; piece = piece.next) {
+            TextureRegion image = piece.getString("asset").equals("wall") ? wall : platform;
+            batch.draw(image, piece.getFloat("x"), piece.getFloat("y"), piece.getFloat("width"), piece.getFloat("height"));
+        }
+        float centerX = player.x + PlayerBody.WIDTH / 2, centerY = player.y + PlayerBody.HEIGHT / 2;
+        if (shotTime > 0) {
+            batch.setColor(1f, 0.55f, 0.15f, shotTime / 0.22f);
+            drawLine(shotX, shotY, shotEndX, shotEndY, 0.045f);
+        }
+        if (player.isPropelling()) {
+            batch.setColor(1f,0.72f,0.12f,0.85f);
+            drawLine(centerX,centerY,player.getAnchorX(),player.getAnchorY(),0.06f);
+            batch.draw(pixel,player.getAnchorX()-0.12f,player.getAnchorY()-0.12f,0.24f,0.24f);
+        } else if (player.isHooked()) {
+            batch.setColor(0.1f, 0.9f, 1f, 1);
+            float ropeX = centerX, ropeY = centerY;
+            for (int i = 0; i < player.getRopePointCount(); i++) {
+                float nextX = player.getRopePointX(i), nextY = player.getRopePointY(i);
+                drawLine(ropeX, ropeY, nextX, nextY, 0.055f);
+                ropeX = nextX; ropeY = nextY;
+            }
+            batch.draw(pixel, player.getAnchorX() - 0.12f, player.getAnchorY() - 0.12f, 0.24f, 0.24f);
+        } else {
+            float aimLength = (float) Math.hypot(aimX, aimY);
+            PlayerBody.HookTarget target = player.findHookTarget(aimX, aimY);
+            float targetX = centerX + aimX / aimLength * 5f;
+            float targetY = centerY + aimY / aimLength * 5f;
+            if (target != null) {
+                targetX = target.probeX; targetY = target.probeY;
+                if (target.assisted) batch.setColor(0.25f, 1f, 0.45f, 0.7f);
+                else batch.setColor(0.1f, 0.9f, 1f, 0.65f);
+                drawLine(targetX, targetY, target.x, target.y, 0.035f);
+                batch.draw(pixel, target.x - 0.10f, target.y - 0.10f, 0.20f, 0.20f);
+            } else batch.setColor(1f, 0.55f, 0.15f, 0.45f);
+            drawCircle(targetX, targetY, PlayerBody.HOOK_ASSIST_RADIUS);
+            drawLine(targetX - 0.12f, targetY, targetX + 0.12f, targetY, 0.035f);
+            drawLine(targetX, targetY - 0.12f, targetX, targetY + 0.12f, 0.035f);
+        }
+        batch.setColor(Color.WHITE);
+        batch.draw(playerTexture, player.x, player.y, PlayerBody.WIDTH, PlayerBody.HEIGHT);
+        batch.setColor(Color.WHITE);
+        batch.end();
+        hud.getViewport().apply();
+        hud.act(delta);
+        hud.draw();
+    }
+
+    private String hookDirectionName(float dx, float dy) {
+        if (dy > 0) return dx < 0 ? "ARR-IZQ" : dx > 0 ? "ARR-DER" : "ARRIBA";
+        if (dy < 0) return dx < 0 ? "ABA-IZQ" : dx > 0 ? "ABA-DER" : "ABAJO";
+        return dx < 0 ? "IZQUIERDA" : "DERECHA";
+    }
+
+    private void drawCircle(float cx, float cy, float radius) {
+        int segments = 40;
+        for (int i = 0; i < segments; i++) {
+            double a = i * Math.PI * 2 / segments, b = (i + 1) * Math.PI * 2 / segments;
+            drawLine(cx + (float) Math.cos(a) * radius, cy + (float) Math.sin(a) * radius,
+                cx + (float) Math.cos(b) * radius, cy + (float) Math.sin(b) * radius, 0.035f);
+        }
+    }
+
+    private void drawLine(float x1, float y1, float x2, float y2, float thickness) {
+        float dx = x2 - x1, dy = y2 - y1;
+        batch.draw(pixel, x1, y1 - thickness / 2, 0, thickness / 2,
+            (float) Math.hypot(dx, dy), thickness, 1, 1,
+            (float) Math.toDegrees(Math.atan2(dy, dx)), 0, 0, 1, 1, false, false);
+    }
+
+    private void returnToMenu() {
+        game.setScreen(menu);
+        dispose();
+    }
+
+    @Override public void resize(int width, int height) {
+        if (width <= 0 || height <= 0) return;
+        camera.viewportHeight = 15;
+        camera.viewportWidth = 15f * width / height;
+        if (hud != null) {
+            // Mantiene legible el HUD y evita superposiciones al reducir la ventana.
+            ScreenViewport viewport = (ScreenViewport) hud.getViewport();
+            float scale = Math.min(1f, Math.min(width / 640f, height / 520f));
+            viewport.setUnitsPerPixel(1f / scale);
+            viewport.update(width, height, true);
+            if (helpPanel != null) helpPanel.setPosition(14, viewport.getWorldHeight() - 62 - helpPanel.getHeight());
+            if (debugPanel != null) debugPanel.setPosition(14, viewport.getWorldHeight() - 62 - debugPanel.getHeight());
+        }
+    }
+    @Override public void hide() {
+        if (Gdx.input.getInputProcessor() == input) Gdx.input.setInputProcessor(null);
+    }
+    @Override public void dispose() {
+        hide();
+        if (hud != null) { hud.dispose(); hud = null; }
+        if (batch != null) { batch.dispose(); batch = null; }
+        if (font != null) { font.dispose(); font = null; }
+        if (platformTexture != null) { platformTexture.dispose(); platformTexture = null; }
+        if (wallTexture != null) { wallTexture.dispose(); wallTexture = null; }
+        if (backgroundTexture != null) { backgroundTexture.dispose(); backgroundTexture = null; }
+        if (playerTexture != null) { playerTexture.dispose(); playerTexture = null; }
+        if (pixel != null) { pixel.dispose(); pixel = null; }
+    }
+}

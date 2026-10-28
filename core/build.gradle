@@ -12,3 +12,21 @@ dependencies {
 jar {
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+// Verificaciones deterministas de fisica, sin iniciar una ventana.
+tasks.register('physicsCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'PlayerPhysicsCheck'
+}
+tasks.named('check') { dependsOn 'physicsCheck' }
+tasks.register('hookCommandCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'HookCommandCheck'
+}
+tasks.named('check') { dependsOn 'hookCommandCheck' }
+
+// Las verificaciones se ejecutan como JavaExec (physicsCheck y hookCommandCheck),
+// sin un framework JUnit. check depende de ambas y conserva sus fallos de asercion.
+tasks.named('test') { failOnNoDiscoveredTests = false }

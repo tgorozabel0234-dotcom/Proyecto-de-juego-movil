@@ -1,0 +1,29 @@
+[
+  {
+    "file": "platform_metal_orange_v1.png",
+    "path": "environments/industrial_v1/platform_metal_orange_v1.png",
+    "width": 1983,
+    "height": 793,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": 0,
+    "bytes": 940443
+  },
+  {
+    "file": "wall_metal_conduit_v1.png",
+    "path": "environments/industrial_v1/wall_metal_conduit_v1.png",
+    "width": 887,
+    "height": 1774,
+    "pixelFormat": "Format32bppArgb",
+    "cornerAlpha": 0,
+    "bytes": 1898321
+  },
+  {
+    "file": "background_hangar_v1.png",
+    "path": "environments/industrial_v1/background_hangar_v1.png",
+    "width": 1983,
+    "height": 793,
+    "pixelFormat": "Format24bppRgb",
+    "cornerAlpha": 255,
+    "bytes": 1899415
+  }
+]

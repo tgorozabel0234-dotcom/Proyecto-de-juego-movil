@@ -1,0 +1,26 @@
+{
+  "name": "WASD + J/K/I/U",
+  "savedDate": "2026-10-24",
+  "status": "saved_snapshot",
+  "source": "core/src/main/java/io/github/some_example_name/TestLevelScreen.java",
+  "sourceSha256": "DE055473A596BF71AC14115A6CB428CD4B0C55A326782272E63EADB3E81ECB29",
+  "actions": {
+    "moveLeft": "A",
+    "moveRight": "D",
+    "aimUp": "W",
+    "aimDown": "S",
+    "jump": "J",
+    "dashAndSprint": "K",
+    "linearHook": "I",
+    "pendulumHook": "U",
+    "reserved": [
+      "O",
+      "L"
+    ],
+    "reset": "R",
+    "overview": "M",
+    "help": "F1",
+    "diagnostics": "F2",
+    "back": "ESCAPE"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "WASD + H/J/L/I",
+  "savedDate": "2026-10-24",
+  "actions": {
+    "moveLeft": "A",
+    "moveRight": "D",
+    "aimUp": "W",
+    "aimDown": "S",
+    "jump": "H",
+    "dashAndSprint": "J",
+    "linearHook": "L",
+    "pendulumHook": "I",
+    "reserved": [
+      "K",
+      "U",
+      "O"
+    ]
+  }
+}

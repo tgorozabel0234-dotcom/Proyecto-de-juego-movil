@@ -1,0 +1,17 @@
+[
+  {
+    "key": "platform",
+    "transparent_background": true,
+    "prompt": "Use case: stylized-concept. Production asset for reusable 2D side-view metroidvania game, cyberpunk industrial training facility. ONE isolated modular horizontal metal platform, strict front elevation orthographic side-view, NO perspective, no visible top plane. Wide rectangular slab about 4:1 proportions, straight perfectly horizontal walkable top, flat vertical ends compatible with adjoining copies. Dark blue graphite steel panels, subtle wear and bolts, narrow amber orange luminous strip just below upper edge, structural underside. Clean detailed illustrated 2D game art, crisp readable silhouette, restrained cyan accents. Centered with transparent padding, transparent background, no ground shadow outside object, no text, no characters, no hooks, no watermark. Output landscape image."
+  },
+  {
+    "key": "wall",
+    "transparent_background": true,
+    "prompt": "Use case: stylized-concept. Production reusable 2D game asset, side-view metroidvania industrial cyberpunk training facility. ONE isolated rectangular vertical wall module strict front orthographic elevation, NO perspective and no visible top or side planes. Tall about 1:2 proportions. Graphite blue steel rectangular plates, bolts, recessed conduit and small warm orange warning lights, restrained cyan accent. All exterior edges straight so copies can adjoin vertically. Clean illustrated 2D art with crisp readable silhouette and subtle wear, no projecting parts. Transparent background with transparent padding. No text, characters, hooks, floor or cast shadow outside silhouette, no watermark."
+  },
+  {
+    "key": "background",
+    "transparent_background": false,
+    "prompt": "Use case: stylized-concept. A reusable distant BACKGROUND ONLY for a 2D side-view metroidvania industrial cyberpunk testing chamber. Wide landscape composition. Huge spacious interior hangar, faint graphite blue steel trusses and distant pipes, layered atmospheric depth, small restrained amber and cyan utility lights. Center remains open and uncluttered with very low contrast for foreground platforms to read. Strict side-view elevation, no isometric camera, no dramatic perspective. Clean illustrated 2D game art, crisp environmental details fading into dark blue distance, no heavy black vignette. No foreground walkable floor, no foreground platforms, no characters, hooks, text or UI, no watermark. This is a background texture, not a full gameplay screenshot."
+  }
+]

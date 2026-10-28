@@ -1,0 +1,25 @@
+{
+  "name": "WASD + L/K/H/U",
+  "savedDate": "2026-10-24",
+  "status": "active_documented_mapping",
+  "actions": {
+    "moveLeft": "A",
+    "moveRight": "D",
+    "aimUp": "W",
+    "aimDown": "S",
+    "jump": "L",
+    "dashAndSprint": "K",
+    "linearHook": "H",
+    "pendulumHook": "U",
+    "reserved": [
+      "J",
+      "O",
+      "I"
+    ],
+    "help": "F1",
+    "diagnostics": "F2",
+    "reset": "R",
+    "overview": "M",
+    "back": "ESCAPE"
+  }
+}

@@ -1,0 +1,95 @@
+package io.github.some_example_name;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+/** Camino de cuerda sobre esquinas de solidos estaticos; el anclaje original no cambia. */
+final class RopePath {
+    private final List<float[]> solids;
+    private final List<float[]> corners = new ArrayList<>();
+    private float[][] edges;
+    private final List<float[]> path = new ArrayList<>();
+    RopePath(List<float[]> solids) { this.solids = solids; }
+    List<float[]> getPoints() { return path; }
+    void clear() { path.clear(); }
+
+    void update(float sx, float sy, float ax, float ay) {
+        if (visible(sx, sy, ax, ay)) {
+            path.clear(); path.add(new float[]{ax, ay}); return;
+        }
+        if (edges == null) buildGraph();
+        int n = corners.size();
+        float[] dist = new float[n], end = new float[n];
+        int[] prev = new int[n]; boolean[] visited = new boolean[n];
+        Arrays.fill(prev, -1);
+        for (int i = 0; i < n; i++) {
+            float[] p = corners.get(i);
+            dist[i] = visible(sx, sy, p[0], p[1]) ? distance(sx, sy, p[0], p[1]) : Float.POSITIVE_INFINITY;
+            end[i] = visible(p[0], p[1], ax, ay) ? distance(p[0], p[1], ax, ay) : Float.POSITIVE_INFINITY;
+        }
+        float best = Float.POSITIVE_INFINITY; int last = -1;
+        for (int step = 0; step < n; step++) {
+            int u = -1;
+            for (int i = 0; i < n; i++) if (!visited[i] && (u < 0 || dist[i] < dist[u])) u = i;
+            if (u < 0 || !Float.isFinite(dist[u]) || dist[u] >= best) break;
+            visited[u] = true;
+            if (dist[u] + end[u] < best) { best = dist[u] + end[u]; last = u; }
+            for (int v = 0; v < n; v++) if (dist[u] + edges[u][v] < dist[v]) {
+                dist[v] = dist[u] + edges[u][v]; prev[v] = u;
+            }
+        }
+        if (last < 0) return; // Conserva el ultimo recorrido valido ante contacto numerico.
+        path.clear();
+        for (int i = last; i >= 0; i = prev[i]) path.add(corners.get(i));
+        Collections.reverse(path);
+        path.add(new float[]{ax, ay});
+    }
+
+    float length(float sx, float sy) {
+        float result = 0;
+        for (float[] p : path) { result += distance(sx, sy, p[0], p[1]); sx = p[0]; sy = p[1]; }
+        return result;
+    }
+
+    private void buildGraph() {
+        for (float[] s : solids) for (int x = 0; x < 2; x++) for (int y = 0; y < 2; y++) {
+            float px = s[0] + (x == 0 ? -0.015f : s[2] + 0.015f);
+            float py = s[1] + (y == 0 ? -0.015f : s[3] + 0.015f);
+            boolean inside = false;
+            for (float[] other : solids) if (px > other[0] && px < other[0] + other[2]
+                && py > other[1] && py < other[1] + other[3]) { inside = true; break; }
+            if (!inside) corners.add(new float[]{px, py});
+        }
+        int n = corners.size(); edges = new float[n][n];
+        for (int i = 0; i < n; i++) for (int j = 0; j < n; j++) {
+            float[] a = corners.get(i), b = corners.get(j);
+            edges[i][j] = visible(a[0], a[1], b[0], b[1])
+                ? distance(a[0], a[1], b[0], b[1]) : Float.POSITIVE_INFINITY;
+        }
+    }
+
+    private float distance(float ax, float ay, float bx, float by) { return (float) Math.hypot(ax - bx, ay - by); }
+
+    private boolean visible(float sx, float sy, float ex, float ey) {
+        float dx = ex - sx, dy = ey - sy;
+        for (float[] s : solids) {
+            float near = 0, far = 1;
+            float left = s[0] + 0.001f, right = s[0] + s[2] - 0.001f;
+            float bottom = s[1] + 0.001f, top = s[1] + s[3] - 0.001f;
+            if (Math.abs(dx) < 0.000001f) { if (sx <= left || sx >= right) continue; }
+            else {
+                float a = (left - sx) / dx, b = (right - sx) / dx;
+                near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b));
+            }
+            if (Math.abs(dy) < 0.000001f) { if (sy <= bottom || sy >= top) continue; }
+            else {
+                float a = (bottom - sy) / dy, b = (top - sy) / dy;
+                near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b));
+            }
+            if (near < far && near < 0.99999f && far > 0.00001f) return false;
+        }
+        return true;
+    }
+}

@@ -1,0 +1,446 @@
+package io.github.some_example_name;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/** Fisica provisional en unidades de altura de jugador, independiente del renderizado. */
+public final class PlayerBody {
+    public static final float WIDTH = 0.5f, HEIGHT = 1f;
+    public static final float HOOK_RANGE = 35f;
+    public static final float HOOK_ASSIST_RADIUS = 1.25f;
+    public static final float PENDULUM_RADIUS = 15f;
+    private static final float SPEED = 7f, GRAVITY = 26f, JUMP_SPEED = 10f;
+    private static final float DASH_SPEED = 24f, DASH_DURATION = 0.18f;
+    private static final float DASH_COOLDOWN = 0.6f, BOOST_SPEED = SPEED * 2.3f;
+    private static final float SOFT_SPEED = 30f, SAFETY_SPEED = 60f;
+    private static final double FIXED_STEP = 1.0 / 240.0;
+    private double accumulator;
+    private boolean queuedDash;
+    private float coyoteRemaining, variableJumpRemaining;
+    private float propulsionDirectionX, propulsionDirectionY, propulsionSpeed, dashSpeed;
+    public float x, y;
+    private float velocityX, velocityY;
+    private boolean grounded, boosted, hooked, momentum;
+    private float facing = 1, dashDirection = 1;
+    private float dashRemaining, cooldownRemaining;
+    private float anchorX, anchorY, ropeLength;
+    private float ropeTargetLength, reelSpeed;
+    private boolean upperPassConsumed;
+    private int upperSwingBoostCount;
+    private boolean propelling;
+    private float propulsionRemaining;
+    private float jumpBufferRemaining;
+    private final List<float[]> solids = new ArrayList<>();
+
+    private RopePath ropePath = new RopePath(solids);
+
+    public void addSolid(float x, float y, float width, float height) {
+        solids.add(new float[]{x, y, width, height});
+        ropePath = new RopePath(solids);
+    }
+    public void reset(float x, float y) {
+        this.x = x; this.y = y;
+        velocityX = velocityY = dashRemaining = cooldownRemaining = 0;
+        grounded = boosted = hooked = momentum = false;
+        propelling = false; propulsionRemaining = 0;
+        jumpBufferRemaining = 0;
+        ropeTargetLength = reelSpeed = 0;
+        upperPassConsumed = false; upperSwingBoostCount = 0;
+        accumulator = 0; queuedDash = false;
+        coyoteRemaining = variableJumpRemaining = 0;
+        facing = dashDirection = 1;
+        ropePath.clear();
+    }
+    public boolean isDashing() { return dashRemaining > 0; }
+    public boolean isBoosted() { return boosted && !isDashing(); }
+    public boolean canDash() { return cooldownRemaining <= 0 && !isDashing(); }
+    public boolean isHooked() { return hooked; }
+    public boolean isReeling() { return hooked && ropeLength > ropeTargetLength + 0.01f; }
+    public float getRopeTargetLength() { return ropeTargetLength; }
+    public int getUpperSwingBoostCount() { return upperSwingBoostCount; }
+    public boolean isPropelling() { return propelling; }
+    public boolean isGrounded() { return grounded; }
+    public boolean isJumpQueued() { return jumpBufferRemaining > 0; }
+    public float getAnchorX() { return anchorX; }
+    public float getAnchorY() { return anchorY; }
+    public float getRopeLength() { return ropeLength; }
+    public float getVelocityX() { return velocityX; }
+    public float getVelocityY() { return velocityY; }
+    public float getFacing() { return facing; }
+    public int getRopePointCount() { return ropePath.getPoints().size(); }
+    public float getRopePointX(int i) { return ropePath.getPoints().get(i)[0]; }
+    public float getRopePointY(int i) { return ropePath.getPoints().get(i)[1]; }
+    public float getRopeUsedLength() { return ropePath.length(x + WIDTH / 2, y + HEIGHT / 2); }
+
+    public static final class HookTarget {
+        public final float x, y, probeX, probeY;
+        public final boolean assisted;
+        HookTarget(float x, float y, float px, float py, boolean assisted) {
+            this.x = x; this.y = y; probeX = px; probeY = py; this.assisted = assisted;
+        }
+    }
+
+    /** Impacto directo primero; despues busca una superficie dentro del radio circular. */
+    public HookTarget findHookTarget(float aimX, float aimY) {
+        float norm = (float) Math.hypot(aimX, aimY);
+        if (norm < 0.01f) { aimX = facing; aimY = 0; norm = 1; }
+        float dx = aimX / norm, dy = aimY / norm;
+        float ox = x + WIDTH / 2, oy = y + HEIGHT / 2;
+        float nearest = Float.POSITIVE_INFINITY;
+        for (float[] s : solids) nearest = Math.min(nearest, rayHit(ox, oy, dx, dy, s, HOOK_RANGE));
+        if (nearest <= HOOK_RANGE && nearest >= 0.02f) {
+            return new HookTarget(ox + dx * nearest, oy + dy * nearest,
+                ox + dx * nearest, oy + dy * nearest, false);
+        }
+        HookTarget best = null;
+        float bestTime = Float.POSITIVE_INFINITY;
+        for (float[] s : solids) {
+            // No autoengancha al suelo bajo los pies ni a superficies ya tocadas al disparar.
+            if (distanceSquared(ox, oy, s) <= HOOK_ASSIST_RADIUS * HOOK_ASSIST_RADIUS) continue;
+            float radius = HOOK_ASSIST_RADIUS;
+            float[] expanded = {s[0] - radius, s[1] - radius, s[2] + radius * 2, s[3] + radius * 2};
+            float entry = rayHit(ox, oy, dx, dy, expanded, HOOK_RANGE);
+            if (!Float.isFinite(entry) || entry < 0.75f) continue;
+            float contact = entry;
+            float radiusSquared = radius * radius;
+            if (distanceSquared(ox + dx * entry, oy + dy * entry, s) > radiusSquared) {
+                // Distancia a un rectangulo es convexa sobre el rayo: encuentra el minimo
+                // y luego el primer contacto circular, evitando tolerancia cuadrada en esquinas.
+                float a = entry, b = HOOK_RANGE;
+                for (int i = 0; i < 28; i++) {
+                    float u = a + (b - a) / 3, v = b - (b - a) / 3;
+                    if (distanceSquared(ox + dx * u, oy + dy * u, s)
+                        < distanceSquared(ox + dx * v, oy + dy * v, s)) b = v;
+                    else a = u;
+                }
+                float minimum = (a + b) / 2;
+                if (distanceSquared(ox + dx * minimum, oy + dy * minimum, s) > radiusSquared) continue;
+                a = entry; b = minimum;
+                for (int i = 0; i < 22; i++) {
+                    float middle = (a + b) / 2;
+                    if (distanceSquared(ox + dx * middle, oy + dy * middle, s) <= radiusSquared) b = middle;
+                    else a = middle;
+                }
+                contact = b;
+            }
+            if (contact >= bestTime) continue;
+            float px = ox + dx * contact, py = oy + dy * contact;
+            float tx = Math.max(s[0], Math.min(px, s[0] + s[2]));
+            float ty = Math.max(s[1], Math.min(py, s[1] + s[3]));
+            float targetDistance = (float) Math.hypot(tx - ox, ty - oy);
+            if (targetDistance > HOOK_RANGE || targetDistance < 0.75f) continue;
+            boolean blocked = false;
+            for (float[] obstacle : solids) {
+                if (rayHit(ox, oy, (tx - ox) / targetDistance, (ty - oy) / targetDistance,
+                    obstacle, targetDistance) < targetDistance - 0.02f) { blocked = true; break; }
+            }
+            if (!blocked) {
+                bestTime = contact; best = new HookTarget(tx, ty, px, py, true);
+            }
+        }
+        return best;
+    }
+
+    private float distanceSquared(float px, float py, float[] s) {
+        float dx = px - Math.max(s[0], Math.min(px, s[0] + s[2]));
+        float dy = py - Math.max(s[1], Math.min(py, s[1] + s[3]));
+        return dx * dx + dy * dy;
+    }
+
+    /** Alias para pruebas y mapas existentes: este modo es solamente pendulo. */
+    public boolean launchHook(float aimX, float aimY) { return launchPendulum(aimX, aimY); }
+
+    public boolean launchPendulum(float aimX, float aimY) {
+        HookTarget target = findHookTarget(aimX, aimY);
+        if (target == null) return false;
+        float ox = x + WIDTH / 2, oy = y + HEIGHT / 2;
+        anchorX = target.x; anchorY = target.y;
+        float distance = (float) Math.hypot(anchorX - ox, anchorY - oy);
+        ropeLength = Math.max(0.6f, distance);
+        ropeTargetLength = Math.min(ropeLength,PENDULUM_RADIUS);
+        reelSpeed = 0;
+        upperPassConsumed = false;
+        hooked = momentum = true;
+        propelling = false; propulsionRemaining = 0;
+        coyoteRemaining = grounded ? 0.1f : coyoteRemaining;
+        grounded = false;
+        variableJumpRemaining = 0;
+        ropePath.update(ox, oy, anchorX, anchorY);
+
+
+
+        limitVelocity();
+        return true;
+    }
+    /** Propulsion independiente: aceleracion breve sin borrar el impulso previo. */
+    public boolean launchPropulsion(float aimX, float aimY) {
+        HookTarget target = findHookTarget(aimX, aimY);
+        if (target == null) return false;
+        releaseHook();
+        anchorX = target.x; anchorY = target.y;
+        float dx = anchorX - (x + WIDTH / 2), dy = anchorY - (y + HEIGHT / 2);
+        float distance = (float) Math.hypot(dx, dy);
+        propelling = momentum = true;
+        coyoteRemaining = grounded ? 0.1f : coyoteRemaining;
+        grounded = false; dashRemaining = 0;
+        variableJumpRemaining = 0;
+        propulsionRemaining = Math.min(1.6f, distance / 28f + 0.22f);
+        propulsionDirectionX = dx / distance;
+        propulsionDirectionY = dy / distance;
+        propulsionSpeed = Math.max(28f, velocityX * propulsionDirectionX + velocityY * propulsionDirectionY);
+        return true;
+    }
+
+    public void releaseHook() { hooked = false; reelSpeed = 0; ropePath.clear(); }
+
+    /** Interseccion rayo/caja por intervalos: diagonales normalizadas, primer obstaculo. */
+    private float rayHit(float ox, float oy, float dx, float dy, float[] s, float max) {
+        float near = 0, far = max;
+        if (Math.abs(dx) < 0.00001f) {
+            if (ox < s[0] || ox > s[0] + s[2]) return Float.POSITIVE_INFINITY;
+        } else {
+            float a = (s[0] - ox) / dx, b = (s[0] + s[2] - ox) / dx;
+            near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b));
+        }
+        if (Math.abs(dy) < 0.00001f) {
+            if (oy < s[1] || oy > s[1] + s[3]) return Float.POSITIVE_INFINITY;
+        } else {
+            float a = (s[1] - oy) / dy, b = (s[1] + s[3] - oy) / dy;
+            near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b));
+        }
+        return near <= far && far >= 0 && near <= max ? near : Float.POSITIVE_INFINITY;
+    }
+
+    public void update(float dt, float direction, boolean jump) { update(dt,direction,jump,false,false,true); }
+    public void update(float dt, float direction, boolean jump, boolean dash) { update(dt,direction,jump,dash,dash,true); }
+    public void update(float dt, float direction, boolean jump, boolean dash, boolean sprintHeld) {
+        update(dt,direction,jump,dash,sprintHeld,true);
+    }
+
+    public void update(float delta, float direction, boolean jump, boolean dash, boolean sprintHeld, boolean jumpHeld) {
+        if (!Float.isFinite(delta) || delta < 0) return;
+        direction = Math.max(-1,Math.min(1,direction));
+        if (direction != 0) facing = Math.signum(direction);
+        if (!sprintHeld) boosted = false;
+        if (jump) {
+            jumpBufferRemaining = 0.12f;
+            if (propelling || hooked) {
+                propelling = false;
+                releaseHook();
+            }
+        }
+        queuedDash |= dash;
+        // Las entradas de un cuadro sin tick quedan pendientes hasta el siguiente paso.
+        accumulator += Math.min(delta,0.25f);
+        int ticks = 0;
+        while (accumulator + 0.0000001 >= FIXED_STEP && ticks++ < 60) {
+            step((float)FIXED_STEP,direction,sprintHeld,jumpHeld);
+            accumulator = Math.max(0,accumulator-FIXED_STEP);
+        }
+    }
+
+    private void step(float dt, float direction, boolean sprintHeld, boolean jumpHeld) {
+        boolean wasGrounded = grounded;
+        if (grounded) coyoteRemaining = 0.1f;
+        else coyoteRemaining = Math.max(0,coyoteRemaining-dt);
+        if (queuedDash) {
+            if (canDash()) {
+                propelling = false; propulsionRemaining = 0;
+                dashDirection = facing;
+                dashSpeed = Math.max(DASH_SPEED,velocityX * dashDirection);
+                dashRemaining = DASH_DURATION;
+                cooldownRemaining = DASH_COOLDOWN;
+                boosted = false; momentum = true;
+            }
+            queuedDash = false;
+        }
+        if (jumpBufferRemaining > 0 && (grounded || coyoteRemaining > 0) && !propelling) {
+            velocityY = JUMP_SPEED;
+            grounded = false; coyoteRemaining = jumpBufferRemaining = 0;
+            variableJumpRemaining = 0.18f;
+        }
+        jumpBufferRemaining = Math.max(0,jumpBufferRemaining-dt);
+        if (!jumpHeld && variableJumpRemaining > 0) {
+            if (velocityY > 0) velocityY *= 0.5f;
+            variableJumpRemaining = 0;
+        }
+        float oldX = x, oldY = y, oldLength = ropeLength;
+        if (hooked && ropeLength > ropeTargetLength) {
+            reelSpeed = Math.min(18f,reelSpeed+90f*dt);
+            ropeLength = Math.max(ropeTargetLength,ropeLength-reelSpeed*dt);
+        } else reelSpeed = 0;
+        boolean dashing = isDashing();
+        float targetDx = anchorX-(x+WIDTH/2), targetDy = anchorY-(y+HEIGHT/2);
+        float targetDistance = (float)Math.hypot(targetDx,targetDy);
+        if (propelling && (targetDistance <= 0.65f || propulsionRemaining <= 0
+            || targetDx*propulsionDirectionX+targetDy*propulsionDirectionY <= 0)) propelling = false;
+        boolean linearStep = propelling;
+        if (linearStep) {
+            float blend = 1f-(float)Math.exp(-dt/0.07f);
+            velocityX += (propulsionDirectionX*propulsionSpeed-velocityX)*blend;
+            velocityY += (propulsionDirectionY*propulsionSpeed-velocityY)*blend;
+            propulsionRemaining -= dt;
+        } else if (dashing) {
+            velocityX = dashDirection*dashSpeed;
+            dashRemaining = Math.max(0,dashRemaining-dt);
+            if (dashRemaining == 0) boosted = sprintHeld;
+        } else if (hooked) {
+            pumpSwing(direction,dt);
+        } else {
+            float cruise = boosted ? BOOST_SPEED : SPEED;
+            float target = direction*cruise;
+            if (grounded) {
+                float acceleration = direction == 0 ? (momentum ? 10f : 70f)
+                    : velocityX*direction < 0 ? 85f
+                    : momentum && Math.abs(velocityX)>cruise ? 8f : 85f;
+                velocityX = approach(velocityX,target,acceleration*dt);
+                if (Math.abs(velocityX)<=cruise+0.05f) momentum = false;
+            } else if (momentum) {
+                if (direction != 0 && (velocityX*direction<0 || Math.abs(velocityX)<cruise))
+                    velocityX = approach(velocityX,target,18f*dt);
+            } else velocityX = approach(velocityX,target,45f*dt);
+        }
+        cooldownRemaining = Math.max(0,cooldownRemaining-dt);
+        if (!linearStep) {
+            float gravityScale = jumpHeld && variableJumpRemaining>0 && velocityY>0 ? 0.6f : 1f;
+            velocityY -= GRAVITY*gravityScale*dt;
+        }
+        variableJumpRemaining = Math.max(0,variableJumpRemaining-dt);
+        applySpeedResistance(dt);
+        float expectedX = velocityX, expectedY = velocityY;
+        moveX(velocityX*dt);
+        grounded = false;
+        moveY(velocityY*dt);
+        if (linearStep && (velocityX != expectedX || velocityY != expectedY)) {
+            // Conserva la componente que puede deslizarse por la pared/plataforma.
+            propelling = false; propulsionRemaining = 0;
+        }
+        if (hooked) {
+            constrainRope(dt,oldX,oldY,oldLength,wasGrounded);
+            applyUpperSwingImpulse();
+        }
+        if (grounded) variableJumpRemaining = 0;
+        if (dashing && velocityX == 0) { dashRemaining = 0; boosted = sprintHeld; }
+    }
+
+    private float approach(float value, float target, float amount) {
+        return value < target ? Math.min(value+amount,target) : Math.max(value-amount,target);
+    }
+    private void pumpSwing(float direction, float dt) {
+        float pivotX = ropePath.getPoints().isEmpty() ? anchorX : ropePath.getPoints().get(0)[0];
+        float pivotY = ropePath.getPoints().isEmpty() ? anchorY : ropePath.getPoints().get(0)[1];
+        float rx = x + WIDTH / 2 - pivotX, ry = y + HEIGHT / 2 - pivotY;
+        float distance = (float) Math.hypot(rx, ry);
+        if (distance < 0.01f || direction == 0) return;
+        float tx = -ry / distance, ty = rx / distance;
+        float tangentSpeed = velocityX * tx + velocityY * ty;
+        float input = direction * tx;
+        boolean opposing = tangentSpeed * input < 0;
+        float change = input * (opposing ? 32f : 18f) * dt;
+        // Primero frena hasta cero; nunca invierte el impulso en un solo paso.
+        if (opposing && Math.abs(change) > Math.abs(tangentSpeed)) change = -tangentSpeed;
+        velocityX += tx * change; velocityY += ty * change;
+    }
+
+    private void constrainRope(float dt, float oldX, float oldY, float oldLength, boolean oldGrounded) {
+        // La cuerda solo limita la distancia maxima; no empuja al jugador hacia fuera.
+        for (int iteration = 0; iteration < 8; iteration++) {
+            ropePath.update(x + WIDTH / 2, y + HEIGHT / 2, anchorX, anchorY);
+            float excess = getRopeUsedLength() - ropeLength;
+            if (excess <= 0.001f || ropePath.getPoints().isEmpty()) break;
+            float[] pivot = ropePath.getPoints().get(0);
+            float rx = x + WIDTH / 2 - pivot[0], ry = y + HEIGHT / 2 - pivot[1];
+            float distance = (float) Math.hypot(rx, ry);
+            if (distance < 0.001f) break;
+            float correction = Math.min(excess, distance);
+            moveX(-rx / distance * correction,false);
+            moveY(-ry / distance * correction,false);
+        }
+        ropePath.update(x + WIDTH / 2, y + HEIGHT / 2, anchorX, anchorY);
+        float remainingError = getRopeUsedLength() - ropeLength;
+        if (remainingError > 0.02f) {
+            // Un obstaculo impide avanzar: conserva la ultima posicion y longitud viables.
+            x = oldX; y = oldY; ropeLength = oldLength;
+            grounded = oldGrounded;
+            reelSpeed = 0;
+            ropePath.update(x + WIDTH / 2, y + HEIGHT / 2, anchorX, anchorY);
+        }
+        if (!ropePath.getPoints().isEmpty() && getRopeUsedLength() >= ropeLength - 0.01f) {
+            float[] pivot = ropePath.getPoints().get(0);
+            float rx = x + WIDTH / 2 - pivot[0], ry = y + HEIGHT / 2 - pivot[1];
+            float distance = (float) Math.hypot(rx, ry);
+            if (distance > 0.001f) {
+                float nx = rx / distance, ny = ry / distance;
+                float outward = velocityX * nx + velocityY * ny;
+                boolean shortened = ropeLength < oldLength;
+                boolean finished = shortened && ropeLength <= ropeTargetLength + 0.0001f;
+                if (shortened) {
+                    // Recoger la cuerda mueve hacia dentro y conserva el impulso tangencial.
+                    // Al llegar al radio de giro, elimina solo el movimiento radial de recogida.
+                    float radial = finished ? 0 : -(oldLength-ropeLength)/dt;
+                    velocityX -= (outward-radial)*nx;
+                    velocityY -= (outward-radial)*ny;
+                } else if (outward > 0) {
+                    velocityX -= outward*nx; velocityY -= outward*ny;
+                }
+            }
+        }
+    }
+    private void applyUpperSwingImpulse() {
+        float rx = x + WIDTH/2 - anchorX, ry = y + HEIGHT/2 - anchorY;
+        // Histeresis: solo se rearma tras pasar claramente por debajo del anclaje.
+        if (ry < -0.5f) upperPassConsumed = false;
+        if (ry <= 0.2f || upperPassConsumed || isReeling()) return;
+        float distance = (float)Math.hypot(rx,ry);
+        if (distance < 0.1f) return;
+        float tx = -ry/distance, ty = rx/distance;
+        float tangentSpeed = velocityX*tx + velocityY*ty;
+        if (Math.abs(tangentSpeed) < 1f) return; // No inventa giro si esta quieto.
+        float speed = (float)Math.hypot(velocityX,velocityY);
+        float impulse = Math.min(5f,Math.max(0,36f-speed));
+        float sign = Math.signum(tangentSpeed);
+        velocityX += tx*sign*impulse;
+        velocityY += ty*sign*impulse;
+        upperPassConsumed = true;
+        if (impulse > 0) upperSwingBoostCount++;
+    }
+
+    private void applySpeedResistance(float dt) {
+        if (hooked) {
+            float speed = (float)Math.hypot(velocityX,velocityY);
+            if (speed>SOFT_SPEED) {
+                float resistance = (float)Math.exp(-(speed-SOFT_SPEED)*1.8f*dt);
+                velocityX *= resistance; velocityY *= resistance;
+            }
+        } else if (Math.abs(velocityX)>SOFT_SPEED) {
+            velocityX *= (float)Math.exp(-(Math.abs(velocityX)-SOFT_SPEED)*1.8f*dt);
+        }
+        limitVelocity();
+    }
+    private void limitVelocity() {
+        // Proteccion extrema, fuera de la banda habitual; la caida no roba impulso horizontal.
+        velocityY = Math.max(-45f,Math.min(45f,velocityY));
+        float speed = (float)Math.hypot(velocityX,velocityY);
+        if (speed>SAFETY_SPEED) {velocityX*=SAFETY_SPEED/speed;velocityY*=SAFETY_SPEED/speed;}
+    }
+    private void moveX(float dx) { moveX(dx,true); }
+    private void moveX(float dx, boolean cancelVelocity) {
+        x += dx;
+        for (float[] s:solids) if(overlaps(s)) {
+            if(dx>0)x=s[0]-WIDTH;
+            else if(dx<0)x=s[0]+s[2];
+            if(cancelVelocity && dx!=0)velocityX=0;
+        }
+    }
+    private void moveY(float dy) { moveY(dy,true); }
+    private void moveY(float dy, boolean cancelVelocity) {
+        y += dy;
+        for (float[] s:solids) if(overlaps(s)) {
+            if(dy<0){y=s[1]+s[3];grounded=true;}
+            else if(dy>0)y=s[1]-HEIGHT;
+            if(cancelVelocity && dy!=0)velocityY=0;
+        }
+    }    private boolean overlaps(float[] s) {
+        return x < s[0] + s[2] && x + WIDTH > s[0] && y < s[1] + s[3] && y + HEIGHT > s[1];
+    }
+}
