@@ -1,0 +1,34 @@
+{
+  "frameHeight": 192,
+  "frames": [
+    {
+      "durationMs": 30,
+      "file": "frames/dash_00.png",
+      "pose": "preparacion",
+      "originalFrame": 0
+    },
+    {
+      "durationMs": 110,
+      "file": "frames/dash_01.png",
+      "pose": "impulso",
+      "originalFrame": 2
+    },
+    {
+      "durationMs": 40,
+      "file": "frames/dash_02.png",
+      "pose": "recuperacion",
+      "originalFrame": 6
+    }
+  ],
+  "notes": "Three existing poses, no new artwork; preview timing only.",
+  "durationMs": 180,
+  "name": "dash_simplified_v2",
+  "integrated": false,
+  "status": "draft_pending_user_approval",
+  "pivot": {
+    "y": 184,
+    "x": 64
+  },
+  "frameWidth": 128,
+  "loop": false
+}

@@ -1,0 +1,94 @@
+{
+  "frames": [
+    {
+      "durationMs": 55,
+      "sourceRegion": [
+        54,
+        155,
+        316,
+        533
+      ],
+      "file": "frames/dash_00.png"
+    },
+    {
+      "durationMs": 35,
+      "sourceRegion": [
+        330,
+        154,
+        693,
+        534
+      ],
+      "file": "frames/dash_01.png"
+    },
+    {
+      "durationMs": 30,
+      "sourceRegion": [
+        660,
+        220,
+        1093,
+        534
+      ],
+      "file": "frames/dash_02.png"
+    },
+    {
+      "durationMs": 30,
+      "sourceRegion": [
+        1050,
+        136,
+        1439,
+        536
+      ],
+      "file": "frames/dash_03.png"
+    },
+    {
+      "durationMs": 35,
+      "sourceRegion": [
+        29,
+        585,
+        367,
+        1002
+      ],
+      "file": "frames/dash_04.png"
+    },
+    {
+      "durationMs": 45,
+      "sourceRegion": [
+        444,
+        589,
+        707,
+        1007
+      ],
+      "file": "frames/dash_05.png"
+    },
+    {
+      "durationMs": 60,
+      "sourceRegion": [
+        764,
+        581,
+        1048,
+        1010
+      ],
+      "file": "frames/dash_06.png"
+    },
+    {
+      "durationMs": 100,
+      "sourceRegion": [
+        1134,
+        575,
+        1366,
+        1014
+      ],
+      "file": "frames/dash_07.png"
+    }
+  ],
+  "frameHeight": 192,
+  "name": "dash",
+  "loop": false,
+  "timing": "preview_only_not_gameplay",
+  "status": "draft_pending_user_approval",
+  "pivot": {
+    "y": 184,
+    "x": 64
+  },
+  "frameWidth": 128
+}

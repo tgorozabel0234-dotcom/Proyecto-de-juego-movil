@@ -1,0 +1,9 @@
+{
+  "animations": 14,
+  "frames": 36,
+  "orientationCases": 88,
+  "impactBranches": "passed",
+  "scriptSyntax": "passed",
+  "browserInteraction": "not_verified_local_file_navigation_blocked",
+  "gameIntegration": "not_performed_pending_review"
+}

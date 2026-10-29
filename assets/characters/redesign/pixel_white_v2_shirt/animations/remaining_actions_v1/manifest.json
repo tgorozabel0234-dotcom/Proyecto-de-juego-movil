@@ -1,0 +1,103 @@
+{
+  "animations": [
+    {
+      "id": "attack_side",
+      "label": "Barrido lateral",
+      "file": "attack_side/animation.json",
+      "group": "combat"
+    },
+    {
+      "id": "thrust",
+      "label": "Estocada en carrera",
+      "file": "thrust/animation.json",
+      "group": "combat"
+    },
+    {
+      "id": "hook_fire",
+      "label": "Disparo del gancho",
+      "file": "hook_fire/animation.json",
+      "group": "grapple"
+    },
+    {
+      "id": "pendulum",
+      "label": "Péndulo orientable",
+      "file": "pendulum/animation.json",
+      "group": "grapple"
+    },
+    {
+      "id": "attack_up",
+      "label": "Barrido hacia arriba",
+      "file": "attack_up/animation.json",
+      "group": "combat"
+    },
+    {
+      "id": "attack_down",
+      "label": "Barrido aéreo y rebote",
+      "file": "attack_down/animation.json",
+      "group": "combat"
+    },
+    {
+      "id": "aura",
+      "label": "Activación del aura",
+      "file": "aura/animation.json",
+      "group": "combat"
+    },
+    {
+      "id": "hook_strike",
+      "label": "Ataque rápido desde péndulo",
+      "file": "hook_strike/animation.json",
+      "group": "combat"
+    },
+    {
+      "id": "propulsion",
+      "label": "Propulsión hacia objetivo",
+      "file": "propulsion/animation.json",
+      "group": "grapple"
+    },
+    {
+      "id": "release",
+      "label": "Soltarse del gancho",
+      "file": "release/animation.json",
+      "group": "grapple"
+    },
+    {
+      "id": "whirlwind",
+      "label": "Torbellino enganchado",
+      "file": "whirlwind/animation.json",
+      "group": "combat"
+    },
+    {
+      "id": "stand_up",
+      "label": "Levantarse del reposo",
+      "file": "stand_up/animation.json",
+      "group": "reaction"
+    },
+    {
+      "id": "hurt",
+      "label": "Recibir daño",
+      "file": "hurt/animation.json",
+      "group": "reaction"
+    },
+    {
+      "id": "death",
+      "label": "Muerte",
+      "file": "death/animation.json",
+      "group": "reaction"
+    }
+  ],
+  "version": 1,
+  "existingDrafts": {
+    "dash": "../dash_simplified_v2/dash/animation.json",
+    "jump": "../locomotion_draft_v1/jump/animation.json",
+    "idle": "../idle_kneel_draft_v1/animation.json"
+  },
+  "status": "integrated_by_explicit_user_request",
+  "generatedWith": "built_in_imagegen",
+  "approved": {
+    "fall": "../fall_draft_v1/fall/animation.json",
+    "walk": "../locomotion_two_step_v3/walk/animation.json",
+    "run": "../run_six_frame_v4/run/animation.json"
+  },
+  "integrated": true,
+  "landing": "omitted_by_user"
+}

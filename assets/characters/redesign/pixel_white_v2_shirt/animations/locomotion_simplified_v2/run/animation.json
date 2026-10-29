@@ -1,0 +1,34 @@
+{
+  "frameHeight": 192,
+  "name": "run_simplified_v2",
+  "loop": true,
+  "frameWidth": 128,
+  "status": "draft_pending_user_approval",
+  "notes": "Three selected key poses; reduced stylized cycle for review.",
+  "integrated": false,
+  "timing": "preview_only",
+  "frames": [
+    {
+      "originalFrame": 0,
+      "file": "frames/run_00.png",
+      "durationMs": 90,
+      "pose": "zancada extendida"
+    },
+    {
+      "originalFrame": 1,
+      "file": "frames/run_01.png",
+      "durationMs": 70,
+      "pose": "apoyo comprimido"
+    },
+    {
+      "originalFrame": 3,
+      "file": "frames/run_02.png",
+      "durationMs": 90,
+      "pose": "fase aérea"
+    }
+  ],
+  "pivot": {
+    "y": 184,
+    "x": 64
+  }
+}

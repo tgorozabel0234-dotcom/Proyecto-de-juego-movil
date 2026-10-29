@@ -1,0 +1,95 @@
+{
+  "frameWidth": 128,
+  "durationMs": 390,
+  "integrated": false,
+  "status": "draft_pending_user_approval",
+  "timing": "preview_only",
+  "scale": 0.23,
+  "loop": true,
+  "frameHeight": 192,
+  "pivot": {
+    "y": 184,
+    "x": 64
+  },
+  "frames": [
+    {
+      "file": "frames/run_00.png",
+      "durationMs": 65,
+      "sourceFloorY": 496,
+      "sourceRootX": 305,
+      "sourceRegion": [
+        85,
+        20,
+        469,
+        496
+      ],
+      "phase": "Contacto: primera pierna"
+    },
+    {
+      "file": "frames/run_01.png",
+      "durationMs": 60,
+      "sourceFloorY": 496,
+      "sourceRootX": 746,
+      "sourceRegion": [
+        529,
+        20,
+        922,
+        495
+      ],
+      "phase": "Impulso hacia el segundo paso"
+    },
+    {
+      "file": "frames/run_02.png",
+      "durationMs": 70,
+      "sourceFloorY": 496,
+      "sourceRootX": 1230,
+      "sourceRegion": [
+        1002,
+        20,
+        1491,
+        468
+      ],
+      "phase": "Vuelo hacia el segundo apoyo"
+    },
+    {
+      "file": "frames/run_03.png",
+      "durationMs": 65,
+      "sourceFloorY": 984,
+      "sourceRootX": 310,
+      "sourceRegion": [
+        73,
+        511,
+        475,
+        984
+      ],
+      "phase": "Contacto: pierna contraria"
+    },
+    {
+      "file": "frames/run_04.png",
+      "durationMs": 60,
+      "sourceFloorY": 984,
+      "sourceRootX": 746,
+      "sourceRegion": [
+        516,
+        511,
+        919,
+        981
+      ],
+      "phase": "Impulso de regreso"
+    },
+    {
+      "file": "frames/run_05.png",
+      "durationMs": 70,
+      "sourceFloorY": 984,
+      "sourceRootX": 1230,
+      "sourceRegion": [
+        1000,
+        511,
+        1508,
+        968
+      ],
+      "phase": "Vuelo hacia el primer apoyo"
+    }
+  ],
+  "name": "run_six_frame_v4"
+}

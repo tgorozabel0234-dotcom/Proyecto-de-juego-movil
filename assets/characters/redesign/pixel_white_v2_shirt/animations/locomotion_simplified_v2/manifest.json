@@ -1,0 +1,11 @@
+{
+  "integrated": false,
+  "status": "draft_pending_user_approval",
+  "animations": {
+    "dash": "../dash_simplified_v2/dash/animation.json",
+    "run": "run/animation.json",
+    "jump": "../locomotion_draft_v1/jump/animation.json",
+    "walk": "walk/animation.json"
+  },
+  "principle": "Use only key poses that clearly communicate an action; avoid redundant in-betweens and fixed frame quotas."
+}

@@ -1,0 +1,1353 @@
+{
+  "version": 1,
+  "idleDelay": 3.0,
+  "clips": [
+    {
+      "id": "neutral",
+      "pixelsPerUnit": 116,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/idle_kneel_draft_v1/frames/idle_00.png",
+          "duration": 0.0,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        }
+      ]
+    },
+    {
+      "id": "rest",
+      "pixelsPerUnit": 116,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/idle_kneel_draft_v1/frames/idle_00.png",
+          "duration": 0.65,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/idle_kneel_draft_v1/frames/idle_01.png",
+          "duration": 0.25,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/idle_kneel_draft_v1/frames/idle_02.png",
+          "duration": 0.65,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/idle_kneel_draft_v1/frames/idle_03.png",
+          "duration": 0.4,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/idle_kneel_draft_v1/frames/idle_04.png",
+          "duration": 0.18,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/idle_kneel_draft_v1/frames/idle_05.png",
+          "duration": 0.2,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/idle_kneel_draft_v1/frames/idle_06.png",
+          "duration": 0.22,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/idle_kneel_draft_v1/frames/idle_07.png",
+          "duration": 0.0,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        }
+      ]
+    },
+    {
+      "id": "walk",
+      "pixelsPerUnit": 88,
+      "loop": true,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/locomotion_two_step_v3/walk/frames/walk_00.png",
+          "duration": 0.18,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/locomotion_two_step_v3/walk/frames/walk_01.png",
+          "duration": 0.16,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/locomotion_two_step_v3/walk/frames/walk_02.png",
+          "duration": 0.18,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/locomotion_two_step_v3/walk/frames/walk_03.png",
+          "duration": 0.16,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "pixelsPerUnit": 88,
+      "loop": true,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/run_six_frame_v4/run/frames/run_00.png",
+          "duration": 0.065,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/run_six_frame_v4/run/frames/run_01.png",
+          "duration": 0.06,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/run_six_frame_v4/run/frames/run_02.png",
+          "duration": 0.07,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/run_six_frame_v4/run/frames/run_03.png",
+          "duration": 0.065,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/run_six_frame_v4/run/frames/run_04.png",
+          "duration": 0.06,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/run_six_frame_v4/run/frames/run_05.png",
+          "duration": 0.07,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        }
+      ]
+    },
+    {
+      "id": "jump",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/locomotion_draft_v1/jump/frames/jump_02.png",
+          "duration": 0.08,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 105
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/locomotion_draft_v1/jump/frames/jump_03.png",
+          "duration": 0.1,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 105
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/locomotion_draft_v1/jump/frames/jump_04.png",
+          "duration": 0.0,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 105
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        }
+      ]
+    },
+    {
+      "id": "fall",
+      "pixelsPerUnit": 100,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/fall_draft_v1/fall/frames/fall_00.png",
+          "duration": 0.12,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 92
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/fall_draft_v1/fall/frames/fall_01.png",
+          "duration": 0.0,
+          "pivot": {
+            "x": 64,
+            "y": 184
+          },
+          "hip": {
+            "x": 64,
+            "y": 92
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        }
+      ]
+    },
+    {
+      "id": "dash",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/dash_simplified_v2/dash/frames/dash_00.png",
+          "duration": 0.03,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/dash_simplified_v2/dash/frames/dash_01.png",
+          "duration": 0.11,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/dash_simplified_v2/dash/frames/dash_02.png",
+          "duration": 0.04,
+          "pivot": {
+            "y": 184,
+            "x": 64
+          },
+          "hip": {
+            "x": 64,
+            "y": 114
+          },
+          "hand": {
+            "x": 77,
+            "y": 84
+          },
+          "floorY": 184
+        }
+      ]
+    },
+    {
+      "id": "attack_down",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/attack_down/frames/attack_down_00.png",
+          "duration": 0.07,
+          "pivot": {
+            "x": 170,
+            "y": 172
+          },
+          "hip": {
+            "x": 170,
+            "y": 172
+          },
+          "hand": {
+            "x": 113.9,
+            "y": 142.3
+          },
+          "floorY": 240
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/attack_down/frames/attack_down_01.png",
+          "duration": 0.13,
+          "pivot": {
+            "x": 170,
+            "y": 172
+          },
+          "hip": {
+            "x": 170,
+            "y": 172
+          },
+          "hand": {
+            "x": 124.9,
+            "y": 169.8
+          },
+          "floorY": 240
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/attack_down/frames/attack_down_02.png",
+          "duration": 0.12,
+          "pivot": {
+            "x": 170,
+            "y": 172
+          },
+          "hip": {
+            "x": 170,
+            "y": 172
+          },
+          "hand": {
+            "x": 122.7,
+            "y": 176.4
+          },
+          "floorY": 240
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1
+        ],
+        "hit": [
+          0,
+          1,
+          2
+        ],
+        "miss": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "attack_side",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/attack_side/frames/attack_side_00.png",
+          "duration": 0.07,
+          "pivot": {
+            "x": 160,
+            "y": 200
+          },
+          "hip": {
+            "x": 160,
+            "y": 200
+          },
+          "hand": {
+            "x": 125.0,
+            "y": 166.4
+          },
+          "floorY": 269
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/attack_side/frames/attack_side_01.png",
+          "duration": 0.11,
+          "pivot": {
+            "x": 160,
+            "y": 200
+          },
+          "hip": {
+            "x": 160,
+            "y": 200
+          },
+          "hand": {
+            "x": 223.0,
+            "y": 167.8
+          },
+          "floorY": 264
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/attack_side/frames/attack_side_02.png",
+          "duration": 0.14,
+          "pivot": {
+            "x": 160,
+            "y": 200
+          },
+          "hip": {
+            "x": 160,
+            "y": 200
+          },
+          "hand": {
+            "x": 181.0,
+            "y": 204.2
+          },
+          "floorY": 257
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "attack_up",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/attack_up/frames/attack_up_00.png",
+          "duration": 0.07,
+          "pivot": {
+            "x": 144,
+            "y": 300
+          },
+          "hip": {
+            "x": 144,
+            "y": 230
+          },
+          "hand": {
+            "x": 138.0,
+            "y": 232.5
+          },
+          "floorY": 300
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/attack_up/frames/attack_up_01.png",
+          "duration": 0.11,
+          "pivot": {
+            "x": 144,
+            "y": 300
+          },
+          "hip": {
+            "x": 144,
+            "y": 230
+          },
+          "hand": {
+            "x": 117.14,
+            "y": 147.0
+          },
+          "floorY": 300
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/attack_up/frames/attack_up_02.png",
+          "duration": 0.14,
+          "pivot": {
+            "x": 144,
+            "y": 300
+          },
+          "hip": {
+            "x": 144,
+            "y": 230
+          },
+          "hand": {
+            "x": 192.0,
+            "y": 175.5
+          },
+          "floorY": 300
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "aura",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/aura/frames/aura_00.png",
+          "duration": 0.1,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 128.8,
+            "y": 155.2
+          },
+          "floorY": 224
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/aura/frames/aura_01.png",
+          "duration": 0.22,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 92.0,
+            "y": 144.0
+          },
+          "floorY": 224
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "death",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/death/frames/death_00.png",
+          "duration": 0.14,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 117.5,
+            "y": 168.8
+          },
+          "floorY": 224
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/death/frames/death_01.png",
+          "duration": 0.18,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 128.0,
+            "y": 212.6
+          },
+          "floorY": 224
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/death/frames/death_02.png",
+          "duration": 0.0,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 194.0,
+            "y": 217.1
+          },
+          "floorY": 224
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "hook_fire",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/hook_fire/frames/hook_fire_00.png",
+          "duration": 0.065,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 156.9,
+            "y": 107.55
+          },
+          "floorY": 224
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/hook_fire/frames/hook_fire_01.png",
+          "duration": 0.095,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 184.1,
+            "y": 111.8
+          },
+          "floorY": 224
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1
+        ]
+      },
+      "aimArm": {
+        "frame": 1,
+        "x": 147,
+        "y": 99,
+        "width": 70,
+        "height": 28,
+        "shoulderX": 147,
+        "shoulderY": 111
+      }
+    },
+    {
+      "id": "hook_strike",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/hook_strike/frames/hook_strike_00.png",
+          "duration": 0.06,
+          "pivot": {
+            "x": 160,
+            "y": 192
+          },
+          "hip": {
+            "x": 160,
+            "y": 192
+          },
+          "hand": {
+            "x": 173.2,
+            "y": 185.4
+          },
+          "floorY": 262.08
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/hook_strike/frames/hook_strike_01.png",
+          "duration": 0.12,
+          "pivot": {
+            "x": 160,
+            "y": 192
+          },
+          "hip": {
+            "x": 160,
+            "y": 192
+          },
+          "hand": {
+            "x": 220.5,
+            "y": 167.8
+          },
+          "floorY": 262.08
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/hook_strike/frames/hook_strike_02.png",
+          "duration": 0.12,
+          "pivot": {
+            "x": 160,
+            "y": 192
+          },
+          "hip": {
+            "x": 160,
+            "y": 192
+          },
+          "hand": {
+            "x": 122.6,
+            "y": 178.8
+          },
+          "floorY": 262.08
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1
+        ],
+        "hit": [
+          0,
+          1,
+          2
+        ],
+        "miss": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "hurt",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/hurt/frames/hurt_00.png",
+          "duration": 0.09,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 136.5,
+            "y": 108.06
+          },
+          "floorY": 224
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/hurt/frames/hurt_01.png",
+          "duration": 0.15,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 99.1,
+            "y": 160.42
+          },
+          "floorY": 224
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "pendulum",
+      "pixelsPerUnit": 112,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/pendulum/frames/pendulum_00.png",
+          "duration": 0.0,
+          "pivot": {
+            "x": 128,
+            "y": 128
+          },
+          "hip": {
+            "x": 128,
+            "y": 128
+          },
+          "hand": {
+            "x": 116.8,
+            "y": 30.7
+          },
+          "floorY": 209.76
+        }
+      ],
+      "sequences": {
+        "default": [
+          0
+        ]
+      }
+    },
+    {
+      "id": "propulsion",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/propulsion/frames/propulsion_00.png",
+          "duration": 0.09,
+          "pivot": {
+            "x": 128,
+            "y": 128
+          },
+          "hip": {
+            "x": 128,
+            "y": 128
+          },
+          "hand": {
+            "x": 208.75,
+            "y": 99.95
+          },
+          "floorY": 198.08
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/propulsion/frames/propulsion_01.png",
+          "duration": 0.0,
+          "pivot": {
+            "x": 128,
+            "y": 128
+          },
+          "hip": {
+            "x": 128,
+            "y": 128
+          },
+          "hand": {
+            "x": 216.4,
+            "y": 109.3
+          },
+          "floorY": 198.08
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "release",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/release/frames/release_00.png",
+          "duration": 0.085,
+          "pivot": {
+            "x": 128,
+            "y": 128
+          },
+          "hip": {
+            "x": 128,
+            "y": 128
+          },
+          "hand": {
+            "x": 84.8,
+            "y": 88.4
+          },
+          "floorY": 198.08
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/release/frames/release_01.png",
+          "duration": 0.135,
+          "pivot": {
+            "x": 128,
+            "y": 128
+          },
+          "hip": {
+            "x": 128,
+            "y": 128
+          },
+          "hand": {
+            "x": 84.8,
+            "y": 113.6
+          },
+          "floorY": 198.08
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": "stand_up",
+      "pixelsPerUnit": 105,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/stand_up/frames/stand_up_00.png",
+          "duration": 0.1,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 100.4,
+            "y": 188.35
+          },
+          "floorY": 224
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/stand_up/frames/stand_up_01.png",
+          "duration": 0.1,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 98.1,
+            "y": 156.15
+          },
+          "floorY": 224
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/stand_up/frames/stand_up_02.png",
+          "duration": 0.11,
+          "pivot": {
+            "x": 128,
+            "y": 224
+          },
+          "hip": {
+            "x": 128,
+            "y": 154
+          },
+          "hand": {
+            "x": 106.15,
+            "y": 145.8
+          },
+          "floorY": 224
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "thrust",
+      "pixelsPerUnit": 96,
+      "loop": false,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/thrust/frames/thrust_00.png",
+          "duration": 0.04,
+          "pivot": {
+            "x": 144,
+            "y": 300
+          },
+          "hip": {
+            "x": 144,
+            "y": 230
+          },
+          "hand": {
+            "x": 103.5,
+            "y": 229.8
+          },
+          "floorY": 303
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/thrust/frames/thrust_01.png",
+          "duration": 0.14,
+          "pivot": {
+            "x": 144,
+            "y": 300
+          },
+          "hip": {
+            "x": 144,
+            "y": 230
+          },
+          "hand": {
+            "x": 191.25,
+            "y": 220.35
+          },
+          "floorY": 303
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/thrust/frames/thrust_02.png",
+          "duration": 0.08,
+          "pivot": {
+            "x": 144,
+            "y": 300
+          },
+          "hip": {
+            "x": 144,
+            "y": 230
+          },
+          "hand": {
+            "x": 114.3,
+            "y": 223.05
+          },
+          "floorY": 303
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/thrust/frames/thrust_03.png",
+          "duration": 0.1,
+          "pivot": {
+            "x": 144,
+            "y": 300
+          },
+          "hip": {
+            "x": 144,
+            "y": 230
+          },
+          "hand": {
+            "x": 179.1,
+            "y": 187.95
+          },
+          "floorY": 303
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1,
+          2
+        ],
+        "hit": [
+          0,
+          1,
+          3
+        ],
+        "miss": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "id": "whirlwind",
+      "pixelsPerUnit": 96,
+      "loop": true,
+      "frames": [
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/whirlwind/frames/whirlwind_00.png",
+          "duration": 0.09,
+          "pivot": {
+            "x": 180,
+            "y": 192
+          },
+          "hip": {
+            "x": 180,
+            "y": 192
+          },
+          "hand": {
+            "x": 219.6,
+            "y": 167.8
+          },
+          "floorY": 262.08
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/whirlwind/frames/whirlwind_01.png",
+          "duration": 0.09,
+          "pivot": {
+            "x": 180,
+            "y": 192
+          },
+          "hip": {
+            "x": 180,
+            "y": 192
+          },
+          "hand": {
+            "x": 222.9,
+            "y": 200.8
+          },
+          "floorY": 262.08
+        },
+        {
+          "file": "characters/redesign/pixel_white_v2_shirt/animations/remaining_actions_v1/whirlwind/frames/whirlwind_02.png",
+          "duration": 0.09,
+          "pivot": {
+            "x": 180,
+            "y": 192
+          },
+          "hip": {
+            "x": 180,
+            "y": 192
+          },
+          "hand": {
+            "x": 133.8,
+            "y": 167.8
+          },
+          "floorY": 262.08
+        }
+      ],
+      "sequences": {
+        "default": [
+          0,
+          1,
+          2
+        ]
+      }
+    }
+  ],
+  "landing": false,
+  "notes": "Visual scale doubled. Explicit floor anchors, continuous ground/air placement; original colliders preserved.",
+  "renderScale": 2.0
+}

@@ -1,0 +1,95 @@
+{
+  "loop": false,
+  "frames": [
+    {
+      "durationMs": 70,
+      "file": "frames/attack_side_00.png",
+      "pivot": {
+        "x": 160,
+        "y": 200
+      },
+      "sourceId": "attack_side",
+      "hip": {
+        "x": 160,
+        "y": 200
+      },
+      "sourceScale": 0.28,
+      "sourceRegion": [
+        133,
+        53,
+        660,
+        535
+      ],
+      "hand": {
+        "x": 125.0,
+        "y": 166.4
+      }
+    },
+    {
+      "durationMs": 110,
+      "file": "frames/attack_side_01.png",
+      "pivot": {
+        "x": 160,
+        "y": 200
+      },
+      "sourceId": "attack_side",
+      "hip": {
+        "x": 160,
+        "y": 200
+      },
+      "sourceScale": 0.28,
+      "sourceRegion": [
+        59,
+        583,
+        1003,
+        1056
+      ],
+      "hand": {
+        "x": 223.0,
+        "y": 167.8
+      }
+    },
+    {
+      "durationMs": 140,
+      "file": "frames/attack_side_02.png",
+      "pivot": {
+        "x": 160,
+        "y": 200
+      },
+      "sourceId": "attack_side",
+      "hip": {
+        "x": 160,
+        "y": 200
+      },
+      "sourceScale": 0.28,
+      "sourceRegion": [
+        228,
+        1075,
+        945,
+        1511
+      ],
+      "hand": {
+        "x": 181.0,
+        "y": 204.2
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "id": "attack_side",
+  "integrated": true,
+  "orientation": "none",
+  "label": "Barrido lateral",
+  "timing": "visual_review_only",
+  "group": "combat",
+  "sheet": "sheet.png",
+  "frameHeight": 384,
+  "frameWidth": 384,
+  "holdLast": true,
+  "sequences": {
+    "default": [
+      0,
+      1,
+      2
+    ]
+  }
+}

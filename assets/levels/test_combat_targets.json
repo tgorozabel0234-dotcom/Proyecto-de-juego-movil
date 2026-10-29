@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "targets": [
+    {"type": "MELEE", "x": 46, "y": 0.55, "radius": 0.55, "health": 50},
+    {"type": "MELEE", "x": 31, "y": 0.55, "radius": 0.55, "health": 50},
+    {"type": "FLYING", "x": 49, "y": 7, "radius": 0.5, "health": 30},
+    {"type": "FLYING", "x": 28, "y": 11, "radius": 0.5, "health": 30},
+    {"type": "MELEE", "x": 39, "y": 19.55, "radius": 0.55, "health": 50},
+    {"type": "FLYING", "x": 48, "y": 24, "radius": 0.5, "health": 30}
+  ]
+}

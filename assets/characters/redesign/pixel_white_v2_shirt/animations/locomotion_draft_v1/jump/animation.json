@@ -1,0 +1,94 @@
+{
+  "frames": [
+    {
+      "durationMs": 90,
+      "sourceRegion": [
+        17,
+        130,
+        322,
+        531
+      ],
+      "file": "frames/jump_00.png"
+    },
+    {
+      "durationMs": 80,
+      "sourceRegion": [
+        391,
+        175,
+        716,
+        531
+      ],
+      "file": "frames/jump_01.png"
+    },
+    {
+      "durationMs": 80,
+      "sourceRegion": [
+        760,
+        44,
+        1051,
+        531
+      ],
+      "file": "frames/jump_02.png"
+    },
+    {
+      "durationMs": 100,
+      "sourceRegion": [
+        1118,
+        25,
+        1439,
+        403
+      ],
+      "file": "frames/jump_03.png"
+    },
+    {
+      "durationMs": 140,
+      "sourceRegion": [
+        15,
+        552,
+        356,
+        920
+      ],
+      "file": "frames/jump_04.png"
+    },
+    {
+      "durationMs": 100,
+      "sourceRegion": [
+        387,
+        564,
+        704,
+        1041
+      ],
+      "file": "frames/jump_05.png"
+    },
+    {
+      "durationMs": 90,
+      "sourceRegion": [
+        786,
+        686,
+        1093,
+        1061
+      ],
+      "file": "frames/jump_06.png"
+    },
+    {
+      "durationMs": 160,
+      "sourceRegion": [
+        1171,
+        541,
+        1419,
+        1063
+      ],
+      "file": "frames/jump_07.png"
+    }
+  ],
+  "frameHeight": 192,
+  "name": "jump",
+  "loop": false,
+  "timing": "preview_only_not_gameplay",
+  "status": "draft_pending_user_approval",
+  "pivot": {
+    "y": 184,
+    "x": 64
+  },
+  "frameWidth": 128
+}

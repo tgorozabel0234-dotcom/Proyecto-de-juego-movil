@@ -1,0 +1,53 @@
+{
+  "name": "idle_kneel_draft_v1",
+  "status": "draft_pending_user_approval",
+  "frameWidth": 128,
+  "frameHeight": 192,
+  "baselineY": 184,
+  "loop": false,
+  "trigger": "idle_on_ground",
+  "exit": "movement_or_gameplay_action",
+  "frames": [
+    {
+      "file": "frames/idle_00.png",
+      "durationMs": 650,
+      "holdUntilMovement": false
+    },
+    {
+      "file": "frames/idle_01.png",
+      "durationMs": 250,
+      "holdUntilMovement": false
+    },
+    {
+      "file": "frames/idle_02.png",
+      "durationMs": 650,
+      "holdUntilMovement": false
+    },
+    {
+      "file": "frames/idle_03.png",
+      "durationMs": 400,
+      "holdUntilMovement": false
+    },
+    {
+      "file": "frames/idle_04.png",
+      "durationMs": 180,
+      "holdUntilMovement": false
+    },
+    {
+      "file": "frames/idle_05.png",
+      "durationMs": 200,
+      "holdUntilMovement": false
+    },
+    {
+      "file": "frames/idle_06.png",
+      "durationMs": 220,
+      "holdUntilMovement": false
+    },
+    {
+      "file": "frames/idle_07.png",
+      "durationMs": 0,
+      "holdUntilMovement": true
+    }
+  ],
+  "notes": "Visual review only. Not connected to game code. Idle trigger delay and standing-up transition are not yet implemented."
+}

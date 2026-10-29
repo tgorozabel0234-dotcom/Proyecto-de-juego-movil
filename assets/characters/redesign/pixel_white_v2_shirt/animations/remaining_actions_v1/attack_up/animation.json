@@ -1,0 +1,95 @@
+{
+  "loop": false,
+  "frames": [
+    {
+      "durationMs": 70,
+      "file": "frames/attack_up_00.png",
+      "pivot": {
+        "x": 144,
+        "y": 300
+      },
+      "sourceId": "attack_up",
+      "hip": {
+        "x": 144,
+        "y": 230
+      },
+      "sourceScale": 0.3,
+      "sourceRegion": [
+        148,
+        343,
+        578,
+        779
+      ],
+      "hand": {
+        "x": 138.0,
+        "y": 232.5
+      }
+    },
+    {
+      "durationMs": 110,
+      "file": "frames/attack_up_01.png",
+      "pivot": {
+        "x": 144,
+        "y": 300
+      },
+      "sourceId": "attack_up_active",
+      "hip": {
+        "x": 144,
+        "y": 230
+      },
+      "sourceScale": 0.17,
+      "sourceRegion": [
+        254,
+        50,
+        822,
+        1442
+      ],
+      "hand": {
+        "x": 117.14,
+        "y": 147.0
+      }
+    },
+    {
+      "durationMs": 140,
+      "file": "frames/attack_up_02.png",
+      "pivot": {
+        "x": 144,
+        "y": 300
+      },
+      "sourceId": "attack_up",
+      "hip": {
+        "x": 144,
+        "y": 230
+      },
+      "sourceScale": 0.3,
+      "sourceRegion": [
+        1381,
+        210,
+        1916,
+        779
+      ],
+      "hand": {
+        "x": 192.0,
+        "y": 175.5
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "id": "attack_up",
+  "integrated": true,
+  "orientation": "none",
+  "label": "Barrido hacia arriba",
+  "timing": "visual_review_only",
+  "group": "combat",
+  "sheet": "sheet.png",
+  "frameHeight": 384,
+  "frameWidth": 384,
+  "holdLast": true,
+  "sequences": {
+    "default": [
+      0,
+      1,
+      2
+    ]
+  }
+}

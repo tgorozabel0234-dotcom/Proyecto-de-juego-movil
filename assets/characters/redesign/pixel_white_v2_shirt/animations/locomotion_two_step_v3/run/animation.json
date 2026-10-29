@@ -1,0 +1,68 @@
+{
+  "frameHeight": 192,
+  "pivot": {
+    "x": 64,
+    "y": 184
+  },
+  "frames": [
+    {
+      "sourceRegion": [
+        188,
+        21,
+        588,
+        500
+      ],
+      "sourceFloorY": 500,
+      "durationMs": 100,
+      "sourceRootX": 420,
+      "file": "frames/run_00.png",
+      "phase": "Apoyo: pierna del bolsillo delante"
+    },
+    {
+      "sourceRegion": [
+        844,
+        21,
+        1280,
+        500
+      ],
+      "sourceFloorY": 500,
+      "durationMs": 95,
+      "sourceRootX": 1080,
+      "file": "frames/run_01.png",
+      "phase": "Vuelo: pierna lisa hacia delante"
+    },
+    {
+      "sourceRegion": [
+        173,
+        513,
+        613,
+        994
+      ],
+      "sourceFloorY": 994,
+      "durationMs": 100,
+      "sourceRootX": 425,
+      "file": "frames/run_02.png",
+      "phase": "Apoyo: pierna lisa delante"
+    },
+    {
+      "sourceRegion": [
+        853,
+        514,
+        1337,
+        994
+      ],
+      "sourceFloorY": 994,
+      "durationMs": 95,
+      "sourceRootX": 1090,
+      "file": "frames/run_03.png",
+      "phase": "Vuelo: pierna del bolsillo hacia delante"
+    }
+  ],
+  "timing": "visual_preview_only",
+  "name": "run_two_step_v3",
+  "status": "draft_pending_user_approval",
+  "loop": true,
+  "integrated": false,
+  "frameWidth": 128,
+  "scale": 0.23
+}

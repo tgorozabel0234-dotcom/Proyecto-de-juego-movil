@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "duration": 0.32,
+  "reach": 3.3,
+  "damage": 10,
+  "auraMultiplier": 1.5,
+  "attackColor": "5DF3FF",
+  "auraColor": "15C8E3",
+  "visuals": "Neon forearm blade sprites, 2x visual size; reach enlarged proportionally, unchanged damage/duration/stun.",
+  "bounceSpeed": 20,
+  "hookRiseSpeed": 18,
+  "thrustMinimum": 18,
+  "thrustMaximum": 32,
+  "stunDuration": 0.75,
+  "reboundMultiplier": 0.85,
+  "attackOriginHeight": 1.5,
+  "downReach": 1.9,
+  "whirlwindContactRadius": 1.5
+}

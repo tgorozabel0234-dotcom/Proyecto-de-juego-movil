@@ -1,0 +1,17 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Caída · borrador 01</title>
+<style>*{box-sizing:border-box}body{margin:0;padding:24px;background:#101720;color:#e6f5fb;font:16px system-ui;text-align:center}main{max-width:780px;margin:auto}h1{font-size:25px}p{line-height:1.5;color:#b9c9d2}.stage{width:min(100%,256px);margin:20px auto;background:#182430;border:1px solid #365166;border-radius:12px}.sprite{display:block;width:100%;image-rendering:pixelated}.flip{transform:scaleX(-1)}button,select{font:inherit;color:#e6f5fb;background:#1e3847;border:1px solid #35d4e8;border-radius:7px;padding:9px 12px;margin:5px;cursor:pointer}button:focus-visible{outline:3px solid #df6faf}#status{color:#6ce4ee;min-height:28px}.sheet{width:min(100%,512px);image-rendering:pixelated;background:#182430}small{color:#b9c9d2}</style>
+<main><h1>Caída · dos poses</h1><p>Comienza el descenso y extiende las piernas para mantener una caída controlada.<br>La segunda pose se conserva hasta el contacto con una superficie.</p>
+<div class="stage"><img id="sprite" class="sprite" width="128" height="192" alt="Personaje cayendo"></div><p id="status" aria-live="polite">Cargando…</p>
+<button id="play" disabled>Repetir caída</button><button id="next" disabled>Ver siguiente pose</button><button id="direction">Mirar a la izquierda</button><label>Velocidad <select id="speed"><option value="1">1×</option><option value="0.5">0,5× · lenta</option></select></label>
+<p><small>Vista de poses en el sitio: el juego controlará el desplazamiento vertical. No incluye aterrizaje ni modifica la física. Borrador pendiente de aprobación.</small></p>
+<details><summary>Ver los dos fotogramas</summary><p><img class="sheet" src="fall/sheet_256x192.png" alt="Inicio del descenso y caída sostenida"></p></details></main>
+<script>
+const sprite=document.querySelector('#sprite'),status=document.querySelector('#status'),play=document.querySelector('#play'),next=document.querySelector('#next'),speed=document.querySelector('#speed');
+const frames=[0,1].map(i=>{const im=new Image();im.src=`fall/frames/fall_0${i}.png`;return im});
+let frame=0,timer;
+function show(i){frame=i;sprite.src=frames[i].src;status.textContent=i===0?'1 de 2 · comienza el descenso':'2 de 2 · caída sostenida hasta tocar el suelo'}
+function replay(){clearTimeout(timer);show(0);timer=setTimeout(()=>show(1),120/Number(speed.value))}
+play.onclick=replay;next.onclick=()=>{clearTimeout(timer);show((frame+1)%2)};
+document.querySelector('#direction').onclick=e=>{const left=sprite.classList.toggle('flip');e.target.textContent=left?'Mirar a la derecha':'Mirar a la izquierda'};
+Promise.all(frames.map(im=>im.decode())).then(()=>{play.disabled=next.disabled=false;replay()}).catch(()=>status.textContent='No se pudieron cargar los fotogramas. Conserva la página junto a su carpeta fall.');
+</script></html>

@@ -1,0 +1,97 @@
+{
+  "loop": true,
+  "frames": [
+    {
+      "durationMs": 90,
+      "file": "frames/whirlwind_00.png",
+      "pivot": {
+        "x": 180,
+        "y": 192
+      },
+      "sourceId": "whirlwind",
+      "hip": {
+        "x": 180,
+        "y": 192
+      },
+      "sourceScale": 0.22,
+      "sourceRegion": [
+        118,
+        47,
+        865,
+        646
+      ],
+      "hand": {
+        "x": 219.6,
+        "y": 167.8
+      }
+    },
+    {
+      "durationMs": 90,
+      "file": "frames/whirlwind_01.png",
+      "pivot": {
+        "x": 180,
+        "y": 192
+      },
+      "sourceId": "whirlwind",
+      "hip": {
+        "x": 180,
+        "y": 192
+      },
+      "sourceScale": 0.22,
+      "sourceRegion": [
+        790,
+        100,
+        1505,
+        679
+      ],
+      "hand": {
+        "x": 222.9,
+        "y": 200.8
+      }
+    },
+    {
+      "durationMs": 90,
+      "file": "frames/whirlwind_02.png",
+      "pivot": {
+        "x": 180,
+        "y": 192
+      },
+      "sourceId": "whirlwind",
+      "hip": {
+        "x": 180,
+        "y": 192
+      },
+      "sourceScale": 0.22,
+      "sourceRegion": [
+        1470,
+        97,
+        2131,
+        653
+      ],
+      "hand": {
+        "x": 133.8,
+        "y": 167.8
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "damageDuringLoop": false,
+  "id": "whirlwind",
+  "integrated": true,
+  "orientation": "rope_angle_and_tangent_direction",
+  "onEnemyContact": "release_rope_keep_momentum",
+  "label": "Torbellino enganchado",
+  "timing": "visual_review_only",
+  "group": "combat",
+  "sheet": "sheet.png",
+  "frameHeight": 384,
+  "frameWidth": 384,
+  "holdLast": false,
+  "sequences": {
+    "default": [
+      0,
+      1,
+      2
+    ]
+  }
+}

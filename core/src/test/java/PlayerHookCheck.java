@@ -54,7 +54,8 @@ public class PlayerHookCheck {
         neutral.releaseHook();
         check(!neutral.isHooked() && vx==neutral.getVelocityX() && vy==neutral.getVelocityY(), "Release keeps momentum");
         neutral.update(1f/120,0,false,false,false);
-        check(Math.abs(neutral.getVelocityX()-vx)<.001, "Free flight keeps horizontal momentum");
+        float expectedVx=Math.signum(vx)*Math.max(0,Math.abs(vx)-16f/120);
+        check(Math.abs(neutral.getVelocityX()-expectedVx)<.001, "Free flight smoothly brakes with no directional input");
         PlayerBody limit = swing();
         for (int i=0;i<5000;i++) {
             limit.update(1f/240,Math.signum(limit.getVelocityX()),false,false,false);

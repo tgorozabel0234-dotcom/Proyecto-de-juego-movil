@@ -1,0 +1,70 @@
+{
+  "loop": false,
+  "frames": [
+    {
+      "durationMs": 65,
+      "file": "frames/hook_fire_00.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "hook_fire",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.17,
+      "sourceRegion": [
+        72,
+        13,
+        742,
+        859
+      ],
+      "hand": {
+        "x": 156.9,
+        "y": 107.55
+      }
+    },
+    {
+      "durationMs": 95,
+      "file": "frames/hook_fire_01.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "hook_fire",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.17,
+      "sourceRegion": [
+        860,
+        13,
+        1725,
+        851
+      ],
+      "hand": {
+        "x": 184.1,
+        "y": 111.8
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "id": "hook_fire",
+  "integrated": true,
+  "orientation": "none",
+  "label": "Disparo del gancho",
+  "timing": "visual_review_only",
+  "group": "grapple",
+  "sheet": "sheet.png",
+  "frameHeight": 256,
+  "frameWidth": 256,
+  "holdLast": true,
+  "sequences": {
+    "default": [
+      0,
+      1
+    ]
+  }
+}

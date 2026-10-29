@@ -1,0 +1,95 @@
+{
+  "loop": false,
+  "frames": [
+    {
+      "durationMs": 100,
+      "file": "frames/stand_up_00.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "stand_up",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.23,
+      "sourceRegion": [
+        222,
+        206,
+        685,
+        701
+      ],
+      "hand": {
+        "x": 100.4,
+        "y": 188.35
+      }
+    },
+    {
+      "durationMs": 100,
+      "file": "frames/stand_up_01.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "stand_up",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.23,
+      "sourceRegion": [
+        888,
+        62,
+        1278,
+        710
+      ],
+      "hand": {
+        "x": 98.1,
+        "y": 156.15
+      }
+    },
+    {
+      "durationMs": 110,
+      "file": "frames/stand_up_02.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "stand_up",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.23,
+      "sourceRegion": [
+        1632,
+        15,
+        1970,
+        709
+      ],
+      "hand": {
+        "x": 106.15,
+        "y": 145.8
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "id": "stand_up",
+  "integrated": true,
+  "orientation": "none",
+  "label": "Levantarse del reposo",
+  "timing": "visual_review_only",
+  "group": "reaction",
+  "sheet": "sheet.png",
+  "frameHeight": 256,
+  "frameWidth": 256,
+  "holdLast": true,
+  "sequences": {
+    "default": [
+      0,
+      1,
+      2
+    ]
+  }
+}

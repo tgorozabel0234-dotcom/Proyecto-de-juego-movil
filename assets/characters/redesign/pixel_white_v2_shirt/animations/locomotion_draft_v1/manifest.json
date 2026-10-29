@@ -1,0 +1,17 @@
+{
+  "frameSize": [
+    128,
+    192
+  ],
+  "status": "draft_pending_user_approval",
+  "animations": [
+    "walk",
+    "run",
+    "jump",
+    "dash"
+  ],
+  "notes": "Visual drafts. No changes to game mechanics or active sprite.",
+  "scale": 0.27,
+  "source": "Built-in ImageGen",
+  "integrated": false
+}

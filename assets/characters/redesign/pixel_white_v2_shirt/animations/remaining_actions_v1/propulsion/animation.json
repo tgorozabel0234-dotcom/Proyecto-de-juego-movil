@@ -1,0 +1,70 @@
+{
+  "loop": false,
+  "frames": [
+    {
+      "durationMs": 90,
+      "file": "frames/propulsion_00.png",
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "sourceId": "propulsion",
+      "hip": {
+        "x": 128,
+        "y": 128
+      },
+      "sourceScale": 0.17,
+      "sourceRegion": [
+        222,
+        31,
+        1193,
+        610
+      ],
+      "hand": {
+        "x": 208.75,
+        "y": 99.95
+      }
+    },
+    {
+      "durationMs": 0,
+      "file": "frames/propulsion_01.png",
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "sourceId": "propulsion",
+      "hip": {
+        "x": 128,
+        "y": 128
+      },
+      "sourceScale": 0.17,
+      "sourceRegion": [
+        214,
+        565,
+        1372,
+        992
+      ],
+      "hand": {
+        "x": 216.4,
+        "y": 109.3
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "id": "propulsion",
+  "integrated": true,
+  "orientation": "target_direction",
+  "label": "Propulsión hacia objetivo",
+  "timing": "visual_review_only",
+  "group": "grapple",
+  "sheet": "sheet.png",
+  "frameHeight": 256,
+  "frameWidth": 256,
+  "holdLast": true,
+  "sequences": {
+    "default": [
+      0,
+      1
+    ]
+  }
+}

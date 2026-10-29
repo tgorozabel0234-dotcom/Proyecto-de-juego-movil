@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "reference": "references/user_reference.png",
+  "design": "White/silver tousled hair, dark hooded jacket with cyan piping, dark cargo pants and boots, silver mechanical left arm, light skin; side view facing right.",
+  "style": "Clean illustrated anime game sprites, crisp contour, cel shading, actual transparent RGBA background. Consistent character scale across poses.",
+  "sources": [
+    {"file": "locomotion.png", "request": "Sixteen isolated poses: 4 idle breathing, 4 alternating walk, 4 run, 4 jump/fall key poses; no scenery, captions or grid lines."},
+    {"file": "combat.png", "request": "Sixteen isolated poses: 4 lateral sweep, 4 upward strike, 4 aerial downward strike, 4 running thrust. Mechanical arm used for melee. No energy arcs, glow or trails crossing neighbors; game draws effects separately."},
+    {"file": "grapple_reactions.png", "request": "Sixteen isolated poses: 4 grappling fire without rope, 4 swinging/releasing poses, 2 hurt and 2 death poses, 4 aura charging poses."}
+  ],
+  "constraints": "Preserve identity, jacket and arm design; no opaque backgrounds, no text, no extra characters. Do not enlarge crouched poses independently. Store measured regions instead of assuming generated cells are uniform.",
+  "unused_concept": "references/combat_glow_concept.png"
+}

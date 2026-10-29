@@ -10,12 +10,15 @@ public final class PlayerBody {
     public static final float HOOK_ASSIST_RADIUS = 1.25f;
     public static final float PENDULUM_RADIUS = 15f;
     private static final float SPEED = 7f, GRAVITY = 26f, JUMP_SPEED = 10f;
-    private static final float DASH_SPEED = 24f, DASH_DURATION = 0.18f;
+    private static final float DASH_SPEED = 22f, DASH_DURATION = 0.18f;
     private static final float DASH_COOLDOWN = 0.6f, BOOST_SPEED = SPEED * 2.3f;
+    private static final float AIR_BRAKE = 45f, AIR_DRAG = 16f, AIR_ACCELERATION = 18f;
     private static final float SOFT_SPEED = 30f, SAFETY_SPEED = 60f;
     private static final double FIXED_STEP = 1.0 / 240.0;
     private double accumulator;
     private boolean queuedDash;
+    private boolean attackAirJump;
+    private float combatBrakeRemaining;
     private float coyoteRemaining, variableJumpRemaining;
     private float propulsionDirectionX, propulsionDirectionY, propulsionSpeed, dashSpeed;
     public float x, y;
@@ -46,19 +49,26 @@ public final class PlayerBody {
         jumpBufferRemaining = 0;
         ropeTargetLength = reelSpeed = 0;
         upperPassConsumed = false; upperSwingBoostCount = 0;
-        accumulator = 0; queuedDash = false;
+        attackAirJump=false;
+        accumulator = 0; queuedDash = false; combatBrakeRemaining = 0;
         coyoteRemaining = variableJumpRemaining = 0;
         facing = dashDirection = 1;
         ropePath.clear();
     }
     public boolean isDashing() { return dashRemaining > 0; }
+    public boolean hasPendingDash() { return queuedDash && canDash(); }
     public boolean isBoosted() { return boosted && !isDashing(); }
     public boolean canDash() { return cooldownRemaining <= 0 && !isDashing(); }
+    public float getDashCooldownRemaining() { return Math.max(0,cooldownRemaining); }
+    public float getDashRecoveryFraction() { return Math.max(0,Math.min(1,1-cooldownRemaining/DASH_COOLDOWN)); }
     public boolean isHooked() { return hooked; }
     public boolean isReeling() { return hooked && ropeLength > ropeTargetLength + 0.01f; }
     public float getRopeTargetLength() { return ropeTargetLength; }
     public int getUpperSwingBoostCount() { return upperSwingBoostCount; }
     public boolean isPropelling() { return propelling; }
+    public boolean hasAttackAirJump() { return attackAirJump; }
+    public void refreshAttackAirJump() { attackAirJump=true; }
+    public boolean canStartGroundThrust() { return grounded && jumpBufferRemaining<=0; }
     public boolean isGrounded() { return grounded; }
     public boolean isJumpQueued() { return jumpBufferRemaining > 0; }
     public float getAnchorX() { return anchorX; }
@@ -176,8 +186,14 @@ public final class PlayerBody {
     public boolean launchPropulsion(float aimX, float aimY) {
         HookTarget target = findHookTarget(aimX, aimY);
         if (target == null) return false;
-        releaseHook();
-        anchorX = target.x; anchorY = target.y;
+        return launchPropulsionTo(target.x,target.y);
+    }
+    public boolean launchPropulsionTo(float tx, float ty) {
+        float distanceToTarget=(float)Math.hypot(tx-x-WIDTH/2,ty-y-HEIGHT/2);
+        if(distanceToTarget<0.65f || distanceToTarget>HOOK_RANGE || !hasCombatLine(tx,ty)) return false;
+        cancelCombatTravel();
+        combatBrakeRemaining=0;
+        anchorX = tx; anchorY = ty;
         float dx = anchorX - (x + WIDTH / 2), dy = anchorY - (y + HEIGHT / 2);
         float distance = (float) Math.hypot(dx, dy);
         propelling = momentum = true;
@@ -188,6 +204,53 @@ public final class PlayerBody {
         propulsionDirectionX = dx / distance;
         propulsionDirectionY = dy / distance;
         propulsionSpeed = Math.max(28f, velocityX * propulsionDirectionX + velocityY * propulsionDirectionY);
+        return true;
+    }
+
+    /** Impulsos de combate conservan la componente horizontal y no teletransportan. */
+    public void combatImpulse(float dx, float upward, boolean detach) {
+        if (detach) cancelCombatTravel();
+        velocityX += dx;
+        velocityY = Math.max(velocityY, upward);
+        if (upward > 0) {
+            grounded = false; coyoteRemaining = variableJumpRemaining = jumpBufferRemaining = 0;
+        }
+        momentum = true;
+        limitVelocity();
+    }
+    public float prepareRisingThrust(float minimum, float maximum) {
+        float horizontal=hasPendingDash()?Math.max(DASH_SPEED,Math.abs(velocityX)):Math.abs(velocityX);
+        float converted=(float)Math.hypot(horizontal,Math.max(0,velocityY));
+        // Atacar conserva la carrera/dash. La conversion y el freno ocurren al acertar.
+        return Math.max(minimum,Math.min(maximum,converted));
+    }
+    public void risingThrustImpact(float speed) {
+        combatImpulse(0,speed,true);
+        velocityX=0; combatBrakeRemaining=0.18f;
+        attackAirJump=true;
+    }
+    public void cancelCombatTravel() {
+        releaseHook(); propelling = false; propulsionRemaining = dashRemaining = 0;
+        queuedDash=false; boosted=false;
+    }
+    public boolean isAreaFree(float bx,float by,float width,float height) {
+        for(float[] solid:solids)
+            if(bx<solid[0]+solid[2]-.00001f && bx+width>solid[0]+.00001f
+                && by<solid[1]+solid[3]-.00001f && by+height>solid[1]+.00001f) return false;
+        return true;
+    }
+    public void retargetPropulsion(float tx,float ty) {
+        if(!propelling) return;
+        float dx=tx-x-WIDTH/2,dy=ty-y-HEIGHT/2,distance=(float)Math.hypot(dx,dy);
+        if(distance<.001f) return;
+        anchorX=tx;anchorY=ty;propulsionDirectionX=dx/distance;propulsionDirectionY=dy/distance;
+    }
+    public boolean hasCombatLine(float tx, float ty) {
+        float ox=x+WIDTH/2, oy=y+HEIGHT/2;
+        float dx=tx-ox, dy=ty-oy, distance=(float)Math.hypot(dx,dy);
+        if(distance<0.001f) return true;
+        for(float[] solid:solids)
+            if(rayHit(ox,oy,dx/distance,dy/distance,solid,distance)<distance-0.02f) return false;
         return true;
     }
 
@@ -240,6 +303,10 @@ public final class PlayerBody {
     }
 
     private void step(float dt, float direction, boolean sprintHeld, boolean jumpHeld) {
+        if(combatBrakeRemaining>0) {
+            combatBrakeRemaining=Math.max(0,combatBrakeRemaining-dt);
+            direction=0; velocityX=0; queuedDash=false; dashRemaining=0; boosted=false;
+        }
         boolean wasGrounded = grounded;
         if (grounded) coyoteRemaining = 0.1f;
         else coyoteRemaining = Math.max(0,coyoteRemaining-dt);
@@ -254,8 +321,10 @@ public final class PlayerBody {
             }
             queuedDash = false;
         }
-        if (jumpBufferRemaining > 0 && (grounded || coyoteRemaining > 0) && !propelling) {
-            velocityY = JUMP_SPEED;
+        if (jumpBufferRemaining > 0 && (grounded || coyoteRemaining > 0 || attackAirJump) && !propelling) {
+            boolean bonusJump=attackAirJump && !grounded && coyoteRemaining<=0;
+            velocityY = bonusJump ? Math.max(0,velocityY)+JUMP_SPEED : JUMP_SPEED;
+            attackAirJump=false;
             grounded = false; coyoteRemaining = jumpBufferRemaining = 0;
             variableJumpRemaining = 0.18f;
         }
@@ -296,8 +365,14 @@ public final class PlayerBody {
                 velocityX = approach(velocityX,target,acceleration*dt);
                 if (Math.abs(velocityX)<=cruise+0.05f) momentum = false;
             } else if (momentum) {
-                if (direction != 0 && (velocityX*direction<0 || Math.abs(velocityX)<cruise))
-                    velocityX = approach(velocityX,target,18f*dt);
+                if (direction == 0) {
+                    // Deslizamiento suave al soltar A/D; no afecta al pendulo activo.
+                    velocityX = approach(velocityX,0,AIR_DRAG*dt);
+                } else if (velocityX*direction<0) {
+                    velocityX = approach(velocityX,target,AIR_BRAKE*dt);
+                } else if (Math.abs(velocityX)<cruise) {
+                    velocityX = approach(velocityX,target,AIR_ACCELERATION*dt);
+                }
             } else velocityX = approach(velocityX,target,45f*dt);
         }
         cooldownRemaining = Math.max(0,cooldownRemaining-dt);
@@ -319,7 +394,7 @@ public final class PlayerBody {
             constrainRope(dt,oldX,oldY,oldLength,wasGrounded);
             applyUpperSwingImpulse();
         }
-        if (grounded) variableJumpRemaining = 0;
+        if (grounded) { variableJumpRemaining = 0; attackAirJump=false; }
         if (dashing && velocityX == 0) { dashRemaining = 0; boosted = sprintHeld; }
     }
 

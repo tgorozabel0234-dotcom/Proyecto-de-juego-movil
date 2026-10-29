@@ -1,0 +1,68 @@
+{
+  "frameHeight": 192,
+  "pivot": {
+    "x": 64,
+    "y": 184
+  },
+  "frames": [
+    {
+      "sourceRegion": [
+        185,
+        28,
+        621,
+        603
+      ],
+      "sourceFloorY": 603,
+      "durationMs": 180,
+      "sourceRootX": 395,
+      "file": "frames/walk_00.png",
+      "phase": "Contacto: pierna del bolsillo delante"
+    },
+    {
+      "sourceRegion": [
+        827,
+        28,
+        1116,
+        603
+      ],
+      "sourceFloorY": 603,
+      "durationMs": 160,
+      "sourceRootX": 966,
+      "file": "frames/walk_01.png",
+      "phase": "Apoyo: pierna del bolsillo"
+    },
+    {
+      "sourceRegion": [
+        143,
+        621,
+        635,
+        1171
+      ],
+      "sourceFloorY": 1177,
+      "durationMs": 180,
+      "sourceRootX": 372,
+      "file": "frames/walk_02.png",
+      "phase": "Contacto: pierna lisa delante"
+    },
+    {
+      "sourceRegion": [
+        815,
+        620,
+        1086,
+        1180
+      ],
+      "sourceFloorY": 1177,
+      "durationMs": 160,
+      "sourceRootX": 949,
+      "file": "frames/walk_03.png",
+      "phase": "Apoyo: pierna lisa"
+    }
+  ],
+  "timing": "visual_preview_only",
+  "name": "walk_two_step_v3",
+  "status": "draft_pending_user_approval",
+  "loop": true,
+  "integrated": false,
+  "frameWidth": 128,
+  "scale": 0.23
+}

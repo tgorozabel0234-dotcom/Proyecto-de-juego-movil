@@ -1,0 +1,95 @@
+{
+  "loop": false,
+  "frames": [
+    {
+      "durationMs": 140,
+      "file": "frames/death_00.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "death",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.3,
+      "sourceRegion": [
+        611,
+        5,
+        918,
+        444
+      ],
+      "hand": {
+        "x": 117.5,
+        "y": 168.8
+      }
+    },
+    {
+      "durationMs": 180,
+      "file": "frames/death_01.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "death",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.3,
+      "sourceRegion": [
+        590,
+        499,
+        967,
+        818
+      ],
+      "hand": {
+        "x": 128.0,
+        "y": 212.6
+      }
+    },
+    {
+      "durationMs": 0,
+      "file": "frames/death_02.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "death",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.3,
+      "sourceRegion": [
+        407,
+        846,
+        1116,
+        1003
+      ],
+      "hand": {
+        "x": 194.0,
+        "y": 217.1
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "id": "death",
+  "integrated": true,
+  "orientation": "none",
+  "label": "Muerte",
+  "timing": "visual_review_only",
+  "group": "reaction",
+  "sheet": "sheet.png",
+  "frameHeight": 256,
+  "frameWidth": 256,
+  "holdLast": true,
+  "sequences": {
+    "default": [
+      0,
+      1,
+      2
+    ]
+  }
+}

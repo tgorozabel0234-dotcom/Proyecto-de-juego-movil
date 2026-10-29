@@ -1,0 +1,70 @@
+{
+  "loop": false,
+  "frames": [
+    {
+      "durationMs": 100,
+      "file": "frames/aura_00.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "aura",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.16,
+      "sourceRegion": [
+        155,
+        121,
+        749,
+        982
+      ],
+      "hand": {
+        "x": 128.8,
+        "y": 155.2
+      }
+    },
+    {
+      "durationMs": 220,
+      "file": "frames/aura_01.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "aura",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.16,
+      "sourceRegion": [
+        831,
+        41,
+        1402,
+        985
+      ],
+      "hand": {
+        "x": 92.0,
+        "y": 144.0
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "id": "aura",
+  "integrated": true,
+  "orientation": "none",
+  "label": "Activación del aura",
+  "timing": "visual_review_only",
+  "group": "combat",
+  "sheet": "sheet.png",
+  "frameHeight": 256,
+  "frameWidth": 256,
+  "holdLast": true,
+  "sequences": {
+    "default": [
+      0,
+      1
+    ]
+  }
+}

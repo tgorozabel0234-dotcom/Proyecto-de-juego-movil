@@ -209,3 +209,37 @@ tasks.withType(JavaExec.class).configureEach {
 if(enableGraalNative == 'true') {
   apply from: file("nativeimage.gradle")
 }
+// Verificacion visual opcional del HUD; requiere OpenGL de escritorio.
+tasks.register('hudPreviewCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'HudPreviewCheck'
+    workingDir = rootProject.file('assets').path
+    jvmArgs '--enable-native-access=ALL-UNNAMED', '--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED'
+}
+
+// Galeria opcional de todas las acciones del personaje, con el render del juego.
+tasks.register('characterPreviewCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'CharacterPreviewCheck'
+    workingDir = rootProject.file('assets').path
+    jvmArgs '--enable-native-access=ALL-UNNAMED', '--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED'
+}
+
+// Render del rediseño integrado, sin ventana visible.
+tasks.register('redesignPreviewCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'RedesignPreviewCheck'
+    workingDir = rootProject.file('assets').path
+    jvmArgs '--enable-native-access=ALL-UNNAMED', '--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED'
+}
+
+tasks.register('attackLevelPreviewCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'AttackLevelPreviewCheck'
+    workingDir = rootProject.file('assets').path
+    jvmArgs '--enable-native-access=ALL-UNNAMED', '--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED'
+}

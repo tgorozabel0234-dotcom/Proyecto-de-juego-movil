@@ -1,0 +1,129 @@
+{
+  "loop": false,
+  "frames": [
+    {
+      "durationMs": 40,
+      "file": "frames/thrust_00.png",
+      "pivot": {
+        "x": 144,
+        "y": 300
+      },
+      "sourceId": "thrust",
+      "hip": {
+        "x": 144,
+        "y": 230
+      },
+      "sourceScale": 0.27,
+      "sourceRegion": [
+        87,
+        30,
+        584,
+        484
+      ],
+      "hand": {
+        "x": 103.5,
+        "y": 229.8
+      }
+    },
+    {
+      "durationMs": 140,
+      "file": "frames/thrust_01.png",
+      "pivot": {
+        "x": 144,
+        "y": 300
+      },
+      "sourceId": "thrust",
+      "hip": {
+        "x": 144,
+        "y": 230
+      },
+      "sourceScale": 0.27,
+      "sourceRegion": [
+        694,
+        35,
+        1516,
+        500
+      ],
+      "hand": {
+        "x": 191.25,
+        "y": 220.35
+      }
+    },
+    {
+      "durationMs": 80,
+      "file": "frames/thrust_02.png",
+      "pivot": {
+        "x": 144,
+        "y": 300
+      },
+      "sourceId": "thrust",
+      "hip": {
+        "x": 144,
+        "y": 230
+      },
+      "sourceScale": 0.27,
+      "sourceRegion": [
+        122,
+        505,
+        580,
+        995
+      ],
+      "hand": {
+        "x": 114.3,
+        "y": 223.05
+      }
+    },
+    {
+      "durationMs": 100,
+      "file": "frames/thrust_03.png",
+      "pivot": {
+        "x": 144,
+        "y": 300
+      },
+      "sourceId": "thrust",
+      "hip": {
+        "x": 144,
+        "y": 230
+      },
+      "sourceScale": 0.27,
+      "sourceRegion": [
+        910,
+        425,
+        1498,
+        1005
+      ],
+      "hand": {
+        "x": 179.1,
+        "y": 187.95
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "id": "thrust",
+  "integrated": true,
+  "orientation": "none",
+  "label": "Estocada en carrera",
+  "timing": "visual_review_only",
+  "group": "combat",
+  "sheet": "sheet.png",
+  "frameHeight": 384,
+  "frameWidth": 384,
+  "holdLast": true,
+  "sequences": {
+    "default": [
+      0,
+      1,
+      2
+    ],
+    "hit": [
+      0,
+      1,
+      3
+    ],
+    "miss": [
+      0,
+      1,
+      2
+    ]
+  }
+}

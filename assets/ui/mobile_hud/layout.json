@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "margin": 18,
+  "joystickDiameter": 144,
+  "deadzone": 0.18,
+  "opacity": 0.58,
+  "accent": "15F4E3",
+  "healthCells": 10,
+  "cyan": "15F4E3",
+  "pink": "FF4FBF",
+  "violet": "9467FF"
+}

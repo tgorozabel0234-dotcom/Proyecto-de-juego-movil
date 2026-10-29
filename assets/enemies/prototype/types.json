@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "player": {
+    "health": 10,
+    "invulnerability": 0.8
+  },
+  "melee": {
+    "speed": 3,
+    "detectionRange": 12,
+    "attackRange": 1.25,
+    "damage": 1,
+    "windup": 0.35,
+    "recovery": 0.9,
+    "color": "E56858"
+  },
+  "flying": {
+    "speed": 3.5,
+    "detectionRange": 16,
+    "attackRange": 1.35,
+    "damage": 1,
+    "windup": 0.45,
+    "recovery": 1.1,
+    "color": "72C8ED"
+  }
+}

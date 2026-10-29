@@ -1,0 +1,444 @@
+{
+  "version": 1,
+  "character": "white_hair_cyberpunk_v1",
+  "renderScale": 1.5,
+  "sheets": [
+    {
+      "file": "locomotion.png",
+      "width": 1254,
+      "height": 1254,
+      "frames": [
+        {
+          "x": 100,
+          "y": 34,
+          "width": 130,
+          "height": 302,
+          "pivotX": 65.0,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 412,
+          "y": 34,
+          "width": 131,
+          "height": 302,
+          "pivotX": 65.5,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 719,
+          "y": 34,
+          "width": 132,
+          "height": 302,
+          "pivotX": 66.0,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 1038,
+          "y": 33,
+          "width": 131,
+          "height": 303,
+          "pivotX": 65.5,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 63,
+          "y": 355,
+          "width": 216,
+          "height": 301,
+          "pivotX": 108.0,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 369,
+          "y": 356,
+          "width": 210,
+          "height": 301,
+          "pivotX": 105.0,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 685,
+          "y": 355,
+          "width": 211,
+          "height": 302,
+          "pivotX": 105.5,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 976,
+          "y": 358,
+          "width": 229,
+          "height": 299,
+          "pivotX": 114.5,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 33,
+          "y": 701,
+          "width": 249,
+          "height": 261,
+          "pivotX": 117.03,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 350,
+          "y": 687,
+          "width": 227,
+          "height": 278,
+          "pivotX": 106.69,
+          "pixelsPerUnit": 300,
+          "exclude": [
+            {
+              "x": 160,
+              "y": 269,
+              "width": 41,
+              "height": 9
+            }
+          ]
+        },
+        {
+          "x": 646,
+          "y": 676,
+          "width": 272,
+          "height": 276,
+          "pivotX": 127.84,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 970,
+          "y": 682,
+          "width": 231,
+          "height": 282,
+          "pivotX": 108.57,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 80,
+          "y": 1031,
+          "width": 170,
+          "height": 197,
+          "pivotX": 85.0,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 385,
+          "y": 956,
+          "width": 207,
+          "height": 271,
+          "pivotX": 103.5,
+          "pixelsPerUnit": 300,
+          "exclude": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 4,
+              "height": 7
+            }
+          ]
+        },
+        {
+          "x": 693,
+          "y": 974,
+          "width": 179,
+          "height": 218,
+          "pivotX": 89.5,
+          "pixelsPerUnit": 300
+        },
+        {
+          "x": 1022,
+          "y": 987,
+          "width": 180,
+          "height": 241,
+          "pivotX": 90.0,
+          "pixelsPerUnit": 300
+        }
+      ]
+    },
+    {
+      "file": "combat.png",
+      "width": 1254,
+      "height": 1254,
+      "frames": [
+        {
+          "x": 30,
+          "y": 44,
+          "width": 225,
+          "height": 265,
+          "pivotX": 112.5,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 342,
+          "y": 40,
+          "width": 255,
+          "height": 272,
+          "pivotX": 119.85,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 658,
+          "y": 39,
+          "width": 315,
+          "height": 273,
+          "pivotX": 107.1,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 990,
+          "y": 43,
+          "width": 247,
+          "height": 269,
+          "pivotX": 116.09,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 48,
+          "y": 417,
+          "width": 219,
+          "height": 235,
+          "pivotX": 109.5,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 342,
+          "y": 354,
+          "width": 218,
+          "height": 300,
+          "pivotX": 102.46,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 683,
+          "y": 324,
+          "width": 216,
+          "height": 337,
+          "pivotX": 97.2,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 993,
+          "y": 381,
+          "width": 208,
+          "height": 275,
+          "pivotX": 104.0,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 80,
+          "y": 679,
+          "width": 193,
+          "height": 210,
+          "pivotX": 96.5,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 395,
+          "y": 690,
+          "width": 168,
+          "height": 210,
+          "pivotX": 84.0,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 681,
+          "y": 727,
+          "width": 183,
+          "height": 200,
+          "pivotX": 78.69,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 999,
+          "y": 678,
+          "width": 202,
+          "height": 230,
+          "pivotX": 101.0,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 24,
+          "y": 966,
+          "width": 247,
+          "height": 248,
+          "pivotX": 123.5,
+          "pixelsPerUnit": 275
+        },
+        {
+          "x": 330,
+          "y": 963,
+          "width": 317,
+          "height": 251,
+          "pivotX": 126.8,
+          "pixelsPerUnit": 275,
+          "exclude": [
+            {
+              "x": 312,
+              "y": 201,
+              "width": 5,
+              "height": 19
+            }
+          ]
+        },
+        {
+          "x": 642,
+          "y": 962,
+          "width": 324,
+          "height": 249,
+          "pivotX": 129.6,
+          "pixelsPerUnit": 275,
+          "exclude": [
+            {
+              "x": 0,
+              "y": 41,
+              "width": 5,
+              "height": 23
+            }
+          ]
+        },
+        {
+          "x": 976,
+          "y": 959,
+          "width": 247,
+          "height": 257,
+          "pivotX": 123.5,
+          "pixelsPerUnit": 275
+        }
+      ]
+    },
+    {
+      "file": "grapple_reactions.png",
+      "width": 1254,
+      "height": 1254,
+      "frames": [
+        {
+          "x": 61,
+          "y": 61,
+          "width": 195,
+          "height": 282,
+          "pivotX": 97.5,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 358,
+          "y": 68,
+          "width": 250,
+          "height": 275,
+          "pivotX": 105.0,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 697,
+          "y": 70,
+          "width": 215,
+          "height": 274,
+          "pivotX": 96.75,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 1012,
+          "y": 37,
+          "width": 189,
+          "height": 306,
+          "pivotX": 94.5,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 32,
+          "y": 371,
+          "width": 268,
+          "height": 291,
+          "pivotX": 134.0,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 365,
+          "y": 362,
+          "width": 229,
+          "height": 288,
+          "pivotX": 103.05,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 738,
+          "y": 363,
+          "width": 162,
+          "height": 251,
+          "pivotX": 77.76,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 958,
+          "y": 370,
+          "width": 273,
+          "height": 280,
+          "pivotX": 122.85,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 75,
+          "y": 697,
+          "width": 194,
+          "height": 237,
+          "pivotX": 97.0,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 367,
+          "y": 705,
+          "width": 189,
+          "height": 229,
+          "pivotX": 94.5,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 672,
+          "y": 744,
+          "width": 204,
+          "height": 181,
+          "pivotX": 102.0,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 941,
+          "y": 845,
+          "width": 276,
+          "height": 86,
+          "pivotX": 110.4,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 50,
+          "y": 961,
+          "width": 222,
+          "height": 264,
+          "pivotX": 111.0,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 363,
+          "y": 965,
+          "width": 229,
+          "height": 260,
+          "pivotX": 114.5,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 667,
+          "y": 963,
+          "width": 233,
+          "height": 264,
+          "pivotX": 116.5,
+          "pixelsPerUnit": 280
+        },
+        {
+          "x": 989,
+          "y": 964,
+          "width": 219,
+          "height": 262,
+          "pivotX": 109.5,
+          "pixelsPerUnit": 280
+        }
+      ]
+    }
+  ]
+}

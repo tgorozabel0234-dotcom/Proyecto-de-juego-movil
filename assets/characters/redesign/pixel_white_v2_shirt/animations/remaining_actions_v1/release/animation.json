@@ -1,0 +1,70 @@
+{
+  "loop": false,
+  "frames": [
+    {
+      "durationMs": 85,
+      "file": "frames/release_00.png",
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "sourceId": "release",
+      "hip": {
+        "x": 128,
+        "y": 128
+      },
+      "sourceScale": 0.18,
+      "sourceRegion": [
+        239,
+        51,
+        897,
+        766
+      ],
+      "hand": {
+        "x": 84.8,
+        "y": 88.4
+      }
+    },
+    {
+      "durationMs": 135,
+      "file": "frames/release_01.png",
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "sourceId": "release",
+      "hip": {
+        "x": 128,
+        "y": 128
+      },
+      "sourceScale": 0.18,
+      "sourceRegion": [
+        1066,
+        45,
+        1792,
+        756
+      ],
+      "hand": {
+        "x": 84.8,
+        "y": 113.6
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "id": "release",
+  "integrated": true,
+  "orientation": "none",
+  "label": "Soltarse del gancho",
+  "timing": "visual_review_only",
+  "group": "grapple",
+  "sheet": "sheet.png",
+  "frameHeight": 256,
+  "frameWidth": 256,
+  "holdLast": true,
+  "sequences": {
+    "default": [
+      0,
+      1
+    ]
+  }
+}

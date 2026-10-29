@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reposo · borrador 01</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#101720;color:#e6f5fb;font:16px system-ui;text-align:center;padding:24px}main{max-width:820px;margin:auto}h1{font-size:24px}p{color:#b9c9d2;line-height:1.5}.stage{margin:24px auto 16px;max-width:512px;background:linear-gradient(#182430,#111b24);border:1px solid #365166;border-radius:16px}#sprite{width:100%;display:block;image-rendering:pixelated}button{font:inherit;color:#e6f5fb;background:#1e3847;border:1px solid #35d4e8;border-radius:8px;padding:10px 16px;margin:5px;cursor:pointer}button:focus-visible{outline:3px solid #df6faf}#status{min-height:28px;color:#5ee7ef}#sheet{width:100%;image-rendering:pixelated;background:#182430;border-radius:12px}small{color:#b9c9d2}
+</style>
+<main>
+<h1>Animación de reposo · borrador 01</h1>
+<p>Mira a ambos lados, baja una rodilla y permanece arrodillado hasta moverse.</p>
+<div class="stage"><img id="sprite" width="128" height="192" alt="Personaje en reposo"></div>
+<div id="status" aria-live="polite">Preparando imágenes…</div>
+<button id="replay" disabled>Repetir secuencia</button>
+<button id="move" disabled>Simular movimiento</button>
+<p><small>La última postura se mantiene sin repetir la animación. «Simular movimiento» devuelve la postura de pie; la transición para levantarse se trabajará después. Esta vista no modifica el juego.</small></p>
+<details><summary>Ver los 8 fotogramas</summary><p><img id="sheet" src="sheet_512x384.png" alt="Ocho fotogramas de reposo, de izquierda a derecha y de arriba abajo"></p></details>
+</main>
+<script>
+const sprite=document.querySelector('#sprite'), status=document.querySelector('#status');
+const replay=document.querySelector('#replay'), move=document.querySelector('#move');
+const durations=[650,250,650,400,180,200,220];
+const captions=['Reposo de pie','Gira la cabeza','Mira hacia atrás','Mira hacia delante','Comienza a bajar','Baja la rodilla','Apoya la rodilla','Permanece arrodillado · esperando movimiento'];
+const frames=Array.from({length:8},(_,i)=>{const img=new Image();img.src=`frames/idle_${String(i).padStart(2,'0')}.png`;return img});
+let timer;
+function show(i){sprite.src=frames[i].src;status.textContent=captions[i]}
+function play(i=0){clearTimeout(timer);show(i);if(i<7)timer=setTimeout(()=>play(i+1),durations[i])}
+replay.onclick=()=>play();
+move.onclick=()=>{clearTimeout(timer);show(0);status.textContent='Movimiento simulado · sale del reposo'};
+Promise.all(frames.map(img=>img.decode())).then(()=>{replay.disabled=move.disabled=false;play()}).catch(()=>{status.textContent='No se pudieron cargar los fotogramas. Mantén esta página junto a la carpeta frames.'});
+</script>
+</html>

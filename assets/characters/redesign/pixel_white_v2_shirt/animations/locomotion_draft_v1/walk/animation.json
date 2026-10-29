@@ -1,0 +1,94 @@
+{
+  "frames": [
+    {
+      "durationMs": 125,
+      "sourceRegion": [
+        44,
+        14,
+        391,
+        529
+      ],
+      "file": "frames/walk_00.png"
+    },
+    {
+      "durationMs": 100,
+      "sourceRegion": [
+        451,
+        13,
+        686,
+        529
+      ],
+      "file": "frames/walk_01.png"
+    },
+    {
+      "durationMs": 100,
+      "sourceRegion": [
+        777,
+        14,
+        1021,
+        529
+      ],
+      "file": "frames/walk_02.png"
+    },
+    {
+      "durationMs": 100,
+      "sourceRegion": [
+        1103,
+        14,
+        1444,
+        529
+      ],
+      "file": "frames/walk_03.png"
+    },
+    {
+      "durationMs": 125,
+      "sourceRegion": [
+        28,
+        549,
+        391,
+        1060
+      ],
+      "file": "frames/walk_04.png"
+    },
+    {
+      "durationMs": 100,
+      "sourceRegion": [
+        430,
+        549,
+        697,
+        1060
+      ],
+      "file": "frames/walk_05.png"
+    },
+    {
+      "durationMs": 100,
+      "sourceRegion": [
+        780,
+        549,
+        1042,
+        1060
+      ],
+      "file": "frames/walk_06.png"
+    },
+    {
+      "durationMs": 100,
+      "sourceRegion": [
+        1096,
+        549,
+        1444,
+        1060
+      ],
+      "file": "frames/walk_07.png"
+    }
+  ],
+  "frameHeight": 192,
+  "name": "walk",
+  "loop": true,
+  "timing": "preview_only_not_gameplay",
+  "status": "draft_pending_user_approval",
+  "pivot": {
+    "y": 184,
+    "x": 64
+  },
+  "frameWidth": 128
+}

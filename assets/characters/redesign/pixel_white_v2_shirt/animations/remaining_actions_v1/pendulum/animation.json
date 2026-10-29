@@ -1,0 +1,45 @@
+{
+  "loop": false,
+  "frames": [
+    {
+      "durationMs": 0,
+      "file": "frames/pendulum_00.png",
+      "pivot": {
+        "x": 128,
+        "y": 128
+      },
+      "sourceId": "pendulum",
+      "hip": {
+        "x": 128,
+        "y": 128
+      },
+      "sourceScale": 0.14,
+      "sourceRegion": [
+        314,
+        58,
+        849,
+        1471
+      ],
+      "hand": {
+        "x": 116.8,
+        "y": 30.7
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "id": "pendulum",
+  "integrated": true,
+  "orientation": "rope_angle_and_tangent_direction",
+  "label": "Péndulo orientable",
+  "timing": "visual_review_only",
+  "group": "grapple",
+  "sheet": "sheet.png",
+  "frameHeight": 256,
+  "frameWidth": 256,
+  "holdLast": true,
+  "sequences": {
+    "default": [
+      0
+    ]
+  }
+}

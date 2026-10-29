@@ -1,0 +1,47 @@
+{
+  "frameHeight": 192,
+  "status": "draft_pending_user_approval",
+  "frameWidth": 128,
+  "entry": "airborne_descending",
+  "pivot": {
+    "x": 64,
+    "y": 184
+  },
+  "frames": [
+    {
+      "file": "frames/fall_00.png",
+      "durationMs": 120,
+      "sourceRegion": [
+        180,
+        42,
+        691,
+        962
+      ],
+      "holdUntilGrounded": false,
+      "sourceHipY": 440,
+      "sourceHipX": 420
+    },
+    {
+      "file": "frames/fall_01.png",
+      "durationMs": null,
+      "sourceRegion": [
+        816,
+        64,
+        1327,
+        1027
+      ],
+      "holdUntilGrounded": true,
+      "sourceHipY": 466,
+      "sourceHipX": 1050
+    }
+  ],
+  "visualHip": {
+    "x": 64,
+    "y": 92
+  },
+  "name": "fall_draft_v1",
+  "integrated": false,
+  "exit": "ground_contact_or_gameplay_state_change",
+  "timing": "preview_only",
+  "loop": false
+}

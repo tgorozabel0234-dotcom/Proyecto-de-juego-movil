@@ -1,0 +1,70 @@
+{
+  "loop": false,
+  "frames": [
+    {
+      "durationMs": 90,
+      "file": "frames/hurt_00.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "hurt",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.17,
+      "sourceRegion": [
+        344,
+        17,
+        898,
+        852
+      ],
+      "hand": {
+        "x": 136.5,
+        "y": 108.06
+      }
+    },
+    {
+      "durationMs": 150,
+      "file": "frames/hurt_01.png",
+      "pivot": {
+        "x": 128,
+        "y": 224
+      },
+      "sourceId": "hurt",
+      "hip": {
+        "x": 128,
+        "y": 154
+      },
+      "sourceScale": 0.17,
+      "sourceRegion": [
+        964,
+        12,
+        1524,
+        854
+      ],
+      "hand": {
+        "x": 99.1,
+        "y": 160.42
+      }
+    }
+  ],
+  "status": "integrated_by_explicit_user_request",
+  "id": "hurt",
+  "integrated": true,
+  "orientation": "none",
+  "label": "Recibir daño",
+  "timing": "visual_review_only",
+  "group": "reaction",
+  "sheet": "sheet.png",
+  "frameHeight": 256,
+  "frameWidth": 256,
+  "holdLast": true,
+  "sequences": {
+    "default": [
+      0,
+      1
+    ]
+  }
+}
