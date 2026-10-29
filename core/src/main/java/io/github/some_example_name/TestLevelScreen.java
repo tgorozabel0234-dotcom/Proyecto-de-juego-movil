@@ -51,27 +51,47 @@ public class TestLevelScreen extends ScreenAdapter {
     private float inspectionZoom = 1;
     private float cameraAheadX, cameraAheadY, motionZoom = 1;
     private float worldWidth, worldHeight;
+    private String levelJsonPath;
     private final PlayerBody player = new PlayerBody();
 
     public TestLevelScreen(Game game, MenuScreen menu) {
+        this(game, menu, "levels/section_1.json");
+    }
+
+    public TestLevelScreen(Game game, MenuScreen menu, String levelJsonPath) {
         this.game = game;
         this.menu = menu;
+        this.levelJsonPath = levelJsonPath;
     }
 
     @Override public void show() {
         batch = new SpriteBatch();
-        map = new JsonReader().parse(Gdx.files.internal("levels/test_level_00.json"));
+        map = new JsonReader().parse(Gdx.files.internal(levelJsonPath));
         worldWidth = map.getFloat("width");
         worldHeight = map.getFloat("height");
         for (JsonValue piece = map.get("pieces").child; piece != null; piece = piece.next) {
             player.addSolid(piece.getFloat("x"), piece.getFloat("y"), piece.getFloat("width"), piece.getFloat("height"));
         }
         player.reset(map.get("spawn").getFloat("x"), map.get("spawn").getFloat("y"));
+
         String root = "environments/industrial_v1/";
-        platformTexture = new Texture(Gdx.files.internal(root + "platform_metal_orange_v1.png"));
-        wallTexture = new Texture(Gdx.files.internal(root + "wall_metal_conduit_v1.png"));
-        backgroundTexture = new Texture(Gdx.files.internal(root + "background_hangar_v1.png"));
-        playerTexture = new Texture(Gdx.files.internal("players/prototype/player_yellow_v1.png"));
+        String platformPath = root + "platform_metal_orange_v1.png";
+        String wallPath = root + "wall_metal_conduit_v1.png";
+        String bgPath = root + "background_hangar_v1.png";
+        String playerPath = "players/prototype/player_yellow_v1.png";
+
+        if (map.has("assets")) {
+            JsonValue assets = map.get("assets");
+            if (assets.has("platform")) platformPath = assets.getString("platform");
+            if (assets.has("wall")) wallPath = assets.getString("wall");
+            if (assets.has("background")) bgPath = assets.getString("background");
+            if (assets.has("player")) playerPath = assets.getString("player");
+        }
+
+        platformTexture = new Texture(Gdx.files.internal(platformPath));
+        wallTexture = new Texture(Gdx.files.internal(wallPath));
+        backgroundTexture = new Texture(Gdx.files.internal(bgPath));
+        playerTexture = new Texture(Gdx.files.internal(playerPath));
         platform = trim(platformTexture);
         wall = trim(wallTexture);
         for (Texture texture : new Texture[]{platformTexture, wallTexture, backgroundTexture}) {
@@ -133,7 +153,8 @@ public class TestLevelScreen extends ScreenAdapter {
         top.setFillParent(true);
         top.top().pad(14);
         top.setTouchable(Touchable.childrenOnly);
-        Label level = new Label("00 / PRUEBAS", text);
+        String titleStr = map != null && map.has("title") ? map.getString("title") : "00 / PRUEBAS";
+        Label level = new Label(titleStr, text);
         level.setColor(Color.valueOf("FFC94D"));
         top.add(level).expandX().left();
         top.add(hudButton("AYUDA F1", buttons, () -> toggleHelp())).width(88).height(34).padLeft(6);
