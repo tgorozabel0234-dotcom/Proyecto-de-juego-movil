@@ -94,9 +94,8 @@ public class MenuScreen implements Screen {
         btnJugar.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("MENU", "Acción: Iniciar el juego");
-                // Cuando tengas tu pantalla de juego lista, la cambias aquí:
-                // game.setScreen(new MiPantallaDeJuego(game));
+                Gdx.app.log("MENU", "Acción: Iniciar el juego (Sección 1)");
+                game.setScreen(new TestLevelScreen(game, MenuScreen.this, "levels/section_1.json"));
             }
         });
 
@@ -173,13 +172,21 @@ public class MenuScreen implements Screen {
         levelsTable.row();
         for (int i = 0; i < 6; i++) {
             boolean testLevel = i == 0;
-            String text = testLevel ? "00  NIVEL DE PRUEBAS" : String.format("%02d  PROXIMAMENTE", i);
+            boolean section1Level = i == 1;
+            String text = testLevel ? "00  NIVEL DE PRUEBAS" : section1Level ? "01  SECCIÓN 1" : String.format("%02d  PROXIMAMENTE", i);
             BorderButton option = new BorderButton(text, skin, "default");
             if (testLevel) {
                 option.addListener(new ClickListener() {
                     @Override public void clicked(InputEvent event, float x, float y) {
-                        game.setScreen(new TestLevelScreen(game, MenuScreen.this));
+                        game.setScreen(new TestLevelScreen(game, MenuScreen.this, "levels/test_level_00.json"));
                         Gdx.app.log("NIVELES", "Nivel de pruebas seleccionado");
+                    }
+                });
+            } else if (section1Level) {
+                option.addListener(new ClickListener() {
+                    @Override public void clicked(InputEvent event, float x, float y) {
+                        game.setScreen(new TestLevelScreen(game, MenuScreen.this, "levels/section_1.json"));
+                        Gdx.app.log("NIVELES", "Sección 1 seleccionada");
                     }
                 });
             } else {

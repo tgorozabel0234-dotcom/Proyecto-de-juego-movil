@@ -50,6 +50,7 @@ public class TestLevelScreen extends ScreenAdapter {
     private float inspectionZoom = 1;
     private float cameraAheadX, cameraAheadY, motionZoom = 1;
     private float worldWidth, worldHeight;
+    private String levelJsonPath;
     private final PlayerBody player = new PlayerBody();
     private final CombatSystem combat = new CombatSystem();
     private Label combatStatus, lifeStatus;
@@ -61,13 +62,18 @@ public class TestLevelScreen extends ScreenAdapter {
 
 
     public TestLevelScreen(Game game, MenuScreen menu) {
+        this(game, menu, "levels/section_1.json");
+    }
+
+    public TestLevelScreen(Game game, MenuScreen menu, String levelJsonPath) {
         this.game = game;
         this.menu = menu;
+        this.levelJsonPath = levelJsonPath;
     }
 
     @Override public void show() {
         batch = new SpriteBatch();
-        map = new JsonReader().parse(Gdx.files.internal("levels/test_level_00.json"));
+        map = new JsonReader().parse(Gdx.files.internal(levelJsonPath));
         worldWidth = map.getFloat("width");
         worldHeight = map.getFloat("height");
         for (JsonValue piece = map.get("pieces").child; piece != null; piece = piece.next) {
@@ -101,12 +107,20 @@ public class TestLevelScreen extends ScreenAdapter {
             combat.enemies.add(new CombatSystem.Enemy(e.getFloat("x"),e.getFloat("y"),e.getFloat("radius"),e.getFloat("health"),e.getBoolean("stunImmune",false),CombatSystem.EnemyType.valueOf(e.getString("type","DUMMY"))));
         combat.reset(); life.reset();
         String root = "environments/industrial_v1/";
-        platformTexture = new Texture(Gdx.files.internal(root + "platform_metal_orange_v1.png"));
-        wallTexture = new Texture(Gdx.files.internal(root + "wall_metal_conduit_v1.png"));
-        backgroundTexture = new Texture(Gdx.files.internal(root + "background_hangar_v1.png"));
+        String platformPath = root + "platform_metal_orange_v1.png";
+        String wallPath = root + "wall_metal_conduit_v1.png";
+        String bgPath = root + "background_hangar_v1.png";
+        if (map.has("assets")) {
+            JsonValue assets = map.get("assets");
+            if (assets.has("platform")) platformPath = assets.getString("platform");
+            if (assets.has("wall")) wallPath = assets.getString("wall");
+            if (assets.has("background")) bgPath = assets.getString("background");
+        }
+        platformTexture = new Texture(Gdx.files.internal(platformPath));
+        wallTexture = new Texture(Gdx.files.internal(wallPath));
+        backgroundTexture = new Texture(Gdx.files.internal(bgPath));
         playerSprite=new RedesignSprite();
         playerAnimation.reset(life.getHealth());
-
         platform = trim(platformTexture);
         wall = trim(wallTexture);
         for (Texture texture : new Texture[]{platformTexture, wallTexture, backgroundTexture}) {
