@@ -243,3 +243,19 @@ tasks.register('attackLevelPreviewCheck', JavaExec) {
     workingDir = rootProject.file('assets').path
     jvmArgs '--enable-native-access=ALL-UNNAMED', '--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED'
 }
+
+tasks.register('sectionPreviewCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'SectionPreviewCheck'
+    workingDir = rootProject.file('assets').path
+    jvmArgs '--enable-native-access=ALL-UNNAMED', '--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED'
+}
+
+tasks.register('menuPreviewCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'MenuPreviewCheck'
+    workingDir = rootProject.file('assets').path
+    jvmArgs '--enable-native-access=ALL-UNNAMED', '--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED'
+}

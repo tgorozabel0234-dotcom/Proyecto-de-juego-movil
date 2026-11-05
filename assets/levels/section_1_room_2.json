@@ -1,0 +1,222 @@
+{
+  "version": 4,
+  "title": "02 / TORRE DE ASCENSO",
+  "width": 64,
+  "height": 100,
+  "style": "readable",
+  "spawn": {
+    "x": 4,
+    "y": 2
+  },
+  "pieces": [
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 0,
+      "y": 0,
+      "width": 64,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 16,
+      "y": 12.5,
+      "width": 48,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 7.55,
+      "y": 21.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 0,
+      "y": 24.5,
+      "width": 48,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 55.55,
+      "y": 33.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 16,
+      "y": 36.5,
+      "width": 48,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 7.55,
+      "y": 45.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 0,
+      "y": 48.5,
+      "width": 48,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 55.55,
+      "y": 57.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 16,
+      "y": 60.5,
+      "width": 48,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 7.55,
+      "y": 69.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 0,
+      "y": 72.5,
+      "width": 48,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 55.55,
+      "y": 81.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 16,
+      "y": 84.5,
+      "width": 48,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 7.55,
+      "y": 93.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "wall",
+      "role": "wall",
+      "x": -1,
+      "y": -10,
+      "width": 1,
+      "height": 112
+    },
+    {
+      "asset": "wall",
+      "role": "wall",
+      "x": 64,
+      "y": -10,
+      "width": 1,
+      "height": 112
+    }
+  ],
+  "targets": [
+    {
+      "type": "ROBOT",
+      "x": 35,
+      "y": 14.55,
+      "radius": 0.55,
+      "health": 50,
+      "stunImmune": false
+    },
+    {
+      "type": "SCORP",
+      "x": 25,
+      "y": 26.55,
+      "radius": 0.55,
+      "health": 60,
+      "stunImmune": false
+    },
+    {
+      "type": "ROBOT",
+      "x": 39,
+      "y": 38.55,
+      "radius": 0.55,
+      "health": 50,
+      "stunImmune": false
+    },
+    {
+      "type": "ROBOT",
+      "x": 24,
+      "y": 50.55,
+      "radius": 0.55,
+      "health": 50,
+      "stunImmune": false
+    },
+    {
+      "type": "SCORP",
+      "x": 39,
+      "y": 50.55,
+      "radius": 0.55,
+      "health": 60,
+      "stunImmune": false
+    },
+    {
+      "type": "SCORP",
+      "x": 39,
+      "y": 62.55,
+      "radius": 0.55,
+      "health": 60,
+      "stunImmune": false
+    },
+    {
+      "type": "ROBOT",
+      "x": 26,
+      "y": 74.55,
+      "radius": 0.55,
+      "health": 50,
+      "stunImmune": false
+    },
+    {
+      "type": "SCORP",
+      "x": 40,
+      "y": 86.55,
+      "radius": 0.55,
+      "health": 60,
+      "stunImmune": false
+    }
+  ],
+  "exit": {
+    "x": 58,
+    "y": 86,
+    "width": 2.5,
+    "height": 4,
+    "next": "levels/section_1_room_3.json"
+  }
+}

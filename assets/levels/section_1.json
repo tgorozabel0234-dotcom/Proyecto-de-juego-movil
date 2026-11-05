@@ -1,112 +1,238 @@
 {
-  "version": 1,
-  "unit": "player_height",
-  "width": 100,
-  "height": 50,
-  "title": "SECCIÓN 1 - ESCENARIO PRINCIPAL",
-  "playerReference": {
-    "width": 0.5,
-    "height": 1
-  },
+  "version": 4,
+  "title": "01 / ACCESO EXTENDIDO",
+  "width": 168,
+  "height": 34,
+  "style": "readable",
   "spawn": {
-    "x": 10,
-    "y": 0
-  },
-  "notes": "Escenario completo de la Sección 1 utilizando todos los assets de SECCION 1.",
-  "assets": {
-    "background": "SECCION 1/Gemini_Generated_Image_b19wk3b19wk3b19w.jfif",
-    "platform": "SECCION 1/Gemini_Generated_Image_p72wlxp72wlxp72w.jfif",
-    "wall": "SECCION 1/Gemini_Generated_Image_qfy24lqfy24lqfy2.jfif",
-    "player": "SECCION 1/Gemini_Generated_Image_slttipslttipsltt.jfif"
+    "x": 3,
+    "y": 2
   },
   "pieces": [
     {
       "asset": "platform",
+      "role": "platform",
       "x": 0,
-      "y": -2,
-      "width": 100,
-      "height": 2,
-      "role": "floor"
-    },
-    {
-      "asset": "wall",
-      "x": -3,
-      "y": -2,
-      "width": 3,
-      "height": 54,
-      "role": "wall"
-    },
-    {
-      "asset": "wall",
-      "x": 100,
-      "y": -2,
-      "width": 3,
-      "height": 54,
-      "role": "wall"
-    },
-    {
-      "asset": "platform",
-      "x": 15,
-      "y": 8,
-      "width": 12,
-      "height": 1.5,
-      "role": "platform"
-    },
-    {
-      "asset": "platform",
-      "x": 35,
-      "y": 15,
-      "width": 14,
-      "height": 1.5,
-      "role": "platform"
-    },
-    {
-      "asset": "platform",
-      "x": 58,
-      "y": 22,
-      "width": 12,
-      "height": 1.5,
-      "role": "platform"
-    },
-    {
-      "asset": "platform",
-      "x": 80,
-      "y": 12,
-      "width": 15,
-      "height": 1.5,
-      "role": "platform"
-    },
-    {
-      "asset": "platform",
-      "x": 25,
-      "y": 30,
-      "width": 16,
-      "height": 1.5,
-      "role": "platform"
-    },
-    {
-      "asset": "platform",
-      "x": 50,
-      "y": 36,
-      "width": 20,
-      "height": 1.5,
-      "role": "platform"
-    },
-    {
-      "asset": "wall",
-      "x": 45,
       "y": 0,
-      "width": 2,
-      "height": 10,
-      "role": "obstacle"
+      "width": 16,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 19,
+      "y": 1.4,
+      "width": 13,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 36,
+      "y": 2.8,
+      "width": 12,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 52,
+      "y": 2.8,
+      "width": 16,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 73,
+      "y": 1.4,
+      "width": 13,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 91,
+      "y": 2.8,
+      "width": 13,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 110,
+      "y": 4.2,
+      "width": 14,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 130,
+      "y": 2.8,
+      "width": 12,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 148,
+      "y": 4.2,
+      "width": 20,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 17.05,
+      "y": 11.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 33.55,
+      "y": 13.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 49.55,
+      "y": 15.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 69.55,
+      "y": 14.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 87.55,
+      "y": 14.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 106.55,
+      "y": 17.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 126.55,
+      "y": 16.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 144.55,
+      "y": 16.55,
+      "width": 0.9,
+      "height": 0.9
     },
     {
       "asset": "wall",
-      "x": 75,
-      "y": 22,
+      "role": "wall",
+      "x": 59,
+      "y": 4.8,
       "width": 2,
-      "height": 12,
-      "role": "obstacle"
+      "height": 6
+    },
+    {
+      "asset": "wall",
+      "role": "wall",
+      "x": 116,
+      "y": 6.2,
+      "width": 2,
+      "height": 6
+    },
+    {
+      "asset": "wall",
+      "role": "wall",
+      "x": -1,
+      "y": -10,
+      "width": 1,
+      "height": 46
+    },
+    {
+      "asset": "wall",
+      "role": "wall",
+      "x": 168,
+      "y": -10,
+      "width": 1,
+      "height": 46
     }
-  ]
+  ],
+  "targets": [
+    {
+      "type": "ROBOT",
+      "x": 26,
+      "y": 3.95,
+      "radius": 0.55,
+      "health": 50,
+      "stunImmune": false
+    },
+    {
+      "type": "SCORP",
+      "x": 43,
+      "y": 5.35,
+      "radius": 0.55,
+      "health": 60,
+      "stunImmune": false
+    },
+    {
+      "type": "ROBOT",
+      "x": 80,
+      "y": 3.95,
+      "radius": 0.55,
+      "health": 50,
+      "stunImmune": false
+    },
+    {
+      "type": "SCORP",
+      "x": 98,
+      "y": 5.35,
+      "radius": 0.55,
+      "health": 60,
+      "stunImmune": false
+    },
+    {
+      "type": "ROBOT",
+      "x": 137,
+      "y": 5.35,
+      "radius": 0.55,
+      "health": 50,
+      "stunImmune": false
+    },
+    {
+      "type": "SCORP",
+      "x": 155,
+      "y": 6.75,
+      "radius": 0.55,
+      "health": 60,
+      "stunImmune": false
+    }
+  ],
+  "exit": {
+    "x": 162,
+    "y": 6.2,
+    "width": 2.5,
+    "height": 4,
+    "next": "levels/section_1_room_2.json"
+  }
 }

@@ -152,9 +152,9 @@ public class MenuScreen implements Screen {
     /**
      * Define los colores, bordes y estilos de texto del diseño sin usar imágenes descargadas.
      */
-    /** Fondo retro con encuadre proporcional y sombreado para conservar la legibilidad. */
+    /** Ilustración principal con encuadre proporcional, sin deformar la imagen. */
     private void createBackground() {
-        backgroundTexture = new Texture(Gdx.files.internal("fondo_menu.jpg"));
+        backgroundTexture = new Texture(Gdx.files.internal("ui/main_menu/key_art_v1.jpg"));
         backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         background = new Image(backgroundTexture);
         background.setScaling(Scaling.fill);
@@ -329,10 +329,22 @@ public class MenuScreen implements Screen {
         ScreenViewport viewport = (ScreenViewport) stage.getViewport();
         viewport.setUnitsPerPixel(1f / uiScale);
         viewport.update(width, height, true);
-        // El bloque completo se centra dentro de la mitad inferior de la pantalla.
+        // La zona oscura izquierda deja libres los personajes en horizontal.
+        boolean landscape = width >= height;
+        float margin = Math.max(24f, viewport.getWorldWidth() * .04f);
         if (buttonsTable != null) {
-            buttonsTable.padTop(viewport.getWorldHeight() * 0.5f + 12f);
+            buttonsTable.pad(0);
+            if (landscape) buttonsTable.bottom().left().padLeft(margin);
+            else buttonsTable.center().bottom();
+            buttonsTable.padBottom(Math.max(24f,viewport.getWorldHeight() * .1f));
             buttonsTable.invalidateHierarchy();
+        }
+        if (mainHeading != null) {
+            mainHeading.pad(0);
+            if (landscape) mainHeading.top().left().padLeft(margin);
+            else mainHeading.center().top();
+            mainHeading.padTop(28f);
+            mainHeading.invalidateHierarchy();
         }
         if (background != null) {
             background.setBounds(0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());

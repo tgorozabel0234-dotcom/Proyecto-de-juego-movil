@@ -1,0 +1,226 @@
+{
+  "name": "SCORPIUS-C1 Mech Scorpion",
+  "sheet": "scorpius_c1_sheet.png",
+  "sheet_size": {
+    "width": 1536,
+    "height": 768
+  },
+  "frame_size": {
+    "width": 256,
+    "height": 192
+  },
+  "frames_order": "left-to-right, one animation per row",
+  "animation_rows": [
+    "walk",
+    "fire",
+    "pincer",
+    "damage_death"
+  ],
+  "animations": {
+    "walk": [
+      {
+        "file": "frames/walk_00.png",
+        "index": 0,
+        "sheet_rect": {
+          "x": 0,
+          "y": 0,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/walk_01.png",
+        "index": 1,
+        "sheet_rect": {
+          "x": 256,
+          "y": 0,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/walk_02.png",
+        "index": 2,
+        "sheet_rect": {
+          "x": 512,
+          "y": 0,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/walk_03.png",
+        "index": 3,
+        "sheet_rect": {
+          "x": 768,
+          "y": 0,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/walk_04.png",
+        "index": 4,
+        "sheet_rect": {
+          "x": 1024,
+          "y": 0,
+          "w": 256,
+          "h": 192
+        }
+      }
+    ],
+    "fire": [
+      {
+        "file": "frames/fire_00.png",
+        "index": 0,
+        "sheet_rect": {
+          "x": 0,
+          "y": 192,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/fire_01.png",
+        "index": 1,
+        "sheet_rect": {
+          "x": 256,
+          "y": 192,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/fire_02.png",
+        "index": 2,
+        "sheet_rect": {
+          "x": 512,
+          "y": 192,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/fire_03.png",
+        "index": 3,
+        "sheet_rect": {
+          "x": 768,
+          "y": 192,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/fire_04.png",
+        "index": 4,
+        "sheet_rect": {
+          "x": 1024,
+          "y": 192,
+          "w": 256,
+          "h": 192
+        }
+      }
+    ],
+    "pincer": [
+      {
+        "file": "frames/pincer_00.png",
+        "index": 0,
+        "sheet_rect": {
+          "x": 0,
+          "y": 384,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/pincer_01.png",
+        "index": 1,
+        "sheet_rect": {
+          "x": 256,
+          "y": 384,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/pincer_02.png",
+        "index": 2,
+        "sheet_rect": {
+          "x": 512,
+          "y": 384,
+          "w": 256,
+          "h": 192
+        }
+      }
+    ],
+    "damage_death": [
+      {
+        "file": "frames/damage_death_00.png",
+        "index": 0,
+        "sheet_rect": {
+          "x": 0,
+          "y": 576,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/damage_death_01.png",
+        "index": 1,
+        "sheet_rect": {
+          "x": 256,
+          "y": 576,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/damage_death_02.png",
+        "index": 2,
+        "sheet_rect": {
+          "x": 512,
+          "y": 576,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/damage_death_03.png",
+        "index": 3,
+        "sheet_rect": {
+          "x": 768,
+          "y": 576,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/damage_death_04.png",
+        "index": 4,
+        "sheet_rect": {
+          "x": 1024,
+          "y": 576,
+          "w": 256,
+          "h": 192
+        }
+      },
+      {
+        "file": "frames/damage_death_05.png",
+        "index": 5,
+        "sheet_rect": {
+          "x": 1280,
+          "y": 576,
+          "w": 256,
+          "h": 192
+        }
+      }
+    ]
+  },
+  "suggested_fps": {
+    "walk": 10,
+    "fire": 12,
+    "pincer": 12,
+    "damage_death": 8
+  },
+  "notes": "Source is a lossy JPEG with checkerboard baked into pixels. Background removal is approximate; inspect fine outlines. Some source frame labels skip numbers; frames have been indexed consecutively."
+}

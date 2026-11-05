@@ -1,0 +1,295 @@
+{
+  "image": "voltaic_slinker.png",
+  "frameWidth": 224,
+  "frameHeight": 208,
+  "layout": "8 columns x 6 rows (one animation per row; unused cells transparent)",
+  "sourceNote": "Extracted from a compressed JPG; fine details and transparency are approximate.",
+  "animations": {
+    "idle": {
+      "loop": true,
+      "frames": [
+        {
+          "file": "frames/idle_00.png",
+          "x": 0,
+          "y": 0,
+          "width": 224,
+          "height": 208,
+          "durationMs": 130
+        },
+        {
+          "file": "frames/idle_01.png",
+          "x": 224,
+          "y": 0,
+          "width": 224,
+          "height": 208,
+          "durationMs": 130
+        },
+        {
+          "file": "frames/idle_02.png",
+          "x": 448,
+          "y": 0,
+          "width": 224,
+          "height": 208,
+          "durationMs": 130
+        },
+        {
+          "file": "frames/idle_03.png",
+          "x": 672,
+          "y": 0,
+          "width": 224,
+          "height": 208,
+          "durationMs": 130
+        },
+        {
+          "file": "frames/idle_04.png",
+          "x": 896,
+          "y": 0,
+          "width": 224,
+          "height": 208,
+          "durationMs": 130
+        },
+        {
+          "file": "frames/idle_05.png",
+          "x": 1120,
+          "y": 0,
+          "width": 224,
+          "height": 208,
+          "durationMs": 130
+        }
+      ]
+    },
+    "walk": {
+      "loop": true,
+      "frames": [
+        {
+          "file": "frames/walk_00.png",
+          "x": 0,
+          "y": 208,
+          "width": 224,
+          "height": 208,
+          "durationMs": 100
+        },
+        {
+          "file": "frames/walk_01.png",
+          "x": 224,
+          "y": 208,
+          "width": 224,
+          "height": 208,
+          "durationMs": 100
+        },
+        {
+          "file": "frames/walk_02.png",
+          "x": 448,
+          "y": 208,
+          "width": 224,
+          "height": 208,
+          "durationMs": 100
+        },
+        {
+          "file": "frames/walk_03.png",
+          "x": 672,
+          "y": 208,
+          "width": 224,
+          "height": 208,
+          "durationMs": 100
+        },
+        {
+          "file": "frames/walk_04.png",
+          "x": 896,
+          "y": 208,
+          "width": 224,
+          "height": 208,
+          "durationMs": 100
+        },
+        {
+          "file": "frames/walk_05.png",
+          "x": 1120,
+          "y": 208,
+          "width": 224,
+          "height": 208,
+          "durationMs": 100
+        },
+        {
+          "file": "frames/walk_06.png",
+          "x": 1344,
+          "y": 208,
+          "width": 224,
+          "height": 208,
+          "durationMs": 100
+        },
+        {
+          "file": "frames/walk_07.png",
+          "x": 1568,
+          "y": 208,
+          "width": 224,
+          "height": 208,
+          "durationMs": 100
+        }
+      ]
+    },
+    "swipe": {
+      "loop": false,
+      "frames": [
+        {
+          "file": "frames/swipe_00.png",
+          "x": 0,
+          "y": 416,
+          "width": 224,
+          "height": 208,
+          "durationMs": 90
+        },
+        {
+          "file": "frames/swipe_01.png",
+          "x": 224,
+          "y": 416,
+          "width": 224,
+          "height": 208,
+          "durationMs": 90
+        },
+        {
+          "file": "frames/swipe_02.png",
+          "x": 448,
+          "y": 416,
+          "width": 224,
+          "height": 208,
+          "durationMs": 90
+        },
+        {
+          "file": "frames/swipe_03.png",
+          "x": 672,
+          "y": 416,
+          "width": 224,
+          "height": 208,
+          "durationMs": 90
+        }
+      ]
+    },
+    "static_attack": {
+      "loop": false,
+      "frames": [
+        {
+          "file": "frames/static_attack_00.png",
+          "x": 0,
+          "y": 624,
+          "width": 224,
+          "height": 208,
+          "durationMs": 110
+        },
+        {
+          "file": "frames/static_attack_01.png",
+          "x": 224,
+          "y": 624,
+          "width": 224,
+          "height": 208,
+          "durationMs": 110
+        },
+        {
+          "file": "frames/static_attack_02.png",
+          "x": 448,
+          "y": 624,
+          "width": 224,
+          "height": 208,
+          "durationMs": 110
+        },
+        {
+          "file": "frames/static_attack_03.png",
+          "x": 672,
+          "y": 624,
+          "width": 224,
+          "height": 208,
+          "durationMs": 110
+        },
+        {
+          "file": "frames/static_attack_04.png",
+          "x": 896,
+          "y": 624,
+          "width": 224,
+          "height": 208,
+          "durationMs": 110
+        },
+        {
+          "file": "frames/static_attack_05.png",
+          "x": 1120,
+          "y": 624,
+          "width": 224,
+          "height": 208,
+          "durationMs": 110
+        }
+      ]
+    },
+    "get_hit": {
+      "loop": false,
+      "frames": [
+        {
+          "file": "frames/get_hit_00.png",
+          "x": 0,
+          "y": 832,
+          "width": 224,
+          "height": 208,
+          "durationMs": 150
+        },
+        {
+          "file": "frames/get_hit_01.png",
+          "x": 224,
+          "y": 832,
+          "width": 224,
+          "height": 208,
+          "durationMs": 150
+        }
+      ]
+    },
+    "death": {
+      "loop": false,
+      "frames": [
+        {
+          "file": "frames/death_00.png",
+          "x": 0,
+          "y": 1040,
+          "width": 224,
+          "height": 208,
+          "durationMs": 170
+        },
+        {
+          "file": "frames/death_01.png",
+          "x": 224,
+          "y": 1040,
+          "width": 224,
+          "height": 208,
+          "durationMs": 170
+        },
+        {
+          "file": "frames/death_02.png",
+          "x": 448,
+          "y": 1040,
+          "width": 224,
+          "height": 208,
+          "durationMs": 170
+        },
+        {
+          "file": "frames/death_03.png",
+          "x": 672,
+          "y": 1040,
+          "width": 224,
+          "height": 208,
+          "durationMs": 170
+        },
+        {
+          "file": "frames/death_04.png",
+          "x": 896,
+          "y": 1040,
+          "width": 224,
+          "height": 208,
+          "durationMs": 170
+        },
+        {
+          "file": "frames/death_05.png",
+          "x": 1120,
+          "y": 1040,
+          "width": 224,
+          "height": 208,
+          "durationMs": 170
+        }
+      ]
+    }
+  }
+}

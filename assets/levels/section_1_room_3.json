@@ -1,0 +1,190 @@
+{
+  "version": 4,
+  "title": "03 / CADENA DE PENDULOS",
+  "width": 184,
+  "height": 34,
+  "style": "readable",
+  "spawn": {
+    "x": 3,
+    "y": 4
+  },
+  "pieces": [
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 0,
+      "y": 1,
+      "width": 12,
+      "height": 3
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 26,
+      "y": 2,
+      "width": 9,
+      "height": 3
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 50,
+      "y": 0.5,
+      "width": 10,
+      "height": 3
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 75,
+      "y": 3,
+      "width": 12,
+      "height": 3
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 102,
+      "y": 1,
+      "width": 10,
+      "height": 3
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 126,
+      "y": 3,
+      "width": 12,
+      "height": 3
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 151,
+      "y": 1.5,
+      "width": 9,
+      "height": 3
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 174,
+      "y": 2,
+      "width": 10,
+      "height": 3
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 18.55,
+      "y": 14.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 41.55,
+      "y": 15.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 66.55,
+      "y": 15.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 94.55,
+      "y": 17.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 118.55,
+      "y": 16.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 144.55,
+      "y": 17.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 166.55,
+      "y": 15.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "wall",
+      "role": "wall",
+      "x": -1,
+      "y": -10,
+      "width": 1,
+      "height": 46
+    },
+    {
+      "asset": "wall",
+      "role": "wall",
+      "x": 184,
+      "y": -10,
+      "width": 1,
+      "height": 46
+    }
+  ],
+  "targets": [
+    {
+      "type": "ROBOT",
+      "x": 32,
+      "y": 5.55,
+      "radius": 0.55,
+      "health": 50,
+      "stunImmune": false
+    },
+    {
+      "type": "SCORP",
+      "x": 56,
+      "y": 4.05,
+      "radius": 0.55,
+      "health": 60,
+      "stunImmune": false
+    },
+    {
+      "type": "ROBOT",
+      "x": 83,
+      "y": 6.55,
+      "radius": 0.55,
+      "health": 50,
+      "stunImmune": false
+    },
+    {
+      "type": "SCORP",
+      "x": 133,
+      "y": 6.55,
+      "radius": 0.55,
+      "health": 60,
+      "stunImmune": false
+    }
+  ],
+  "exit": {
+    "x": 179,
+    "y": 5,
+    "width": 2.5,
+    "height": 4,
+    "next": "levels/section_1_room_4.json"
+  }
+}

@@ -20,8 +20,9 @@ public class EnemyAICheck {
         check(life.getHealth()==10&&!life.isInvulnerable(),"Restaura vida y proteccion");
         for(int fps:new int[]{30,60,144,240}) {
             float dt=1f/fps/(float)Math.ceil(240f/fps);
+            for(CombatSystem.EnemyType type:new CombatSystem.EnemyType[]{CombatSystem.EnemyType.MELEE,CombatSystem.EnemyType.ROBOT,CombatSystem.EnemyType.SCORP}) {
             PlayerBody p=ground(0);life=new PlayerVitals();CombatSystem c=new CombatSystem();EnemyAI ai=new EnemyAI();
-            CombatSystem.Enemy e=enemy(CombatSystem.EnemyType.MELEE,5,.5f,false);c.enemies.add(e);
+            CombatSystem.Enemy e=enemy(type,5,.5f,false);c.enemies.add(e);
             for(int i=0;i<Math.round(3/dt);i++)tick(dt,p,life,c,ai);
             check(e.x<4&&e.y>=.49f,"Terrestre persigue y respeta suelo a "+fps);
             check(life.getHealth()<10&&life.getHealth()>4,"Ataques espaciados causan dano a "+fps);
@@ -31,8 +32,9 @@ public class EnemyAICheck {
             for(int i=0;i<Math.round(2/dt);i++)tick(dt,p,life,c,ai);
             check(life.getHealth()<h,"Recupera ataques tras stun");
 
-            p=ground(0);life=new PlayerVitals();c=new CombatSystem();ai=new EnemyAI();
-            e=enemy(CombatSystem.EnemyType.FLYING,4,5,false);c.enemies.add(e);
+            }
+            PlayerBody p=ground(0);life=new PlayerVitals();CombatSystem c=new CombatSystem();EnemyAI ai=new EnemyAI();
+            CombatSystem.Enemy e=enemy(CombatSystem.EnemyType.FLYING,4,5,false);c.enemies.add(e);
             for(int i=0;i<Math.round(3/dt);i++)tick(dt,p,life,c,ai);
             check(e.x<4&&e.y<5&&e.y>=.49f,"Volador persigue en ambos ejes sin entrar al suelo");
             check(life.getHealth()<10,"Volador ataca");

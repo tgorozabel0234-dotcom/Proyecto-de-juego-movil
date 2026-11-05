@@ -5,7 +5,7 @@ import java.util.List;
 
 /** Combate provisional sin dependencias graficas; K se resuelve aqui, no en el gancho. */
 public final class CombatSystem {
-    public enum EnemyType { DUMMY, MELEE, FLYING }
+    public enum EnemyType { DUMMY, MELEE, FLYING, ROBOT, SCORP }
     public enum EnemyState { IDLE, CHASE, WINDUP, RECOVER, STUNNED, DEAD }
     public enum Attack { NONE, SWEEP, UP, THRUST, DOWN, HOOK_STRIKE, WHIRLWIND, AURA }
     public static final class Enemy {

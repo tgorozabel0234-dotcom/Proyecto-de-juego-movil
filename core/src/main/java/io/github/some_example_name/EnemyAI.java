@@ -13,6 +13,8 @@ public final class EnemyAI {
     }
     public final Profile melee=new Profile(3,12,1.25f,1,0.35f,0.9f);
     public final Profile flying=new Profile(3.5f,16,1.35f,1,0.45f,1.1f);
+    public final Profile robot=new Profile(3.8f,14,1.6f,1,.5f,1.1f);
+    public final Profile scorp=new Profile(2.2f,14,2.4f,1,.6f,1.5f);
     public void update(float dt,PlayerBody p,PlayerVitals life,List<CombatSystem.Enemy> enemies) {
         for(CombatSystem.Enemy e:enemies) {
             if(e.type==CombatSystem.EnemyType.DUMMY) continue;
@@ -20,7 +22,7 @@ public final class EnemyAI {
             // No hay rutas alternativas que muevan o ataquen durante el stun.
             if(!e.canAct()) { e.state=CombatSystem.EnemyState.STUNNED;continue; }
             if(!life.alive()) { e.state=CombatSystem.EnemyState.IDLE;continue; }
-            Profile profile=e.type==CombatSystem.EnemyType.FLYING?flying:melee;
+            Profile profile=e.type==CombatSystem.EnemyType.ROBOT?robot:e.type==CombatSystem.EnemyType.SCORP?scorp:e.type==CombatSystem.EnemyType.FLYING?flying:melee;
             e.recovery=Math.max(0,e.recovery-dt);
             float dx=p.x+PlayerBody.WIDTH/2-e.x,dy=p.y+PlayerBody.HEIGHT/2-e.y;
             float distance=(float)Math.hypot(dx,dy);
@@ -31,12 +33,12 @@ public final class EnemyAI {
                 e.windupRemaining=Math.max(0,e.windupRemaining-dt);
                 if(e.windupRemaining==0) {
                     // Se puede esquivar: no se garantiza el golpe al iniciarlo.
-                    if(inRange && life.receiveDamage(profile.damage) && !life.alive()) p.cancelCombatTravel();
+                    if(inRange && dx*e.facing>=0 && life.receiveDamage(profile.damage) && !life.alive()) p.cancelCombatTravel();
                     e.recovery=profile.recovery;e.state=CombatSystem.EnemyState.RECOVER;
                 }
             } else if(inRange && e.recovery<=0) {
                 e.facing=dx<0?-1:1;e.windupRemaining=profile.windup;e.state=CombatSystem.EnemyState.WINDUP;
-            } else if(visible && !inRange) {
+            } else if(visible && !inRange && e.recovery<=0) {
                 e.state=CombatSystem.EnemyState.CHASE;e.facing=dx<0?-1:1;
                 if(e.type==CombatSystem.EnemyType.FLYING) {
                     move(e,p,dx/Math.max(distance,.001f)*profile.speed*dt,dy/Math.max(distance,.001f)*profile.speed*dt);
@@ -49,7 +51,7 @@ public final class EnemyAI {
                     if(!supported||groundAhead) move(e,p,step,0);
                 }
             } else e.state=e.recovery>0?CombatSystem.EnemyState.RECOVER:CombatSystem.EnemyState.IDLE;
-            if(e.type==CombatSystem.EnemyType.MELEE) {
+            if(e.type!=CombatSystem.EnemyType.FLYING) {
                 e.fallSpeed=Math.max(-30,e.fallSpeed-26*dt);
                 if(!move(e,p,0,e.fallSpeed*dt)) e.fallSpeed=0;
                 if(e.y < -10) e.health=0;

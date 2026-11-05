@@ -1,0 +1,21 @@
+{
+  "generator": "built-in image_gen",
+  "prompts": [
+    {
+      "asset": "city",
+      "prompt": "Use case: stylized-concept. Production game asset: background ONLY for a 2D side scrolling cyberpunk platformer. Use the four attached user images as style reference only: dense industrial night city, slate blue smog, tiny cyan and magenta illuminated signs, layered silhouettes, pixel-art details, retro high-quality game environment. Create a wide atmospheric city canyon background, no foreground platforms, no floor, no doors, no hooks, no people, no UI, no grid, no border, no text labels. Many tall buildings extending above and below frame, small vents, conduits, antennas, fine windows. Low contrast desaturated blue grey shapes and sparse subdued cyan/magenta lights so bright playable foreground reads clearly. Orthographic side view, no strong central vanishing point, edge-to-edge continuous city fabric suited to tiling horizontally. 1536x1024 landscape. Dense detailed pixel illustration matching references."
+    },
+    {
+      "asset": "metal",
+      "prompt": "Use case: stylized-concept. Game texture asset, one rectangular metal panel tile, orthographic flat front elevation filling ENTIRE image edge to edge, no margins or backdrop. Cyberpunk industrial pixel art matching the user's references: dark gunmetal blue beveled armor, rivets, perforated ventilation strips, pipe conduits, maintenance panel seams, small warning markings, tiny cyan and magenta indicator lights. This is material applied INSIDE solid rectangular platforms and walls in a 2D side scrolling platform game. Clear thin pale cyan metallic top edge exactly at top of image, no projections above edge, dark structural underside exactly at bottom. Tile should repeat horizontally as modular catwalk fascia. Wide 3:1 composition. No scene, no text, no people, no perspective, no floor plane, no large neon shapes. Detailed pixel illustration, sharp industrial craftsmanship, worn metal. Keep main material medium dark so cyan top lip readable."
+    },
+    {
+      "asset": "door",
+      "prompt": "Use case: stylized-concept. One isolated production game sprite on genuine transparent background: monumental cyberpunk industrial exit door, straight-on flat front elevation for side scrolling pixel art game. Dark blue grey plated steel, layered bevels and inset armor, side conduits and vents, luminous cyan frame with magenta exterior accent tubes, small mint green exit indicator showing only a simple right pointing arrow at the top. Refer to original user's neon industrial doors in supplied reference pictures for mood. Door completely closed; no people, no scenery, no floor, no UI, no text. Whole doorway including all frame visible with small transparent margin. Centered tall 2:3 silhouette. Detailed crisp pixel illustration, not photorealism, not angled, use cyan white core glow sparingly, strong readable silhouette."
+    },
+    {
+      "asset": "anchor",
+      "prompt": "Use case: stylized-concept. Create ONE small readable mechanical grappling anchor sprite for a 2D cyberpunk pixel art platformer. Genuine transparent RGBA background, absolutely no filled background, no environment or shadow rectangle. Front view, centered isolated circular steel coupling ring with a brilliant cyan luminous inner rim, white cyan core highlights, dark steel clamps and two small magenta status diodes. Circular silhouette, minimal short mounting tab at top. No long cable (drawn separately by game), no text, no border, no UI. Thick ring must be clear at 40 pixels rendered size. Detailed sharp pixel art consistent with dark industrial neon reference pictures. Subject occupies central 80% of square canvas, transparent corners and transparent center of ring."
+    }
+  ]
+}

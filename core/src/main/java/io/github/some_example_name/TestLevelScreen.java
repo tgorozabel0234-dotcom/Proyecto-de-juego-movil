@@ -40,6 +40,7 @@ public class TestLevelScreen extends ScreenAdapter {
     private String lastHookMode = "U / I";
     private Texture platformTexture, wallTexture, backgroundTexture, pixel;
     private RedesignSprite playerSprite;
+    private ReadableLevelScene levelScene;
     private final RedesignAnimation playerAnimation=new RedesignAnimation();
 
     private TextureRegion platform, wall;
@@ -55,6 +56,7 @@ public class TestLevelScreen extends ScreenAdapter {
     private final CombatSystem combat = new CombatSystem();
     private Label combatStatus, lifeStatus;
     private final PlayerVitals life = new PlayerVitals();
+    private final EnemySprites enemySprites=new EnemySprites();
     private final EnemyAI enemyAI = new EnemyAI();
     private Color meleeColor, flyingColor;
     private float animationTime;
@@ -76,6 +78,7 @@ public class TestLevelScreen extends ScreenAdapter {
         map = new JsonReader().parse(Gdx.files.internal(levelJsonPath));
         worldWidth = map.getFloat("width");
         worldHeight = map.getFloat("height");
+        if(map.getString("style", "").equals("readable")) levelScene=new ReadableLevelScene();
         for (JsonValue piece = map.get("pieces").child; piece != null; piece = piece.next) {
             player.addSolid(piece.getFloat("x"), piece.getFloat("y"), piece.getFloat("width"), piece.getFloat("height"));
         }
@@ -97,13 +100,15 @@ public class TestLevelScreen extends ScreenAdapter {
         JsonValue enemyConfig=new JsonReader().parse(Gdx.files.internal("enemies/prototype/types.json"));
         life.maxHealth=enemyConfig.get("player").getFloat("health");
         life.invulnerabilityDuration=enemyConfig.get("player").getFloat("invulnerability");
+        loadEnemyProfile(enemyAI.robot,enemyConfig.get("robot"));
+        loadEnemyProfile(enemyAI.scorp,enemyConfig.get("scorp"));
         loadEnemyProfile(enemyAI.melee,enemyConfig.get("melee"));
         loadEnemyProfile(enemyAI.flying,enemyConfig.get("flying"));
         meleeColor=Color.valueOf(enemyConfig.get("melee").getString("color"));
         flyingColor=Color.valueOf(enemyConfig.get("flying").getString("color"));
         JsonValue targets = new JsonReader().parse(Gdx.files.internal("levels/test_combat_targets.json"));
         combat.enemies.clear();
-        for(JsonValue e=targets.get("targets").child;e!=null;e=e.next)
+        for(JsonValue e=(map.has("targets")?map.get("targets"):targets.get("targets")).child;e!=null;e=e.next)
             combat.enemies.add(new CombatSystem.Enemy(e.getFloat("x"),e.getFloat("y"),e.getFloat("radius"),e.getFloat("health"),e.getBoolean("stunImmune",false),CombatSystem.EnemyType.valueOf(e.getString("type","DUMMY"))));
         combat.reset(); life.reset();
         String root = "environments/industrial_v1/";
@@ -288,6 +293,15 @@ public class TestLevelScreen extends ScreenAdapter {
         if(!gameHud.isPaused()) updateGame(delta);
         else { touch.endFrame();delta=0; }
         gameHud.update(player,life,combat);
+        if(!gameHud.isPaused() && life.alive() && map.has("exit") && menu!=null) {
+            JsonValue door=map.get("exit");
+            if(player.x+PlayerBody.WIDTH>door.getFloat("x") && player.x<door.getFloat("x")+door.getFloat("width") && player.y+PlayerBody.HEIGHT>door.getFloat("y") && player.y<door.getFloat("y")+door.getFloat("height")) {
+                String next=door.getString("next");
+                if(next.equals("menu")) returnToMenu();
+                else { game.setScreen(new TestLevelScreen(game,menu,next));dispose(); }
+                return;
+            }
+        }
 
         if (!overview) {
             float frame = Math.min(delta,0.1f);
@@ -314,12 +328,17 @@ public class TestLevelScreen extends ScreenAdapter {
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        if(levelScene!=null) levelScene.draw(batch,pixel,map,camera,animationTime);
+        else {
         float bgScale = Math.max(halfW * 2 / backgroundTexture.getWidth(), halfH * 2 / backgroundTexture.getHeight()) * 1.12f;
         float bgW = backgroundTexture.getWidth() * bgScale, bgH = backgroundTexture.getHeight() * bgScale;
-        batch.draw(backgroundTexture, camera.position.x - bgW / 2, camera.position.y - bgH / 2, bgW, bgH);
+        if(map.getBoolean("artwork",false)) batch.draw(backgroundTexture,0,0,worldWidth,worldHeight);
+        else batch.draw(backgroundTexture, camera.position.x - bgW / 2, camera.position.y - bgH / 2, bgW, bgH);
         for (JsonValue piece = map.get("pieces").child; piece != null; piece = piece.next) {
+            if(map.getBoolean("artwork",false)) continue;
             TextureRegion image = piece.getString("asset").equals("wall") ? wall : platform;
             batch.draw(image, piece.getFloat("x"), piece.getFloat("y"), piece.getFloat("width"), piece.getFloat("height"));
+        }
         }
         drawCombatTargets();
         float centerX = player.x + PlayerBody.WIDTH / 2, centerY = player.y + PlayerBody.HEIGHT / 2;
@@ -388,6 +407,7 @@ public class TestLevelScreen extends ScreenAdapter {
         }
     }
     private void drawCombatTargets() {
+        for(CombatSystem.Enemy e:combat.enemies) enemySprites.draw(batch,e,animationTime);
         for(CombatSystem.Enemy e:combat.enemies) if(e.alive()) {
             batch.setColor(e.flash>0?Color.WHITE:e.isStunned()?Color.valueOf("F4B95D"):e.type==CombatSystem.EnemyType.FLYING?flyingColor:e.type==CombatSystem.EnemyType.MELEE?meleeColor:Color.valueOf("CE568B"));
             if(e.isStunned()) {
@@ -397,7 +417,9 @@ public class TestLevelScreen extends ScreenAdapter {
                 batch.setColor(1,0.35f,0.1f,0.9f);
                 drawCircle(e.x,e.y,e.radius+0.3f);
             }
-            if(e.type==CombatSystem.EnemyType.FLYING) {
+            if(e.type==CombatSystem.EnemyType.ROBOT || e.type==CombatSystem.EnemyType.SCORP) {
+                // Animated sprites are drawn separately.
+            } else if(e.type==CombatSystem.EnemyType.FLYING) {
                 drawCircle(e.x,e.y,e.radius);
                 float flap=MathUtils.sin(animationTime*12)*e.radius*.6f;
                 drawLine(e.x-e.radius*1.8f,e.y+flap,e.x-e.radius*.4f,e.y,0.12f);
@@ -474,6 +496,8 @@ public class TestLevelScreen extends ScreenAdapter {
         if (Gdx.input.getInputProcessor() == input) Gdx.input.setInputProcessor(null);
     }
     @Override public void dispose() {
+        enemySprites.dispose();
+        if(levelScene!=null){levelScene.dispose();levelScene=null;}
         hide();
         if (hud != null) { hud.dispose(); hud = null; }
         if (batch != null) { batch.dispose(); batch = null; }

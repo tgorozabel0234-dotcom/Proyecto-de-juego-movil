@@ -1,0 +1,261 @@
+voltaic_slinker.png
+size: 1792, 1248
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+
+idle
+  rotate: false
+  xy: 0, 0
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 0
+
+idle
+  rotate: false
+  xy: 224, 0
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 1
+
+idle
+  rotate: false
+  xy: 448, 0
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 2
+
+idle
+  rotate: false
+  xy: 672, 0
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 3
+
+idle
+  rotate: false
+  xy: 896, 0
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 4
+
+idle
+  rotate: false
+  xy: 1120, 0
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 5
+
+walk
+  rotate: false
+  xy: 0, 208
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 0
+
+walk
+  rotate: false
+  xy: 224, 208
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 1
+
+walk
+  rotate: false
+  xy: 448, 208
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 2
+
+walk
+  rotate: false
+  xy: 672, 208
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 3
+
+walk
+  rotate: false
+  xy: 896, 208
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 4
+
+walk
+  rotate: false
+  xy: 1120, 208
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 5
+
+walk
+  rotate: false
+  xy: 1344, 208
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 6
+
+walk
+  rotate: false
+  xy: 1568, 208
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 7
+
+swipe
+  rotate: false
+  xy: 0, 416
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 0
+
+swipe
+  rotate: false
+  xy: 224, 416
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 1
+
+swipe
+  rotate: false
+  xy: 448, 416
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 2
+
+swipe
+  rotate: false
+  xy: 672, 416
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 3
+
+static_attack
+  rotate: false
+  xy: 0, 624
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 0
+
+static_attack
+  rotate: false
+  xy: 224, 624
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 1
+
+static_attack
+  rotate: false
+  xy: 448, 624
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 2
+
+static_attack
+  rotate: false
+  xy: 672, 624
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 3
+
+static_attack
+  rotate: false
+  xy: 896, 624
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 4
+
+static_attack
+  rotate: false
+  xy: 1120, 624
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 5
+
+get_hit
+  rotate: false
+  xy: 0, 832
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 0
+
+get_hit
+  rotate: false
+  xy: 224, 832
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 1
+
+death
+  rotate: false
+  xy: 0, 1040
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 0
+
+death
+  rotate: false
+  xy: 224, 1040
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 1
+
+death
+  rotate: false
+  xy: 448, 1040
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 2
+
+death
+  rotate: false
+  xy: 672, 1040
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 3
+
+death
+  rotate: false
+  xy: 896, 1040
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 4
+
+death
+  rotate: false
+  xy: 1120, 1040
+  size: 224, 208
+  orig: 224, 208
+  offset: 0, 0
+  index: 5
