@@ -1,8 +1,8 @@
 {
   "version": 4,
-  "title": "02 / TORRE DE ASCENSO",
+  "title": "Cenizas de neón / Torre de bombeo",
   "width": 64,
-  "height": 100,
+  "height": 112,
   "style": "readable",
   "spawn": {
     "x": 4,
@@ -14,7 +14,7 @@
       "role": "platform",
       "x": 0,
       "y": 0,
-      "width": 64,
+      "width": 19,
       "height": 2
     },
     {
@@ -22,7 +22,7 @@
       "role": "platform",
       "x": 16,
       "y": 12.5,
-      "width": 48,
+      "width": 33,
       "height": 1.5
     },
     {
@@ -38,7 +38,7 @@
       "role": "platform",
       "x": 0,
       "y": 24.5,
-      "width": 48,
+      "width": 17,
       "height": 1.5
     },
     {
@@ -54,7 +54,7 @@
       "role": "platform",
       "x": 16,
       "y": 36.5,
-      "width": 48,
+      "width": 32,
       "height": 1.5
     },
     {
@@ -70,7 +70,7 @@
       "role": "platform",
       "x": 0,
       "y": 48.5,
-      "width": 48,
+      "width": 15,
       "height": 1.5
     },
     {
@@ -86,7 +86,7 @@
       "role": "platform",
       "x": 16,
       "y": 60.5,
-      "width": 48,
+      "width": 37,
       "height": 1.5
     },
     {
@@ -102,7 +102,7 @@
       "role": "platform",
       "x": 0,
       "y": 72.5,
-      "width": 48,
+      "width": 16,
       "height": 1.5
     },
     {
@@ -118,7 +118,7 @@
       "role": "platform",
       "x": 16,
       "y": 84.5,
-      "width": 48,
+      "width": 34,
       "height": 1.5
     },
     {
@@ -135,7 +135,7 @@
       "x": -1,
       "y": -10,
       "width": 1,
-      "height": 112
+      "height": 124
     },
     {
       "asset": "wall",
@@ -143,11 +143,220 @@
       "x": 64,
       "y": -10,
       "width": 1,
-      "height": 112
+      "height": 124
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 6,
+      "y": 6.4,
+      "width": 6,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 50,
+      "y": 30,
+      "width": 7,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 6,
+      "y": 55,
+      "width": 7,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 0,
+      "y": 96.5,
+      "width": 48,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 55.55,
+      "y": 104.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 20.6,
+      "y": 0,
+      "width": 43.4,
+      "height": 2,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 50.6,
+      "y": 12.5,
+      "width": 13.4,
+      "height": 1.5,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 18.6,
+      "y": 24.5,
+      "width": 29.4,
+      "height": 1.5,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 49.6,
+      "y": 36.5,
+      "width": 14.4,
+      "height": 1.5,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 16.6,
+      "y": 48.5,
+      "width": 31.4,
+      "height": 1.5,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 54.6,
+      "y": 60.5,
+      "width": 9.4,
+      "height": 1.5,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 17.6,
+      "y": 72.5,
+      "width": 30.4,
+      "height": 1.5,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 51.6,
+      "y": 84.5,
+      "width": 12.4,
+      "height": 1.5,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 18.7,
+      "y": 1.1,
+      "width": 2.2,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 47,
+      "y": 13,
+      "width": 5,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 15.8,
+      "y": 25.1,
+      "width": 4,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 46.5,
+      "y": 37,
+      "width": 4,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 13.8,
+      "y": 49,
+      "width": 4,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 51,
+      "y": 61,
+      "width": 5,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 14.5,
+      "y": 73,
+      "width": 4,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 48,
+      "y": 85,
+      "width": 5,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 8,
+      "y": 9.6,
+      "width": 6,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 32,
+      "y": 8.3,
+      "width": 11,
+      "height": 0.55
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 25.4,
+      "y": 34.4,
+      "width": 7.2,
+      "height": 0.55
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 27,
+      "y": 80.4,
+      "width": 10,
+      "height": 0.55
     }
   ],
   "targets": [
     {
+      "id": "robot-01",
       "type": "ROBOT",
       "x": 35,
       "y": 14.55,
@@ -156,6 +365,7 @@
       "stunImmune": false
     },
     {
+      "id": "scorp-02",
       "type": "SCORP",
       "x": 25,
       "y": 26.55,
@@ -164,6 +374,7 @@
       "stunImmune": false
     },
     {
+      "id": "robot-03",
       "type": "ROBOT",
       "x": 39,
       "y": 38.55,
@@ -172,6 +383,7 @@
       "stunImmune": false
     },
     {
+      "id": "robot-04",
       "type": "ROBOT",
       "x": 24,
       "y": 50.55,
@@ -180,6 +392,7 @@
       "stunImmune": false
     },
     {
+      "id": "scorp-05",
       "type": "SCORP",
       "x": 39,
       "y": 50.55,
@@ -188,6 +401,7 @@
       "stunImmune": false
     },
     {
+      "id": "scorp-06",
       "type": "SCORP",
       "x": 39,
       "y": 62.55,
@@ -196,6 +410,7 @@
       "stunImmune": false
     },
     {
+      "id": "robot-07",
       "type": "ROBOT",
       "x": 26,
       "y": 74.55,
@@ -204,6 +419,7 @@
       "stunImmune": false
     },
     {
+      "id": "scorp-08",
       "type": "SCORP",
       "x": 40,
       "y": 86.55,
@@ -213,10 +429,129 @@
     }
   ],
   "exit": {
-    "x": 58,
-    "y": 86,
+    "x": 4,
+    "y": 98,
     "width": 2.5,
     "height": 4,
     "next": "levels/section_1_room_3.json"
-  }
+  },
+  "signs": [
+    {
+      "x": 3,
+      "y": 6,
+      "text": "BOMBAS / SUBIR"
+    },
+    {
+      "x": 27,
+      "y": 30,
+      "text": "NIVEL DE AGUA"
+    },
+    {
+      "x": 24,
+      "y": 54,
+      "text": "FILTRO 04"
+    },
+    {
+      "x": 29,
+      "y": 78,
+      "text": "SALA DE PRESION"
+    },
+    {
+      "x": 23,
+      "y": 102,
+      "text": "< PASARELA DE GRUAS"
+    }
+  ],
+  "scenery": [
+    {
+      "sprite": "pump",
+      "x": 4,
+      "y": 2,
+      "width": 13
+    },
+    {
+      "sprite": "pump_bank",
+      "x": 27,
+      "y": 2,
+      "width": 19
+    },
+    {
+      "sprite": "vessel",
+      "x": 45,
+      "y": 14,
+      "width": 12
+    },
+    {
+      "sprite": "gauge",
+      "x": 24,
+      "y": 26,
+      "width": 11
+    },
+    {
+      "sprite": "diverter",
+      "x": 7,
+      "y": 26,
+      "width": 9
+    },
+    {
+      "sprite": "pump",
+      "x": 26,
+      "y": 38,
+      "width": 10
+    },
+    {
+      "sprite": "filters",
+      "x": 22,
+      "y": 50,
+      "width": 14
+    },
+    {
+      "sprite": "filters",
+      "x": 4,
+      "y": 50,
+      "width": 10
+    },
+    {
+      "sprite": "busbars",
+      "x": 37,
+      "y": 62,
+      "width": 13
+    },
+    {
+      "sprite": "vessel",
+      "x": 26,
+      "y": 74,
+      "width": 15
+    },
+    {
+      "sprite": "gauge",
+      "x": 11,
+      "y": 74,
+      "width": 8
+    },
+    {
+      "sprite": "water_tower",
+      "x": 46,
+      "y": 86,
+      "width": 10
+    },
+    {
+      "sprite": "gantry",
+      "x": 17,
+      "y": 98,
+      "width": 22
+    }
+  ],
+  "vents": [
+    {
+      "x": 30,
+      "y": 14,
+      "width": 1.15,
+      "height": 3.2,
+      "period": 5.8,
+      "phase": 0.43,
+      "blast": 1.1,
+      "warning": 0.85
+    }
+  ]
 }

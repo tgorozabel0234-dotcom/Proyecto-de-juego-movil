@@ -99,6 +99,24 @@ public class MenuScreen implements Screen {
             }
         });
 
+        TextButton load = new BorderButton("CARGAR PARTIDA", skin, "default");
+        load.addListener(new ClickListener() {
+            @Override public void clicked(InputEvent event, float x, float y) {
+                try {
+                    SaveStore.Snapshot saved = SaveStore.local().read();
+                    com.badlogic.gdx.files.FileHandle level = Gdx.files.internal(saved.level);
+                    if (!level.exists() || !new com.badlogic.gdx.utils.JsonReader().parse(level).has("pieces"))
+                        throw new java.io.IOException("Nivel no disponible");
+                    game.setScreen(new TestLevelScreen(game, MenuScreen.this, saved));
+                } catch (java.nio.file.NoSuchFileException e) {
+                    load.setText("SIN PARTIDA GUARDADA");
+                } catch (java.io.IOException e) {
+                    load.setText("ERROR AL CARGAR PARTIDA");
+                    Gdx.app.error("Guardado", "Error al cargar la partida", e);
+                }
+            }
+        });
+
         btnNiveles.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -138,6 +156,8 @@ public class MenuScreen implements Screen {
         table.center().padBottom(16f);
         table.add(btnJugar).width(280).height(42).padBottom(8);
         table.row();
+        table.add(load).width(280).height(42).padBottom(8);
+        table.row();
         table.add(btnNiveles).width(280).height(42).padBottom(8);
         table.row();
         table.add(btnOpciones).width(280).height(42).padBottom(8);
@@ -172,8 +192,9 @@ public class MenuScreen implements Screen {
         levelsTable.row();
         for (int i = 0; i < 6; i++) {
             boolean testLevel = i == 0;
-            boolean section1Level = i == 1;
-            String text = testLevel ? "00  NIVEL DE PRUEBAS" : section1Level ? "01  SECCIÓN 1" : String.format("%02d  PROXIMAMENTE", i);
+            boolean campaign = i == 1 || i == 2;
+            String campaignMap = "levels/section_" + i + ".json";
+            String text = testLevel ? "00  NIVEL DE PRUEBAS" : i == 1 ? "01  CENIZAS DE NEÓN" : i == 2 ? "02  CONDUCTOS" : String.format("%02d  PROXIMAMENTE", i);
             BorderButton option = new BorderButton(text, skin, "default");
             if (testLevel) {
                 option.addListener(new ClickListener() {
@@ -182,11 +203,10 @@ public class MenuScreen implements Screen {
                         Gdx.app.log("NIVELES", "Nivel de pruebas seleccionado");
                     }
                 });
-            } else if (section1Level) {
+            } else if (campaign) {
                 option.addListener(new ClickListener() {
                     @Override public void clicked(InputEvent event, float x, float y) {
-                        game.setScreen(new TestLevelScreen(game, MenuScreen.this, "levels/section_1.json"));
-                        Gdx.app.log("NIVELES", "Sección 1 seleccionada");
+                        game.setScreen(new TestLevelScreen(game, MenuScreen.this, campaignMap));
                     }
                 });
             } else {
@@ -197,7 +217,7 @@ public class MenuScreen implements Screen {
             levelsTable.add(option).width(260).height(54);
             if (i % 2 == 1) levelsTable.row();
         }
-        levelStatus = new Label("Elige el nivel de pruebas", skin, "description");
+        levelStatus = new Label("Elige un nivel", skin, "description");
         levelsTable.add(levelStatus).colspan(2).padTop(12);
         levelsTable.row();
         BorderButton back = new BorderButton("VOLVER AL MENU", skin, "default");

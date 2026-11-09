@@ -30,3 +30,16 @@ tasks.named('check') { dependsOn 'hookCommandCheck' }
 // Las verificaciones se ejecutan como JavaExec (physicsCheck y hookCommandCheck),
 // sin un framework JUnit. check depende de ambas y conserva sus fallos de asercion.
 tasks.named('test') { failOnNoDiscoveredTests = false }
+tasks.register('saveStoreCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'io.github.some_example_name.SaveStoreCheck'
+}
+tasks.named('check') { dependsOn 'saveStoreCheck' }
+
+tasks.register('industrialTraversalCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'io.github.some_example_name.IndustrialTraversalCheck'
+}
+tasks.named('check') { dependsOn 'industrialTraversalCheck' }

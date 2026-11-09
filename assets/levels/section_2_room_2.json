@@ -1,0 +1,311 @@
+{
+  "version": 4,
+  "title": "Conductos de Central Corp / Galería de refrigeración",
+  "style": "readable",
+  "width": 150,
+  "height": 36,
+  "spawn": {
+    "x": 3,
+    "y": 4
+  },
+  "pieces": [
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 0,
+      "y": 2,
+      "width": 14,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 25,
+      "y": 4,
+      "width": 17,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 46,
+      "y": 7,
+      "width": 10,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 78,
+      "y": 7,
+      "width": 14,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 105,
+      "y": 6,
+      "width": 16,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 126,
+      "y": 3,
+      "width": 24,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 60,
+      "y": -0.5,
+      "width": 10,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 80,
+      "y": 0,
+      "width": 16,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 98,
+      "y": 1,
+      "width": 9,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 108,
+      "y": 3,
+      "width": 7,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 22.55,
+      "y": 13.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 43.55,
+      "y": 16.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 69.55,
+      "y": 18.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 97.55,
+      "y": 18.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 123.55,
+      "y": 15.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "wall",
+      "role": "wall",
+      "x": -1,
+      "y": -10,
+      "width": 1,
+      "height": 48
+    },
+    {
+      "asset": "wall",
+      "role": "wall",
+      "x": 150,
+      "y": -10,
+      "width": 1,
+      "height": 48
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 15.6,
+      "y": 2,
+      "width": 6.4,
+      "height": 2,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 57.6,
+      "y": 7,
+      "width": 5.4,
+      "height": 1.5,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 71.6,
+      "y": -0.5,
+      "width": 6.4,
+      "height": 1.5,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 61,
+      "y": 7.2,
+      "width": 7,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 95,
+      "y": 3.5,
+      "width": 5,
+      "height": 0.65
+    }
+  ],
+  "targets": [
+    {
+      "id": "guard-0",
+      "type": "ROBOT",
+      "x": 31,
+      "y": 6.05,
+      "health": 50,
+      "radius": 0.55
+    },
+    {
+      "id": "guard-1",
+      "type": "SCORP",
+      "x": 85,
+      "y": 9.05,
+      "health": 60,
+      "radius": 0.55
+    },
+    {
+      "id": "guard-2",
+      "type": "ROBOT",
+      "x": 135,
+      "y": 5.05,
+      "health": 50,
+      "radius": 0.55
+    }
+  ],
+  "exit": {
+    "x": 144,
+    "y": 4.5,
+    "width": 2.5,
+    "height": 4,
+    "next": "levels/section_2_room_3.json"
+  },
+  "portals": [],
+  "signs": [
+    {
+      "x": 3,
+      "y": 9,
+      "text": "REFRIGERACION"
+    },
+    {
+      "x": 46,
+      "y": 13,
+      "text": "ROTURA / USE EL GANCHO"
+    },
+    {
+      "x": 65,
+      "y": 5,
+      "text": "DRENAJE >"
+    },
+    {
+      "x": 127,
+      "y": 9,
+      "text": "CONMUTACION >"
+    }
+  ],
+  "background": "environments/industrial_v1/background_hangar_v1.png",
+  "scenery": [
+    {
+      "sprite": "chiller",
+      "x": 3,
+      "y": 4,
+      "width": 16
+    },
+    {
+      "sprite": "gauge",
+      "x": 26,
+      "y": 5.5,
+      "width": 9
+    },
+    {
+      "sprite": "rupture",
+      "x": 48,
+      "y": 8.5,
+      "width": 17
+    },
+    {
+      "sprite": "drain",
+      "x": 63,
+      "y": 1,
+      "width": 13
+    },
+    {
+      "sprite": "rupture",
+      "x": 78,
+      "y": 8.5,
+      "width": 13
+    },
+    {
+      "sprite": "drain",
+      "x": 96,
+      "y": 2.5,
+      "width": 10
+    },
+    {
+      "sprite": "chiller",
+      "x": 106,
+      "y": 7.5,
+      "width": 13
+    },
+    {
+      "sprite": "switchboard",
+      "x": 129,
+      "y": 4.5,
+      "width": 14
+    }
+  ],
+  "vents": [
+    {
+      "x": 60,
+      "y": 8.5,
+      "width": 1.15,
+      "height": 3.2,
+      "period": 5.8,
+      "phase": 0.86,
+      "blast": 1.1,
+      "warning": 0.85
+    }
+  ]
+}

@@ -1,0 +1,331 @@
+{
+  "tenement": {
+    "sheet": "barrio",
+    "x": 39,
+    "y": 3,
+    "w": 346,
+    "h": 303
+  },
+  "ramen": {
+    "sheet": "barrio",
+    "x": 452,
+    "y": 5,
+    "w": 360,
+    "h": 301
+  },
+  "workshop": {
+    "sheet": "barrio",
+    "x": 858,
+    "y": 31,
+    "w": 381,
+    "h": 275
+  },
+  "water_tower": {
+    "sheet": "barrio",
+    "x": 105,
+    "y": 321,
+    "w": 209,
+    "h": 296
+  },
+  "service_lift": {
+    "sheet": "barrio",
+    "x": 498,
+    "y": 326,
+    "w": 253,
+    "h": 291
+  },
+  "station": {
+    "sheet": "barrio",
+    "x": 838,
+    "y": 372,
+    "w": 412,
+    "h": 239
+  },
+  "shelter": {
+    "sheet": "barrio",
+    "x": 11,
+    "y": 641,
+    "w": 398,
+    "h": 265
+  },
+  "pump": {
+    "sheet": "barrio",
+    "x": 434,
+    "y": 638,
+    "w": 375,
+    "h": 269
+  },
+  "gauge": {
+    "sheet": "barrio",
+    "x": 866,
+    "y": 631,
+    "w": 359,
+    "h": 286
+  },
+  "filters": {
+    "sheet": "barrio",
+    "x": 8,
+    "y": 963,
+    "w": 404,
+    "h": 256
+  },
+  "vessel": {
+    "sheet": "barrio",
+    "x": 432,
+    "y": 953,
+    "w": 396,
+    "h": 265
+  },
+  "gantry": {
+    "sheet": "barrio",
+    "x": 847,
+    "y": 954,
+    "w": 401,
+    "h": 265
+  },
+  "crane": {
+    "sheet": "puerto",
+    "x": 26,
+    "y": 15,
+    "w": 377,
+    "h": 283
+  },
+  "net": {
+    "sheet": "puerto",
+    "x": 457,
+    "y": 64,
+    "w": 337,
+    "h": 230
+  },
+  "cargo": {
+    "sheet": "puerto",
+    "x": 901,
+    "y": 16,
+    "w": 294,
+    "h": 279
+  },
+  "conveyor": {
+    "sheet": "puerto",
+    "x": 26,
+    "y": 339,
+    "w": 369,
+    "h": 260
+  },
+  "cabin": {
+    "sheet": "puerto",
+    "x": 466,
+    "y": 321,
+    "w": 314,
+    "h": 288
+  },
+  "trolley": {
+    "sheet": "puerto",
+    "x": 859,
+    "y": 438,
+    "w": 377,
+    "h": 156
+  },
+  "depot": {
+    "sheet": "puerto",
+    "x": 17,
+    "y": 656,
+    "w": 380,
+    "h": 262
+  },
+  "tracker": {
+    "sheet": "puerto",
+    "x": 425,
+    "y": 643,
+    "w": 398,
+    "h": 277
+  },
+  "datapad": {
+    "sheet": "puerto",
+    "x": 841,
+    "y": 661,
+    "w": 409,
+    "h": 267
+  },
+  "factory": {
+    "sheet": "puerto",
+    "x": 9,
+    "y": 948,
+    "w": 403,
+    "h": 292
+  },
+  "freight_lift": {
+    "sheet": "puerto",
+    "x": 435,
+    "y": 958,
+    "w": 350,
+    "h": 282
+  },
+  "checkpoint": {
+    "sheet": "puerto",
+    "x": 835,
+    "y": 956,
+    "w": 409,
+    "h": 280
+  },
+  "intake": {
+    "sheet": "central",
+    "x": 24,
+    "y": 13,
+    "w": 371,
+    "h": 284
+  },
+  "diverter": {
+    "sheet": "central",
+    "x": 461,
+    "y": 39,
+    "w": 339,
+    "h": 258
+  },
+  "pump_bank": {
+    "sheet": "central",
+    "x": 851,
+    "y": 64,
+    "w": 387,
+    "h": 218
+  },
+  "gallery": {
+    "sheet": "central",
+    "x": 32,
+    "y": 328,
+    "w": 357,
+    "h": 282
+  },
+  "floodgate": {
+    "sheet": "central",
+    "x": 456,
+    "y": 333,
+    "w": 339,
+    "h": 276
+  },
+  "chiller": {
+    "sheet": "central",
+    "x": 851,
+    "y": 350,
+    "w": 384,
+    "h": 252
+  },
+  "rupture": {
+    "sheet": "central",
+    "x": 24,
+    "y": 665,
+    "w": 371,
+    "h": 254
+  },
+  "drain": {
+    "sheet": "central",
+    "x": 435,
+    "y": 654,
+    "w": 369,
+    "h": 259
+  },
+  "switchboard": {
+    "sheet": "central",
+    "x": 866,
+    "y": 640,
+    "w": 366,
+    "h": 266
+  },
+  "transformer": {
+    "sheet": "central",
+    "x": 16,
+    "y": 951,
+    "w": 379,
+    "h": 277
+  },
+  "piston": {
+    "sheet": "central",
+    "x": 458,
+    "y": 946,
+    "w": 339,
+    "h": 284
+  },
+  "busbars": {
+    "sheet": "central",
+    "x": 851,
+    "y": 966,
+    "w": 394,
+    "h": 255
+  },
+  "records": {
+    "sheet": "archivo",
+    "x": 45,
+    "y": 8,
+    "w": 341,
+    "h": 283
+  },
+  "analyzer": {
+    "sheet": "archivo",
+    "x": 465,
+    "y": 5,
+    "w": 320,
+    "h": 289
+  },
+  "breaker": {
+    "sheet": "archivo",
+    "x": 870,
+    "y": 6,
+    "w": 340,
+    "h": 287
+  },
+  "dish": {
+    "sheet": "archivo",
+    "x": 41,
+    "y": 316,
+    "w": 356,
+    "h": 291
+  },
+  "intercom": {
+    "sheet": "archivo",
+    "x": 473,
+    "y": 325,
+    "w": 301,
+    "h": 283
+  },
+  "header": {
+    "sheet": "archivo",
+    "x": 852,
+    "y": 323,
+    "w": 355,
+    "h": 285
+  },
+  "ramen_lamp": {
+    "sheet": "archivo",
+    "x": 49,
+    "y": 641,
+    "w": 317,
+    "h": 279
+  },
+  "shelter_lamp": {
+    "sheet": "archivo",
+    "x": 440,
+    "y": 630,
+    "w": 353,
+    "h": 291
+  },
+  "gate_lamp": {
+    "sheet": "archivo",
+    "x": 852,
+    "y": 641,
+    "w": 369,
+    "h": 277
+  },
+  "timetable": {
+    "sheet": "archivo",
+    "x": 60,
+    "y": 954,
+    "w": 503,
+    "h": 287
+  },
+  "tools": {
+    "sheet": "archivo",
+    "x": 721,
+    "y": 961,
+    "w": 454,
+    "h": 286
+  }
+}

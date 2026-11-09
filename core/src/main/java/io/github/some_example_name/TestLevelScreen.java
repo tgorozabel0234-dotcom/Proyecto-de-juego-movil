@@ -73,16 +73,82 @@ public class TestLevelScreen extends ScreenAdapter {
         this.levelJsonPath = levelJsonPath;
     }
 
+    private SaveStore.Snapshot checkpoint;
+    private java.util.Set<String> flags = new java.util.HashSet<>();
+    private JsonValue arrival;
+
+    private boolean enterDoor(JsonValue door) {
+        if (door == null || (door.has("requires") && !flags.contains(door.getString("requires")))) return false;
+        float x = door.getFloat("x"), y = door.getFloat("y");
+        if (player.x + PlayerBody.WIDTH <= x || player.x >= x + door.getFloat("width")
+            || player.y + PlayerBody.HEIGHT <= y || player.y >= y + door.getFloat("height")) return false;
+        if (door.has("grant")) flags.add(door.getString("grant"));
+        String next = door.getString("next");
+        if (next.equals("menu")) {
+            returnToMenu();
+        } else {
+            recordRoom();
+            TestLevelScreen destination = new TestLevelScreen(game, menu, next);
+            destination.arrival = door.get("arrival");
+            destination.worldHealth = worldHealth;
+            destination.flags = flags;
+            game.setScreen(destination);
+            dispose();
+        }
+        return true;
+    }
+    private java.util.HashMap<String, Float> worldHealth = new java.util.HashMap<>();
+
+    TestLevelScreen(Game game, MenuScreen menu, SaveStore.Snapshot checkpoint) {
+        this(game, menu, checkpoint.level);
+        this.checkpoint = checkpoint;
+        this.worldHealth.putAll(checkpoint.enemies);
+        java.util.Collections.addAll(flags, checkpoint.flags);
+    }
+
+    private final java.util.IdentityHashMap<CombatSystem.Enemy, String> enemyIds = new java.util.IdentityHashMap<>();
+
+    private String legacyEnemyKey(CombatSystem.Enemy enemy) {
+        return levelJsonPath + "/" + enemy.type.name() + "_" + enemy.spawnX + "_" + enemy.spawnY;
+    }
+
+    private void recordRoom() {
+        for (CombatSystem.Enemy enemy : combat.enemies)
+            worldHealth.put(enemyIds.get(enemy), enemy.health);
+    }
+
+    private String saveCheckpoint() {
+        if (!life.alive() || player.y < 0) return "Busca un lugar seguro";
+        SaveStore.Snapshot data = new SaveStore.Snapshot();
+        data.version = SaveStore.CURRENT_VERSION;
+        data.facing = player.getFacing() < 0 ? -1 : 1;
+        data.level = levelJsonPath;
+        data.x = player.x;
+        data.y = player.y;
+        data.health = life.getHealth();
+        recordRoom();
+        data.flags = flags.toArray(new String[0]);
+        data.enemies = new java.util.HashMap<>(worldHealth);
+        try {
+            SaveStore.local().write(data);
+            return "Guardado";
+        } catch (Exception e) {
+            Gdx.app.error("Guardado", "Error al escribir la partida", e);
+            return "Error al guardar";
+        }
+    }
+
     @Override public void show() {
         batch = new SpriteBatch();
         map = new JsonReader().parse(Gdx.files.internal(levelJsonPath));
         worldWidth = map.getFloat("width");
         worldHeight = map.getFloat("height");
-        if(map.getString("style", "").equals("readable")) levelScene=new ReadableLevelScene();
+        if(map.getString("style", "").equals("readable")) levelScene=new ReadableLevelScene(map);
         for (JsonValue piece = map.get("pieces").child; piece != null; piece = piece.next) {
-            player.addSolid(piece.getFloat("x"), piece.getFloat("y"), piece.getFloat("width"), piece.getFloat("height"));
+            player.addSolid(piece.getFloat("x"), piece.getFloat("y"), piece.getFloat("width"), piece.getFloat("height"), "pipe".equals(piece.getString("role", "")));
         }
-        player.reset(map.get("spawn").getFloat("x"), map.get("spawn").getFloat("y"));
+        if (arrival == null) arrival = map.get("spawn");
+        player.reset(arrival.getFloat("x"), arrival.getFloat("y"));
         JsonValue attacks = new JsonReader().parse(Gdx.files.internal("combat/prototype/attacks.json"));
         combat.duration=attacks.getFloat("duration"); combat.reach=attacks.getFloat("reach");
         combat.attackOriginHeight=attacks.getFloat("attackOriginHeight",PlayerBody.HEIGHT/2);
@@ -108,9 +174,25 @@ public class TestLevelScreen extends ScreenAdapter {
         flyingColor=Color.valueOf(enemyConfig.get("flying").getString("color"));
         JsonValue targets = new JsonReader().parse(Gdx.files.internal("levels/test_combat_targets.json"));
         combat.enemies.clear();
-        for(JsonValue e=(map.has("targets")?map.get("targets"):targets.get("targets")).child;e!=null;e=e.next)
-            combat.enemies.add(new CombatSystem.Enemy(e.getFloat("x"),e.getFloat("y"),e.getFloat("radius"),e.getFloat("health"),e.getBoolean("stunImmune",false),CombatSystem.EnemyType.valueOf(e.getString("type","DUMMY"))));
+        for(JsonValue e=(map.has("targets")?map.get("targets"):targets.get("targets")).child;e!=null;e=e.next) {
+            CombatSystem.Enemy enemy = new CombatSystem.Enemy(e.getFloat("x"),e.getFloat("y"),e.getFloat("radius"),e.getFloat("health"),e.getBoolean("stunImmune",false),CombatSystem.EnemyType.valueOf(e.getString("type","DUMMY")));
+            combat.enemies.add(enemy);
+            enemyIds.put(enemy, e.has("id") ? levelJsonPath + "/" + e.getString("id") : legacyEnemyKey(enemy));
+        }
         combat.reset(); life.reset();
+        if (checkpoint != null) {
+            if (checkpoint.x >= 0 && checkpoint.x + PlayerBody.WIDTH <= worldWidth
+                && checkpoint.y >= 0 && checkpoint.y <= worldHeight
+                && player.isAreaFree(checkpoint.x, checkpoint.y, PlayerBody.WIDTH, PlayerBody.HEIGHT))
+                player.restoreCheckpoint(checkpoint.x, checkpoint.y, checkpoint.facing);
+            life.restoreHealth(checkpoint.health);
+        }
+        for (CombatSystem.Enemy enemy : combat.enemies) {
+            String key = enemyIds.get(enemy);
+            Float legacyHealth = worldHealth.remove(legacyEnemyKey(enemy));
+            Float hp = worldHealth.containsKey(key) ? worldHealth.get(key) : legacyHealth;
+            if (hp != null) enemy.health = Math.min(enemy.maxHealth, hp);
+        }
         String root = "environments/industrial_v1/";
         String platformPath = root + "platform_metal_orange_v1.png";
         String wallPath = root + "wall_metal_conduit_v1.png";
@@ -152,7 +234,7 @@ public class TestLevelScreen extends ScreenAdapter {
         });
         Gdx.input.setInputProcessor(input);
         Gdx.input.setCatchKey(Input.Keys.BACK,true);
-        camera.position.set(worldWidth / 2f, 7, 0);
+        camera.position.set(player.x, player.y + 3.5f, 0);
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
@@ -174,7 +256,7 @@ public class TestLevelScreen extends ScreenAdapter {
     private void createHud() {
         font=new BitmapFont();
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear,Texture.TextureFilter.Linear);
-        gameHud=new GameHud(pixel,font,touch,()->restartLevel(),()->returnToMenu(),()->overview=!overview);
+        gameHud=new GameHud(pixel,font,touch,()->restartLevel(),()->returnToMenu(),()->overview=!overview,this::saveCheckpoint);
         hud=gameHud.stage;
         lifeStatus=gameHud.lifeStatus;movementStatus=gameHud.movementStatus;hookStatus=gameHud.hookStatus;
         combatStatus=gameHud.combatStatus;hookInputStatus=gameHud.hookInputStatus;debugSummary=gameHud.debugSummary;
@@ -185,7 +267,7 @@ public class TestLevelScreen extends ScreenAdapter {
     private void restartLevel() {
         gameHud.cancelTouches();hookControls.reset();combat.reset();life.reset();shotTime=hookMissTimer=commandFeedbackTime=0;
         cameraAheadX=cameraAheadY=0;motionZoom=1;overview=false;inspectionZoom=1;
-        player.reset(map.get("spawn").getFloat("x"),map.get("spawn").getFloat("y"));
+        player.reset(arrival.getFloat("x"), arrival.getFloat("y"));
         playerAnimation.reset(life.getHealth());
 
     }
@@ -247,6 +329,7 @@ public class TestLevelScreen extends ScreenAdapter {
                 alive && step==0 && dash,alive && sprintHeld,alive && jumpHeld);
             if(alive) combat.update(dt,player,step==0 && attackPressed,attackHeld,up&&!down,down&&!up);
             else { combat.attack=CombatSystem.Attack.NONE;player.cancelCombatTravel(); }
+            SteamVent.contact(map.get("vents"),animationTime+(step+1)*dt,player,life);
             enemyAI.update(dt,player,life,combat.enemies);
             playerAnimation.update(dt,player,combat,life,shotTime);
         }
@@ -293,14 +376,12 @@ public class TestLevelScreen extends ScreenAdapter {
         if(!gameHud.isPaused()) updateGame(delta);
         else { touch.endFrame();delta=0; }
         gameHud.update(player,life,combat);
-        if(!gameHud.isPaused() && life.alive() && map.has("exit") && menu!=null) {
-            JsonValue door=map.get("exit");
-            if(player.x+PlayerBody.WIDTH>door.getFloat("x") && player.x<door.getFloat("x")+door.getFloat("width") && player.y+PlayerBody.HEIGHT>door.getFloat("y") && player.y<door.getFloat("y")+door.getFloat("height")) {
-                String next=door.getString("next");
-                if(next.equals("menu")) returnToMenu();
-                else { game.setScreen(new TestLevelScreen(game,menu,next));dispose(); }
-                return;
-            }
+        if (!gameHud.isPaused() && life.alive() && menu != null) {
+            if (enterDoor(map.get("exit"))) return;
+            JsonValue portals = map.get("portals");
+            if (portals != null)
+                for (JsonValue door = portals.child; door != null; door = door.next)
+                    if (enterDoor(door)) return;
         }
 
         if (!overview) {
@@ -328,7 +409,7 @@ public class TestLevelScreen extends ScreenAdapter {
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        if(levelScene!=null) levelScene.draw(batch,pixel,map,camera,animationTime);
+        if(levelScene!=null) levelScene.draw(batch,pixel,map,camera,animationTime,flags,player.x,player.y);
         else {
         float bgScale = Math.max(halfW * 2 / backgroundTexture.getWidth(), halfH * 2 / backgroundTexture.getHeight()) * 1.12f;
         float bgW = backgroundTexture.getWidth() * bgScale, bgH = backgroundTexture.getHeight() * bgScale;
@@ -386,6 +467,7 @@ public class TestLevelScreen extends ScreenAdapter {
         if(!life.alive()) batch.setColor(0.45f,0.45f,0.45f,0.8f);
         playerSprite.draw(batch);
         drawAttackEffects(centerX,centerY);
+        if(levelScene!=null && !overview) levelScene.foreground(batch,pixel,camera);
         batch.setColor(Color.WHITE);
         batch.end();
         hud.getViewport().apply();

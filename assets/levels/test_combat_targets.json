@@ -2,6 +2,7 @@
   "version": 2,
   "targets": [
     {
+      "id": "scorp-01",
       "type": "SCORP",
       "x": 46,
       "y": 0.55,
@@ -9,6 +10,7 @@
       "health": 60
     },
     {
+      "id": "robot-02",
       "type": "ROBOT",
       "x": 31,
       "y": 0.55,
@@ -16,6 +18,7 @@
       "health": 50
     },
     {
+      "id": "flying-03",
       "type": "FLYING",
       "x": 49,
       "y": 7,
@@ -23,6 +26,7 @@
       "health": 30
     },
     {
+      "id": "flying-04",
       "type": "FLYING",
       "x": 28,
       "y": 11,
@@ -30,6 +34,7 @@
       "health": 30
     },
     {
+      "id": "robot-05",
       "type": "ROBOT",
       "x": 39,
       "y": 19.55,
@@ -37,6 +42,7 @@
       "health": 50
     },
     {
+      "id": "flying-06",
       "type": "FLYING",
       "x": 48,
       "y": 24,

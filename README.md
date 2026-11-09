@@ -35,3 +35,15 @@ For example, `core:clean` removes `build` folder only from the `core` project.
 ## Reglas de desarrollo para el equipo e IAs
 
 Consultar [AGENTS.md](AGENTS.md) y las [reglas de aturdimiento de enemigos](docs/gameplay/enemy-stun.md) antes de modificar enemigos o combate.
+
+## Guardar y cargar partida
+
+Abre pausa con Esc o II y pulsa GUARDAR. CARGAR PARTIDA en el menu principal
+recupera el ultimo guardado manual. Iniciar juego comienza en la seccion 1 y
+conserva el archivo hasta el siguiente guardado. El punto de control incluye
+sala, posicion, vida y vida de los enemigos de las salas visitadas. Los enemigos vuelven
+a sus posiciones iniciales y los movimientos, ataques y temporizadores se reinician.
+En escritorio el archivo es ~/.cyberpunk-metroidvania/partida.json.
+El formato JSON lleva version; SaveStoreCheck comprueba la lectura y reemplazo.
+
+El formato v3 conserva el estado de la compuerta del Callejón 42 y la energía del barrio. También guarda la orientación del jugador y asocia la vida de cada enemigo con su identificador estable dentro de la sala. Al editar niveles, conserva el id cuando cambies la posición del enemigo y asigna uno nuevo a cada instancia nueva. El lector admite archivos v1 con claves de posición y v2 con identificadores estables. Si el punto guardado queda dentro de una pared o fuera de la sala, el jugador reaparece en la entrada. Al reemplazar una partida válida, se conserva la anterior en partida.json.bak. La carga recupera esa copia si el principal falta o está dañado.

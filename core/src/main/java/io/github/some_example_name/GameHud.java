@@ -46,6 +46,11 @@ public final class GameHud {
     private boolean touchVisible,wasAlive=true;
 
     public GameHud(Texture pixel,BitmapFont font,TouchControls touch,Runnable restart,Runnable exit,Runnable map) {
+        this(pixel,font,touch,restart,exit,map,null);
+    }
+
+    GameHud(Texture pixel,BitmapFont font,TouchControls touch,Runnable restart,Runnable exit,Runnable map,
+            java.util.function.Supplier<String> save) {
         this.pixel=pixel;this.font=font;this.touch=touch;
         JsonValue config=new JsonReader().parse(Gdx.files.internal("ui/mobile_hud/layout.json"));
         margin=config.getFloat("margin",18);stickSize=config.getFloat("joystickDiameter",144);
@@ -84,7 +89,18 @@ public final class GameHud {
         banner.add(combatStatus).width(220);banner.setTouchable(Touchable.disabled);stage.addActor(banner);
 
         Table pauseCard=overlay(pausePanel,"PAUSA");
-        add(pauseCard,button("CONTINUAR",()->closePanels()));
+        Table actions = new Table();
+        actions.add(button("CONTINUAR",this::closePanels)).grow().padRight(4);
+        if (save != null) {
+            TextButton saveButton = new TextButton("GUARDAR",buttonStyle);
+            saveButton.addListener(new com.badlogic.gdx.scenes.scene2d.utils.ClickListener() {
+                @Override public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event,float x,float y) {
+                    saveButton.setText(save.get());
+                }
+            });
+            actions.add(saveButton).grow();
+        }
+        add(pauseCard,actions);
         add(pauseCard,button("AYUDA / CONTROLES",()->toggleHelp()));
         add(pauseCard,button("REINICIAR PRUEBA",()->{closePanels();restart.run();}));
         add(pauseCard,button("CONTROLES TACTILES SI / NO",()->toggleTouch()));

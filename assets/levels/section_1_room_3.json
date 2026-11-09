@@ -1,7 +1,7 @@
 {
   "version": 4,
-  "title": "03 / CADENA DE PENDULOS",
-  "width": 184,
+  "title": "Cenizas de neón / Patio de grúas",
+  "width": 206,
   "height": 34,
   "style": "readable",
   "spawn": {
@@ -14,7 +14,7 @@
       "role": "platform",
       "x": 0,
       "y": 1,
-      "width": 12,
+      "width": 8,
       "height": 3
     },
     {
@@ -38,7 +38,7 @@
       "role": "platform",
       "x": 75,
       "y": 3,
-      "width": 12,
+      "width": 3,
       "height": 3
     },
     {
@@ -54,7 +54,7 @@
       "role": "platform",
       "x": 126,
       "y": 3,
-      "width": 12,
+      "width": 3,
       "height": 3
     },
     {
@@ -140,14 +140,114 @@
     {
       "asset": "wall",
       "role": "wall",
-      "x": 184,
+      "x": 206,
       "y": -10,
       "width": 1,
       "height": 46
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 11,
+      "y": -1,
+      "width": 17,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 35,
+      "y": -1.5,
+      "width": 16,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 60,
+      "y": -1.6,
+      "width": 10,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 85,
+      "y": 10,
+      "width": 9,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 99,
+      "y": 13,
+      "width": 10,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 189.55,
+      "y": 15.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 196,
+      "y": 2,
+      "width": 10,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 9.6,
+      "y": 1,
+      "width": 2.4,
+      "height": 3,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 79.6,
+      "y": 3,
+      "width": 7.4,
+      "height": 3,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 130.6,
+      "y": 3,
+      "width": 7.4,
+      "height": 3,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 12,
+      "y": 2,
+      "width": 6,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 134,
+      "y": 8.3,
+      "width": 5,
+      "height": 0.65
     }
   ],
   "targets": [
     {
+      "id": "robot-01",
       "type": "ROBOT",
       "x": 32,
       "y": 5.55,
@@ -156,6 +256,7 @@
       "stunImmune": false
     },
     {
+      "id": "scorp-02",
       "type": "SCORP",
       "x": 56,
       "y": 4.05,
@@ -164,6 +265,7 @@
       "stunImmune": false
     },
     {
+      "id": "robot-03",
       "type": "ROBOT",
       "x": 83,
       "y": 6.55,
@@ -172,6 +274,7 @@
       "stunImmune": false
     },
     {
+      "id": "scorp-04",
       "type": "SCORP",
       "x": 133,
       "y": 6.55,
@@ -181,10 +284,116 @@
     }
   ],
   "exit": {
-    "x": 179,
-    "y": 5,
+    "x": 201,
+    "y": 3.5,
     "width": 2.5,
     "height": 4,
     "next": "levels/section_1_room_4.json"
-  }
+  },
+  "signs": [
+    {
+      "x": 2,
+      "y": 8,
+      "text": "PATIO DE GRUAS"
+    },
+    {
+      "x": 27,
+      "y": 9,
+      "text": "RED DE RESCATE"
+    },
+    {
+      "x": 76,
+      "y": 10,
+      "text": "CARGA SUSPENDIDA"
+    },
+    {
+      "x": 151,
+      "y": 9,
+      "text": "ANDEN DE TRANSFERENCIA"
+    },
+    {
+      "x": 99,
+      "y": 18,
+      "text": "CABINA 7 / GRUA FUERA DE RED"
+    },
+    {
+      "x": 174,
+      "y": 10,
+      "text": "ULTIMO TRANSBORDO >"
+    }
+  ],
+  "scenery": [
+    {
+      "sprite": "crane",
+      "x": 0,
+      "y": 4,
+      "width": 15
+    },
+    {
+      "sprite": "net",
+      "x": 12,
+      "y": 0.5,
+      "width": 15
+    },
+    {
+      "sprite": "net",
+      "x": 36,
+      "y": 0,
+      "width": 14
+    },
+    {
+      "sprite": "trolley",
+      "x": 50,
+      "y": 3.5,
+      "width": 9
+    },
+    {
+      "sprite": "cargo",
+      "x": 76,
+      "y": 8.6,
+      "width": 10
+    },
+    {
+      "sprite": "cabin",
+      "x": 99,
+      "y": 14.5,
+      "width": 10
+    },
+    {
+      "sprite": "crane",
+      "x": 125,
+      "y": 6,
+      "width": 14
+    },
+    {
+      "sprite": "conveyor",
+      "x": 149,
+      "y": 4.5,
+      "width": 13
+    },
+    {
+      "sprite": "trolley",
+      "x": 174,
+      "y": 5,
+      "width": 10
+    },
+    {
+      "sprite": "gantry",
+      "x": 196,
+      "y": 3.5,
+      "width": 10
+    }
+  ],
+  "vents": [
+    {
+      "x": 80,
+      "y": 6,
+      "width": 1.15,
+      "height": 3.2,
+      "period": 5.8,
+      "phase": 0.86,
+      "blast": 1.1,
+      "warning": 0.85
+    }
+  ]
 }

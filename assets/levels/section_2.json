@@ -1,0 +1,333 @@
+{
+  "version": 4,
+  "title": "Conductos de Central Corp / Colector del distrito",
+  "style": "readable",
+  "width": 129,
+  "height": 34,
+  "spawn": {
+    "x": 4,
+    "y": 2
+  },
+  "pieces": [
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 0,
+      "y": 0,
+      "width": 19,
+      "height": 2
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 29,
+      "y": 1,
+      "width": 14,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 54,
+      "y": 3,
+      "width": 16,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 73,
+      "y": 5,
+      "width": 13,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 95,
+      "y": 3,
+      "width": 12,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 110,
+      "y": 1,
+      "width": 19,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 0,
+      "y": 14,
+      "width": 22,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 25,
+      "y": 16,
+      "width": 16,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 44,
+      "y": 17,
+      "width": 19,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 26.55,
+      "y": 11.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 51.55,
+      "y": 13.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 71.55,
+      "y": 15.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 93.55,
+      "y": 15.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 108.55,
+      "y": 13.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "wall",
+      "role": "wall",
+      "x": -1,
+      "y": -10,
+      "width": 1,
+      "height": 46
+    },
+    {
+      "asset": "wall",
+      "role": "wall",
+      "x": 129,
+      "y": -10,
+      "width": 1,
+      "height": 46
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 20.6,
+      "y": 0,
+      "width": 5.4,
+      "height": 2,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 44.6,
+      "y": 1,
+      "width": 5.4,
+      "height": 1.5,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 87.6,
+      "y": 5,
+      "width": 4.4,
+      "height": 1.5,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 22,
+      "y": 1.2,
+      "width": 6,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 90,
+      "y": 5.5,
+      "width": 5,
+      "height": 0.65
+    }
+  ],
+  "targets": [
+    {
+      "id": "guard-0",
+      "type": "ROBOT",
+      "x": 38,
+      "y": 3.05,
+      "health": 50,
+      "radius": 0.55
+    },
+    {
+      "id": "guard-1",
+      "type": "SCORP",
+      "x": 82,
+      "y": 7.05,
+      "health": 60,
+      "radius": 0.55
+    },
+    {
+      "id": "guard-2",
+      "type": "ROBOT",
+      "x": 117,
+      "y": 3.05,
+      "health": 50,
+      "radius": 0.55
+    }
+  ],
+  "exit": {
+    "x": 123,
+    "y": 2.5,
+    "width": 2.5,
+    "height": 4,
+    "next": "levels/section_2_room_2.json"
+  },
+  "portals": [
+    {
+      "x": 1,
+      "y": 15.5,
+      "width": 2.5,
+      "height": 4,
+      "next": "levels/section_1.json",
+      "requires": "power",
+      "arrival": {
+        "x": 9,
+        "y": 2
+      },
+      "grant": "shutter"
+    }
+  ],
+  "signs": [
+    {
+      "x": 4,
+      "y": 7,
+      "text": "COLECTOR / DISTRITO 42"
+    },
+    {
+      "x": 32,
+      "y": 7,
+      "text": "CAUDAL: DESVIO A CORP"
+    },
+    {
+      "x": 76,
+      "y": 11,
+      "text": "BOMBAS EN SERIE"
+    },
+    {
+      "x": 110,
+      "y": 8,
+      "text": "GALERIA >"
+    },
+    {
+      "x": 4,
+      "y": 20,
+      "text": "COMPUERTA SIN CORRIENTE",
+      "flag": "power",
+      "lit": "< RETORNO AL CALLEJON"
+    }
+  ],
+  "background": "environments/industrial_v1/background_hangar_v1.png",
+  "scenery": [
+    {
+      "sprite": "floodgate",
+      "x": 0,
+      "y": 15.5,
+      "width": 12,
+      "power": "power"
+    },
+    {
+      "sprite": "intake",
+      "x": 4,
+      "y": 2,
+      "width": 15
+    },
+    {
+      "sprite": "gate_lamp",
+      "x": 9,
+      "y": 15.5,
+      "width": 4,
+      "power": "power",
+      "only": "on"
+    },
+    {
+      "sprite": "diverter",
+      "x": 32,
+      "y": 2.5,
+      "width": 12
+    },
+    {
+      "sprite": "header",
+      "x": 45,
+      "y": 18.5,
+      "width": 14
+    },
+    {
+      "sprite": "vessel",
+      "x": 55,
+      "y": 4.5,
+      "width": 12
+    },
+    {
+      "sprite": "pump_bank",
+      "x": 73,
+      "y": 6.5,
+      "width": 18
+    },
+    {
+      "sprite": "pump",
+      "x": 95,
+      "y": 4.5,
+      "width": 10
+    },
+    {
+      "sprite": "gallery",
+      "x": 111,
+      "y": 2.5,
+      "width": 15
+    }
+  ],
+  "vents": [
+    {
+      "x": 48,
+      "y": 2.5,
+      "width": 1.15,
+      "height": 3.2,
+      "period": 5.8,
+      "phase": 1.72,
+      "blast": 1.1,
+      "warning": 0.85
+    }
+  ]
+}

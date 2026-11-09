@@ -35,10 +35,16 @@ public final class PlayerBody {
     private float jumpBufferRemaining;
     private final List<float[]> solids = new ArrayList<>();
 
+    private final List<float[]> pipeSurfaces = new ArrayList<>();
     private RopePath ropePath = new RopePath(solids);
 
     public void addSolid(float x, float y, float width, float height) {
-        solids.add(new float[]{x, y, width, height});
+        addSolid(x,y,width,height,false);
+    }
+    public void addSolid(float x,float y,float width,float height,boolean pipe) {
+        float[] bounds = {x,y,width,height};
+        solids.add(bounds);
+        if (pipe) pipeSurfaces.add(bounds);
         ropePath = new RopePath(solids);
     }
     public void reset(float x, float y) {
@@ -55,6 +61,11 @@ public final class PlayerBody {
         facing = dashDirection = 1;
         ropePath.clear();
     }
+    void restoreCheckpoint(float x, float y, int direction) {
+        reset(x, y);
+        facing = direction;
+    }
+
     public boolean isDashing() { return dashRemaining > 0; }
     public boolean hasPendingDash() { return queuedDash && canDash(); }
     public boolean isBoosted() { return boosted && !isDashing(); }
@@ -302,6 +313,15 @@ public final class PlayerBody {
         }
     }
 
+    private int pipeWallNormal() {
+        for (float[] pipe : pipeSurfaces) {
+            if (y + HEIGHT <= pipe[1] || y >= pipe[1] + pipe[3]) continue;
+            if (Math.abs(x + WIDTH - pipe[0]) < .075f) return -1;
+            if (Math.abs(x - pipe[0] - pipe[2]) < .075f) return 1;
+        }
+        return 0;
+    }
+
     private void step(float dt, float direction, boolean sprintHeld, boolean jumpHeld) {
         if(combatBrakeRemaining>0) {
             combatBrakeRemaining=Math.max(0,combatBrakeRemaining-dt);
@@ -320,6 +340,15 @@ public final class PlayerBody {
                 boosted = false; momentum = true;
             }
             queuedDash = false;
+        }
+        if (jumpBufferRemaining > 0 && !grounded && coyoteRemaining <= 0 && !hooked && !propelling && !isDashing()) {
+            int normal = pipeWallNormal();
+            if (normal != 0) {
+                velocityX = normal * SPEED;
+                velocityY = JUMP_SPEED;
+                variableJumpRemaining = .18f;
+                jumpBufferRemaining = 0;
+            }
         }
         if (jumpBufferRemaining > 0 && (grounded || coyoteRemaining > 0 || attackAirJump) && !propelling) {
             boolean bonusJump=attackAirJump && !grounded && coyoteRemaining<=0;

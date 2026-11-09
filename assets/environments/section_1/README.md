@@ -1,19 +1,25 @@
-# Sección 1: reinterpretación jugable
+# Acto I de Light Town
 
-Rediseño autorizado para priorizar claridad. Las cuatro imágenes anteriores quedan como referencias, sin usarse como superficies del juego.
+Los dos niveles de campaña se pueden iniciar desde el selector. Una partida nueva comienza en el Callejón 42. El nivel 00 es el escenario de pruebas.
 
-1. Acceso extendido: 168 unidades de ancho (antes 48), nueve plataformas, huecos graduales, dos obstáculos y ocho anclajes.
-2. Torre de ascenso: 64 por 100 unidades (antes 36 por 36). Siete pisos separados por 12 unidades. Las losas alternan el paso libre de lado, obligando a cruzar la torre para continuar subiendo. Anclajes visibles en cada paso.
-3. Cadena de péndulos: 184 unidades de ancho (antes 56), siete cruces con anclajes y ocho plataformas de descanso a distintas alturas. Huecos de 13 a 15 unidades.
-4. Distrito terminal: 172 unidades de ancho (antes 48). Diez terrazas que ascienden de 2 a 25 unidades, nueve anclajes y dos obstáculos intermedios. Combina saltos, tirón y balanceo hasta la puerta final.
+## Cenizas de Neón
 
-Ampliación solicitada para que el recorrido dure más con movimiento experto. No se modifica la velocidad del jugador ni se añaden esperas. Los huecos conservan distancias abordables con la física existente. No hay puntos de control intermedios: R o una caída profunda reinician la sala actual.
+- **Callejón 42** (194 unidades). El puesto de ramen apagado y el refugio sobre la calle anticipan el regreso. El taller divide la travesía de tejados y el andén final prepara el ascenso.
+- **Torre de bombeo** (112 de altura). Las losas alternan los extremos abiertos. Descansos laterales junto a las bombas rompen el ritmo del ascenso. La pasarela superior desemboca en las grúas.
+- **Patio de grúas** (206 de ancho). El primer par de anclajes tiene una red de recuperación. Más adelante se puede subir a la cabina en desuso antes de la cadena final de péndulos.
+- **Terminal de suministro** (198 de ancho). Las terrazas conducen al registro del transporte de Lila. Desde el último andén se puede volver al barrio por la puerta elevada o seguir hacia los conductos. Ambas salidas habilitan la compuerta del callejón.
 
-Borde claro = superficie sólida; aro cian = punto de gancho; bordes ámbar = extremos de plataforma; puerta verde con flecha = salida. Los edificios oscuros del fondo son decorativos. Las paredes y plataformas también admiten el gancho existente. La geometría visible usa exactamente las cajas cargadas en PlayerBody, sin trazar colisiones sobre ilustraciones.
+## Conductos de Central Corp
 
-Los datos reutilizables están en assets/levels/section_1.json y section_1_room_2.json a section_1_room_4.json; ReadableLevelScene dibuja esa geometría. Caer por debajo del límite o pulsar R reinicia la sala. Cada puerta restaura vida en la siguiente; la última devuelve al menú. No hay enemigos en estas salas de recorrido. Se conservan los controles y la física.
+- **Colector del distrito**. La entrada inferior muestra la compuerta de retorno por encima del jugador. El indicador de caudal revela el desvío de energía. La salida de la derecha conduce al circuito de refrigeración.
+- **Galería de refrigeración**. Una rotura divide la conducción superior. El gancho permite atravesarla directamente. Las plataformas del drenaje permiten recuperarse bajo la tubería y volver a subir.
+- **Cámara de conmutación**. El recorrido dobla sobre sí mismo. El robot bajo las ménsulas admite estocada ascendente y los escalones y anclajes ofrecen otra subida. El archivo superior revela la compatibilidad de Lila. Cruzar la puerta del conmutador restablece la energía.
+- **Retorno de servicio**. El intercomunicador de Celestia acompaña el descenso. La salida conduce al colector alto, desde donde se vuelve al callejón por la izquierda. El ramen vuelve a encenderse y el refugio abre su salida de fin de acto.
 
-Verificación visual: gradlew.bat :lwjgl3:sectionPreviewCheck --offline. Capturas en lwjgl3/build/reports/section-1. La revisión visual no sustituye una partida completa.
+Los mapas viven en `assets/levels`. Los portales definen destino, llegada, condición y desbloqueo. Las banderas de energía y compuerta se incluyen en el guardado manual. Un guardado anterior al cambio comienza con los circuitos cerrados. El borde claro señala superficies físicas y el aro cian identifica un anclaje. Los carteles pertenecen al escenario. El combate usa los perfiles existentes de Robot y Scorp.
 
-## Arte cyberpunk activo
-La presentación usa los cuatro recursos de assets/environments/cyberpunk_v1. Consultar su README y render.json. Los datos de recorrido de esta sección permanecen idénticos a la ampliación aprobada; el render de metal, neón y ciudad reemplaza únicamente la apariencia anterior.
+La comprobación de escritorio `gradlew.bat :lwjgl3:sectionPreviewCheck --offline` captura la vista general, entrada, tramo medio y salida de las ocho salas en `lwjgl3/build/reports/section-1`.
+
+## Instalaciones del acto I
+
+Los tramos con rol `pipe` son sólidos de movimiento y de gancho. Al pulsar salto en el aire junto a su extremo se rebota hacia fuera. Las válvulas de suelo tienen un ciclo de espera, aviso ámbar y descarga de vapor. El contacto con la columna activa causa un punto de daño, respeta el intervalo de protección del jugador y admite cruzarla durante el dash. La pausa detiene tanto la descarga como su animación. Posición, dimensiones y tiempos se especifican en `vents` en cada mapa.

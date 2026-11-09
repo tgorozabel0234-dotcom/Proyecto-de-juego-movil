@@ -13,6 +13,7 @@ public final class PlayerVitals {
     public boolean alive() { return health>0; }
     public boolean isInvulnerable() { return invulnerability>0; }
     public void reset() { health=maxHealth; invulnerability=0; }
+    void restoreHealth(float saved) { health = Math.min(saved, maxHealth); invulnerability = 0; }
     public void update(float dt) { invulnerability=Math.max(0,invulnerability-dt); }
     public boolean receiveDamage(float amount) {
         if(!alive()||isInvulnerable()||amount<=0) return false;

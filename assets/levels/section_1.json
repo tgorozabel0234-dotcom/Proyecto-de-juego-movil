@@ -1,7 +1,7 @@
 {
   "version": 4,
-  "title": "01 / ACCESO EXTENDIDO",
-  "width": 168,
+  "title": "Cenizas de neón / Callejón 42",
+  "width": 194,
   "height": 34,
   "style": "readable",
   "spawn": {
@@ -14,7 +14,7 @@
       "role": "platform",
       "x": 0,
       "y": 0,
-      "width": 16,
+      "width": 12,
       "height": 2
     },
     {
@@ -38,7 +38,7 @@
       "role": "platform",
       "x": 52,
       "y": 2.8,
-      "width": 16,
+      "width": 11,
       "height": 2
     },
     {
@@ -62,7 +62,7 @@
       "role": "platform",
       "x": 110,
       "y": 4.2,
-      "width": 14,
+      "width": 11,
       "height": 2
     },
     {
@@ -172,14 +172,114 @@
     {
       "asset": "wall",
       "role": "wall",
-      "x": 168,
+      "x": 194,
       "y": -10,
       "width": 1,
       "height": 46
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 33,
+      "y": 7.6,
+      "width": 5,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 40,
+      "y": 10,
+      "width": 9,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 84,
+      "y": -1.5,
+      "width": 9,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 172,
+      "y": 3,
+      "width": 9,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 184,
+      "y": 2,
+      "width": 10,
+      "height": 1.5
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 169.55,
+      "y": 14.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "anchor",
+      "x": 181.55,
+      "y": 13.55,
+      "width": 0.9,
+      "height": 0.9
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 13.6,
+      "y": 0,
+      "width": 2.4,
+      "height": 2,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 64.6,
+      "y": 2.8,
+      "width": 3.4,
+      "height": 2,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 122.6,
+      "y": 4.2,
+      "width": 1.4,
+      "height": 2,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 14,
+      "y": 1.1,
+      "width": 4,
+      "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "pipe",
+      "x": 88,
+      "y": 2,
+      "width": 4,
+      "height": 0.65
     }
   ],
   "targets": [
     {
+      "id": "robot-01",
       "type": "ROBOT",
       "x": 26,
       "y": 3.95,
@@ -188,6 +288,7 @@
       "stunImmune": false
     },
     {
+      "id": "scorp-02",
       "type": "SCORP",
       "x": 43,
       "y": 5.35,
@@ -196,6 +297,7 @@
       "stunImmune": false
     },
     {
+      "id": "robot-03",
       "type": "ROBOT",
       "x": 80,
       "y": 3.95,
@@ -204,6 +306,7 @@
       "stunImmune": false
     },
     {
+      "id": "scorp-04",
       "type": "SCORP",
       "x": 98,
       "y": 5.35,
@@ -212,6 +315,7 @@
       "stunImmune": false
     },
     {
+      "id": "robot-05",
       "type": "ROBOT",
       "x": 137,
       "y": 5.35,
@@ -220,6 +324,7 @@
       "stunImmune": false
     },
     {
+      "id": "scorp-06",
       "type": "SCORP",
       "x": 155,
       "y": 6.75,
@@ -229,10 +334,180 @@
     }
   ],
   "exit": {
-    "x": 162,
-    "y": 6.2,
+    "x": 189,
+    "y": 3.5,
     "width": 2.5,
     "height": 4,
     "next": "levels/section_1_room_2.json"
-  }
+  },
+  "signs": [
+    {
+      "x": 3,
+      "y": 6,
+      "text": "CALLEJON 42"
+    },
+    {
+      "x": 20,
+      "y": 8,
+      "text": "RAMEN / SIN RED",
+      "flag": "power",
+      "lit": "RAMEN / ABIERTO"
+    },
+    {
+      "x": 78,
+      "y": 8,
+      "text": "TALLER DE AKA"
+    },
+    {
+      "x": 153,
+      "y": 11,
+      "text": "TORRE DE BOMBEO >"
+    },
+    {
+      "x": 0.3,
+      "y": 10,
+      "text": "SERVICIO / CERRADO",
+      "flag": "shutter",
+      "lit": "< ATAJO A TERMINAL"
+    },
+    {
+      "x": 174,
+      "y": 12.5,
+      "text": "ANDEN 42 / BOMBAS >"
+    },
+    {
+      "x": 39,
+      "y": 16,
+      "text": "REFUGIO SIN ENERGIA",
+      "flag": "power",
+      "lit": "REFUGIO / FIN DEL ACTO"
+    }
+  ],
+  "portals": [
+    {
+      "x": 0.4,
+      "y": 2,
+      "width": 2.5,
+      "height": 4,
+      "next": "levels/section_1_room_4.json",
+      "requires": "shutter",
+      "arrival": {
+        "x": 173,
+        "y": 25
+      }
+    },
+    {
+      "x": 45,
+      "y": 11.5,
+      "width": 2.5,
+      "height": 4,
+      "next": "menu",
+      "requires": "power"
+    }
+  ],
+  "scenery": [
+    {
+      "sprite": "tenement",
+      "x": 1,
+      "y": 2,
+      "width": 15
+    },
+    {
+      "sprite": "service_lift",
+      "x": 0,
+      "y": 2,
+      "width": 4,
+      "power": "shutter"
+    },
+    {
+      "sprite": "ramen",
+      "x": 19,
+      "y": 3.4,
+      "width": 12,
+      "power": "power"
+    },
+    {
+      "sprite": "ramen_lamp",
+      "x": 28,
+      "y": 7.6,
+      "width": 3,
+      "power": "power",
+      "only": "on"
+    },
+    {
+      "sprite": "shelter",
+      "x": 38,
+      "y": 11.5,
+      "width": 11,
+      "power": "power"
+    },
+    {
+      "sprite": "shelter_lamp",
+      "x": 47,
+      "y": 11.5,
+      "width": 3,
+      "power": "power",
+      "only": "on"
+    },
+    {
+      "sprite": "tenement",
+      "x": 52,
+      "y": 4.8,
+      "width": 14
+    },
+    {
+      "sprite": "workshop",
+      "x": 73,
+      "y": 3.4,
+      "width": 13
+    },
+    {
+      "sprite": "tools",
+      "x": 91,
+      "y": 4.8,
+      "width": 5
+    },
+    {
+      "sprite": "tenement",
+      "x": 111,
+      "y": 6.2,
+      "width": 13
+    },
+    {
+      "sprite": "pump",
+      "x": 132,
+      "y": 4.8,
+      "width": 8
+    },
+    {
+      "sprite": "water_tower",
+      "x": 148,
+      "y": 6.2,
+      "width": 13
+    },
+    {
+      "sprite": "station",
+      "x": 171,
+      "y": 4.5,
+      "width": 11
+    },
+    {
+      "sprite": "timetable",
+      "x": 183,
+      "y": 3.5,
+      "width": 6
+    }
+  ],
+  "vents": [
+    {
+      "x": 61,
+      "y": 4.8,
+      "width": 1.15,
+      "height": 3.2,
+      "period": 5.8,
+      "phase": 0,
+      "blast": 1.1,
+      "warning": 0.85
+    }
+  ]
 }
