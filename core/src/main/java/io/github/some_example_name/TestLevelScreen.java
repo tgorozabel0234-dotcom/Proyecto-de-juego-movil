@@ -64,6 +64,8 @@ public class TestLevelScreen extends ScreenAdapter {
     // Nivel 1 / guion: Salto Frame, Capataz Brutal, Matones y escenas.
     private final FrameJump frameJump = new FrameJump();
     private String frameUnlockFlag = "frame";
+    /** Segundos que se ve la derrota antes de reiniciar solo (types.json, player.respawnDelay). */
+    private float respawnDelay = 1.5f, deathTimer;
     private ForemanBoss foreman;
     private final StoryFoesRenderer foes = new StoryFoesRenderer();
     private final DialoguePlayer dialogue = new DialoguePlayer();
@@ -176,6 +178,7 @@ public class TestLevelScreen extends ScreenAdapter {
         JsonValue enemyConfig=new JsonReader().parse(Gdx.files.internal("enemies/prototype/types.json"));
         life.maxHealth=enemyConfig.get("player").getFloat("health");
         life.invulnerabilityDuration=enemyConfig.get("player").getFloat("invulnerability");
+        respawnDelay=enemyConfig.get("player").getFloat("respawnDelay",respawnDelay);
         loadEnemyProfile(enemyAI.robot,enemyConfig.get("robot"));
         loadEnemyProfile(enemyAI.scorp,enemyConfig.get("scorp"));
         loadEnemyProfile(enemyAI.melee,enemyConfig.get("melee"));
@@ -355,6 +358,7 @@ public class TestLevelScreen extends ScreenAdapter {
         playerAnimation.reset(life.getHealth());
         frameJump.reset();
         if (foreman != null) foreman.reset();
+        deathTimer = 0;
     }
     private void updateGame(float delta) {
         boolean left = Gdx.input.isKeyPressed(Input.Keys.A)||touch.aimX()<0;
@@ -450,6 +454,9 @@ public class TestLevelScreen extends ScreenAdapter {
                 player.isGrounded() ? "SI" : "NO", player.isJumpQueued() ? "SI" : "NO"));
         }
         if (player.y < -10) restartLevel();
+        // Al morir se ve la derrota un momento y el nivel se reinicia solo (R sigue funcionando).
+        if (!life.alive()) { deathTimer += delta; if (deathTimer >= respawnDelay) restartLevel(); }
+        else deathTimer = 0;
         touch.syncSwing(player.isHooked(),firePendulum);
         touch.endFrame();
     }

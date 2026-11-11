@@ -2,7 +2,8 @@
   "version": 1,
   "player": {
     "health": 10,
-    "invulnerability": 0.8
+    "invulnerability": 0.8,
+    "respawnDelay": 1.5
   },
   "melee": {
     "speed": 3,

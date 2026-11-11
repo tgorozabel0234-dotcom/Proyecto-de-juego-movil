@@ -17,7 +17,8 @@ Las instancias y sus vidas estan en `assets/levels/test_combat_targets.json`.
   Golpear cancela el ataque pendiente del enemigo comun e inmoviliza 0.75 s.
 - Enemigos inmunes siguen recibiendo dano pero no se interrumpe su ataque por stun.
 - Al morir un enemigo desaparece y deja de actuar. Al morir el jugador se bloquean
-  sus acciones; R reinicia vida, enemigos, posiciones, ganchos y camara.
+  sus acciones y, tras `player.respawnDelay` (1.5 s), el nivel se reinicia solo; R lo hace al instante.
+  Reiniciar restaura vida, enemigos, posiciones, ganchos y camara.
 
 Los graficos son formas procedurales reutilizables, con colores en `types.json`:
 cuerpo y extremidades para terrestre; nucleo, contorno y alas animadas para volador.
