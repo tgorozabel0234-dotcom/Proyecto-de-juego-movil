@@ -157,7 +157,8 @@ public final class ReadableLevelScene implements Disposable {
         JsonValue vents=map.get("vents");
         if(vents!=null) for(JsonValue v=vents.child;v!=null;v=v.next)
             atmosphere.vent(b,p,v,time);
-        drawDoor(b, map.get("exit"), true);
+        JsonValue exit = map.get("exit");
+        drawDoor(b, exit, exit == null || !exit.has("requires") || flags.contains(exit.getString("requires")));
         JsonValue portals = map.get("portals");
         if (portals != null) for (JsonValue e = portals.child; e != null; e = e.next)
             drawDoor(b, e, !e.has("requires") || flags.contains(e.getString("requires")));

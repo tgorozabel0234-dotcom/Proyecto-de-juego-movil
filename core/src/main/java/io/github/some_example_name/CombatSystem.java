@@ -5,7 +5,7 @@ import java.util.List;
 
 /** Combate provisional sin dependencias graficas; K se resuelve aqui, no en el gancho. */
 public final class CombatSystem {
-    public enum EnemyType { DUMMY, MELEE, FLYING, ROBOT, SCORP }
+    public enum EnemyType { DUMMY, MELEE, FLYING, ROBOT, SCORP, THUG, FOREMAN }
     public enum EnemyState { IDLE, CHASE, WINDUP, RECOVER, STUNNED, DEAD }
     public enum Attack { NONE, SWEEP, UP, THRUST, DOWN, HOOK_STRIKE, WHIRLWIND, AURA }
     public static final class Enemy {
@@ -15,6 +15,17 @@ public final class CombatSystem {
         public EnemyState state=EnemyState.IDLE;
         public float windupRemaining, recovery, fallSpeed, facing=1;
         public final boolean stunImmune;
+        /** Blindaje frontal: solo recibe dano por la espalda y mientras {@link #vulnerable}. */
+        public boolean backArmor;
+        public boolean vulnerable=true;
+        /** Destello de golpe bloqueado; solo lectura para el renderer. */
+        public float blockFlash;
+        /** Se retiro del combate sin morir (Maton que huye). No actua ni recibe golpes. */
+        public boolean fled;
+        /** Grupo opcional: si cae un miembro, los demas con fleeWhenSquadFalls huyen. */
+        public String squad="";
+        public boolean fleeWhenSquadFalls, fleeing;
+        public float fleeRemaining;
         private float stunRemaining;
         private int lastHit = -1;
         public Enemy(float x, float y, float radius, float health) {
@@ -29,10 +40,15 @@ public final class CombatSystem {
             this.spawnX=x; this.spawnY=y; this.radius=radius; this.maxHealth=health;
             reset();
         }
-        void reset() { x=spawnX; y=spawnY; health=maxHealth; flash=stunRemaining=windupRemaining=recovery=fallSpeed=0; facing=1; state=EnemyState.IDLE; lastHit=-1; }
+        void reset() { x=spawnX; y=spawnY; health=maxHealth; blockFlash=0; fled=fleeing=false; fleeRemaining=0; vulnerable=true; flash=stunRemaining=windupRemaining=recovery=fallSpeed=0; facing=1; state=EnemyState.IDLE; lastHit=-1; }
         public boolean isStunned() { return alive() && stunRemaining>0; }
         public float getStunRemaining() { return stunRemaining; }
         public boolean canAct() { return alive() && !isStunned(); }
+        /** Con backArmor, el atacante debe estar detras: al lado opuesto de facing. */
+        public boolean acceptsHitFrom(float attackerX) {
+            if(!backArmor) return true;
+            return vulnerable && (attackerX-x)*facing<0;
+        }
         /** Punto de entrada para el movimiento de la futura IA. */
         public boolean tryMove(float dx,float dy) {
             if(!canAct()) return false;
@@ -45,9 +61,9 @@ public final class CombatSystem {
             stunRemaining=alive()&&!stunImmune?Math.max(0,stunDuration):0;
         }
         private void update(float dt) {
-            flash=Math.max(0,flash-dt); stunRemaining=Math.max(0,stunRemaining-dt);
+            flash=Math.max(0,flash-dt); blockFlash=Math.max(0,blockFlash-dt); stunRemaining=Math.max(0,stunRemaining-dt);
         }
-        public boolean alive() { return health>0; }
+        public boolean alive() { return health>0 && !fled; }
     }
     public final List<Enemy> enemies = new ArrayList<>();
     public Attack attack=Attack.NONE;
@@ -152,6 +168,7 @@ public final class CombatSystem {
             else contact=dx*attackFacing>=-e.radius && distance<reach+e.radius;
             if(!contact||!p.hasCombatLine(e.x,e.y)) continue;
             e.lastHit=serial;
+            if(attack!=Attack.WHIRLWIND && !e.acceptsHitFrom(p.x+PlayerBody.WIDTH/2)) { e.blockFlash=.2f; continue; }
             // El torbellino solo tiene animacion; el contacto suelta sin alterar el momentum.
             if(attack==Attack.WHIRLWIND) { p.releaseHook(); attack=Attack.NONE; cooldown=0.12f; break; }
             e.receiveHit(baseDamage*(auraRemaining>0?auraMultiplier:1),stunDuration);

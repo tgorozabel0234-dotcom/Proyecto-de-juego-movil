@@ -14,6 +14,8 @@ public final class PlayerVitals {
     public boolean isInvulnerable() { return invulnerability>0; }
     public void reset() { health=maxHealth; invulnerability=0; }
     void restoreHealth(float saved) { health = Math.min(saved, maxHealth); invulnerability = 0; }
+    /** Intangibilidad breve (Salto Frame). Nunca acorta una proteccion mas larga en curso. */
+    public void grantInvulnerability(float seconds) { if(alive()) invulnerability=Math.max(invulnerability,Math.max(0,seconds)); }
     public void update(float dt) { invulnerability=Math.max(0,invulnerability-dt); }
     public boolean receiveDamage(float amount) {
         if(!alive()||isInvulnerable()||amount<=0) return false;

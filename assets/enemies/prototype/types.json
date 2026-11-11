@@ -30,6 +30,32 @@
     "windup": 0.5,
     "recovery": 1.1
   },
+  "thug": {
+    "speed": 3.2,
+    "detectionRange": 12,
+    "attackRange": 1.5,
+    "damage": 1,
+    "windup": 0.45,
+    "recovery": 1.0,
+    "fleeDuration": 1.4,
+    "fleeSpeedMultiplier": 1.6,
+    "tint": "FF6B6BFF"
+  },
+  "foreman": {
+    "aggroRange": 15,
+    "telegraph": 0.75,
+    "chargeSpeed": 12,
+    "chargeDistance": 16,
+    "exposedTime": 2.2,
+    "recoverTime": 0.6,
+    "chargeDamage": 2,
+    "slamWindup": 0.8,
+    "waveSpeed": 11,
+    "waveRange": 12,
+    "waveHeight": 0.7,
+    "waveDamage": 1,
+    "cycles": 3
+  },
   "scorp": {
     "speed": 2.2,
     "detectionRange": 14,

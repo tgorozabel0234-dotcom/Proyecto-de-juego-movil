@@ -297,13 +297,26 @@
       "stunImmune": false
     },
     {
-      "id": "robot-03",
-      "type": "ROBOT",
-      "x": 80,
+      "id": "thug-01",
+      "type": "THUG",
+      "x": 79,
       "y": 3.95,
       "radius": 0.55,
-      "health": 50,
-      "stunImmune": false
+      "health": 40,
+      "stunImmune": false,
+      "squad": "matones",
+      "fleeWhenSquadFalls": true
+    },
+    {
+      "id": "thug-02",
+      "type": "THUG",
+      "x": 83,
+      "y": 3.95,
+      "radius": 0.55,
+      "health": 40,
+      "stunImmune": false,
+      "squad": "matones",
+      "fleeWhenSquadFalls": true
     },
     {
       "id": "scorp-04",
@@ -324,13 +337,13 @@
       "stunImmune": false
     },
     {
-      "id": "scorp-06",
-      "type": "SCORP",
-      "x": 155,
-      "y": 6.75,
-      "radius": 0.55,
-      "health": 60,
-      "stunImmune": false
+      "id": "foreman-01",
+      "type": "FOREMAN",
+      "x": 162,
+      "y": 7.3,
+      "radius": 1.1,
+      "health": 90,
+      "stunImmune": true
     }
   ],
   "exit": {
@@ -338,7 +351,8 @@
     "y": 3.5,
     "width": 2.5,
     "height": 4,
-    "next": "levels/section_1_room_2.json"
+    "next": "levels/section_1_room_2.json",
+    "requires": "capataz"
   },
   "signs": [
     {
@@ -381,6 +395,13 @@
       "text": "REFUGIO SIN ENERGIA",
       "flag": "power",
       "lit": "REFUGIO / FIN DEL ACTO"
+    },
+    {
+      "x": 150,
+      "y": 13,
+      "text": "ZONA DE CARGA / CAPATAZ",
+      "flag": "capataz",
+      "lit": "ZONA DE CARGA / DESPEJADA"
     }
   ],
   "portals": [
@@ -508,6 +529,38 @@
       "phase": 0,
       "blast": 1.1,
       "warning": 0.85
+    }
+  ],
+  "story": [
+    {
+      "scene": "intro",
+      "on": "start"
+    },
+    {
+      "scene": "matones",
+      "on": "zone",
+      "x": 67,
+      "y": 0,
+      "width": 4,
+      "height": 16,
+      "grant": "frame"
+    },
+    {
+      "scene": "matones_huida",
+      "on": "flee"
+    },
+    {
+      "scene": "capataz",
+      "on": "zone",
+      "x": 143,
+      "y": 2,
+      "width": 4,
+      "height": 16
+    },
+    {
+      "scene": "datapad",
+      "on": "boss",
+      "grant": "capataz"
     }
   ]
 }

@@ -15,14 +15,23 @@ public final class EnemyAI {
     public final Profile flying=new Profile(3.5f,16,1.35f,1,0.45f,1.1f);
     public final Profile robot=new Profile(3.8f,14,1.6f,1,.5f,1.1f);
     public final Profile scorp=new Profile(2.2f,14,2.4f,1,.6f,1.5f);
+    /** Maton de Celestia (nivel 1). Ver assets/enemies/prototype/types.json. */
+    public final Profile thug=new Profile(3.2f,12,1.5f,1,.45f,1.0f);
+    /** Segundos que tarda un Maton en desaparecer en la penumbra al huir. */
+    public float fleeDuration=1.4f;
+    /** Multiplicador de velocidad al huir. */
+    public float fleeSpeedMultiplier=1.6f;
     public void update(float dt,PlayerBody p,PlayerVitals life,List<CombatSystem.Enemy> enemies) {
+        updateSquads(enemies);
         for(CombatSystem.Enemy e:enemies) {
-            if(e.type==CombatSystem.EnemyType.DUMMY) continue;
+            // El Capataz tiene su propio patron en ForemanBoss.
+            if(e.type==CombatSystem.EnemyType.DUMMY||e.type==CombatSystem.EnemyType.FOREMAN) continue;
             if(!e.alive()) { e.state=CombatSystem.EnemyState.DEAD;continue; }
             // No hay rutas alternativas que muevan o ataquen durante el stun.
             if(!e.canAct()) { e.state=CombatSystem.EnemyState.STUNNED;continue; }
+            if(e.fleeing) { flee(dt,e,p);continue; }
             if(!life.alive()) { e.state=CombatSystem.EnemyState.IDLE;continue; }
-            Profile profile=e.type==CombatSystem.EnemyType.ROBOT?robot:e.type==CombatSystem.EnemyType.SCORP?scorp:e.type==CombatSystem.EnemyType.FLYING?flying:melee;
+            Profile profile=e.type==CombatSystem.EnemyType.THUG?thug:e.type==CombatSystem.EnemyType.ROBOT?robot:e.type==CombatSystem.EnemyType.SCORP?scorp:e.type==CombatSystem.EnemyType.FLYING?flying:melee;
             e.recovery=Math.max(0,e.recovery-dt);
             float dx=p.x+PlayerBody.WIDTH/2-e.x,dy=p.y+PlayerBody.HEIGHT/2-e.y;
             float distance=(float)Math.hypot(dx,dy);
@@ -57,6 +66,29 @@ public final class EnemyAI {
                 if(e.y < -10) e.health=0;
             }
         }
+    }
+    /** Al caer un miembro de un grupo, los companeros marcados huyen (guion 1.2). */
+    private void updateSquads(List<CombatSystem.Enemy> enemies) {
+        for(CombatSystem.Enemy fallen:enemies) {
+            if(fallen.squad.isEmpty()||fallen.alive()||fallen.fled) continue;
+            for(CombatSystem.Enemy mate:enemies)
+                if(mate!=fallen&&mate.alive()&&!mate.fleeing&&mate.fleeWhenSquadFalls&&mate.squad.equals(fallen.squad)) {
+                    mate.fleeing=true;mate.fleeRemaining=fleeDuration;mate.windupRemaining=0;
+                }
+        }
+    }
+    /** Huye alejandose del jugador y se desvanece; queda fuera del combate y del guardado. */
+    private void flee(float dt,CombatSystem.Enemy e,PlayerBody p) {
+        e.state=CombatSystem.EnemyState.CHASE;
+        e.facing=e.x<p.x+PlayerBody.WIDTH/2?-1:1;
+        if(e.canAct()) {
+            Profile profile=e.type==CombatSystem.EnemyType.THUG?thug:melee;
+            move(e,p,e.facing*profile.speed*fleeSpeedMultiplier*dt,0);
+            e.fallSpeed=Math.max(-30,e.fallSpeed-26*dt);
+            if(!move(e,p,0,e.fallSpeed*dt)) e.fallSpeed=0;
+        }
+        e.fleeRemaining=Math.max(0,e.fleeRemaining-dt);
+        if(e.fleeRemaining==0||e.y<-10) { e.fled=true;e.health=0;e.state=CombatSystem.EnemyState.DEAD; }
     }
     private boolean move(CombatSystem.Enemy e,PlayerBody p,float dx,float dy) {
         if(!e.canAct()) return false;

@@ -16,6 +16,10 @@ Al cambiar estas mecanicas, actualizar su documentacion y verificar los casos
 afectados con `gradlew.bat :lwjgl3:classes :core:check --offline`.
 Si no es posible ejecutar la verificacion, informar de esa limitacion.
 
+## Historia del nivel 1 (guion)
+
+Antes de tocar escenas, Salto Frame, Matones (`THUG`) o el Capataz Brutal (`FOREMAN`), leer [assets/story/README.md](assets/story/README.md). Decisiones del usuario: el Salto Frame es una mejora del dash, sin botón nuevo; los Matones usan los sprites del Robot tintados en rojo; el Capataz usa la hoja de sprites del usuario (`assets/enemies/Capataz`, dibujada por `ForemanSprites`); el Capataz está al final del Callejón 42 y bloquea la salida hasta su derrota. Los textos de las escenas están en `assets/story/nivel_1.json`. Mantener la lógica sin gráficos (`FrameJump`, `ForemanBoss`, `DialoguePlayer`, `StoryTriggers`) separada del dibujo (`ForemanSprites`, `StoryFoesRenderer`, `DialogueOverlay`).
+
 ## HUD y entrada tactil
 
 Antes de modificar el HUD o los controles, consultar `assets/ui/mobile_hud/README.md`. Conservar el teclado y la entrada independiente por dedo. Los gestos tactiles del pendulo y sprint permiten atacar con dos pulgares; no sustituirlos por combinaciones que requieran tres dedos sin una decision del usuario. Respetar area segura, pausa, cancelacion de toques y centro libre. La geometria y la configuracion reutilizable estan separadas del escenario.

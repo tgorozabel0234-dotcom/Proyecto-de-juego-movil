@@ -240,6 +240,15 @@ public final class PlayerBody {
         velocityX=0; combatBrakeRemaining=0.18f;
         attackAirJump=true;
     }
+    /**
+     * Salto Frame: reaparece en una posicion ya validada por FrameJump y termina el dash
+     * sin tocar la recarga. Solo cambia posicion, orientacion y velocidad horizontal.
+     */
+    public void frameShift(float newX, float newY, float newFacing) {
+        x = newX; y = newY;
+        velocityX = 0; dashRemaining = 0; queuedDash = false; boosted = false;
+        if (newFacing != 0) facing = Math.signum(newFacing);
+    }
     public void cancelCombatTravel() {
         releaseHook(); propelling = false; propulsionRemaining = dashRemaining = 0;
         queuedDash=false; boosted=false;

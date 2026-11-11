@@ -43,3 +43,11 @@ tasks.register('industrialTraversalCheck', JavaExec) {
     mainClass = 'io.github.some_example_name.IndustrialTraversalCheck'
 }
 tasks.named('check') { dependsOn 'industrialTraversalCheck' }
+
+// Nivel 1 / guion: Salto Frame, Matones, Capataz Brutal, escenas y datos del mapa.
+tasks.register('storyCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'io.github.some_example_name.StoryLevelCheck'
+}
+tasks.named('check') { dependsOn 'storyCheck' }

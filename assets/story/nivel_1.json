@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "title": "Nivel 1 / Cenizas de Neón",
+  "source": "Guion Narrativo Completo (Niveles 1 a 5), escenas 1.1 a 1.3",
+  "scenes": {
+    "intro": [
+      { "style": "action", "text": "Callejón 42, Light City. Noche. Zumba un letrero de neón defectuoso. La lluvia ácida golpea las láminas de metal." },
+      { "speaker": "AKA", "style": "narration", "text": "En Light City dicen que el futuro brilla tanto que te ciega..." },
+      { "speaker": "AKA", "style": "narration", "text": "Mi hermana Lila era lo único brillante que me quedaba. Y una fixer llamada Celestia la apagó en un segundo." },
+      { "style": "glitch", "text": "La elegante y brutal prótesis robótica de Celestia sujeta a Lila por el cuello." },
+      { "style": "glitch", "text": "Aka se abalanza desesperado para defenderla. Un impacto seco. Huesos rotos. Aka cae derrotado." },
+      { "style": "glitch", "text": "La risa fría y sofisticada de Celestia se pierde en la penumbra de Light City." },
+      { "style": "action", "text": "Aka se apoya contra una pared de ladrillo húmedo y tose. En sus ojos no hay miedo, solo furia." },
+      { "speaker": "AKA", "text": "No voy a esperar a la policía de Light City. Ni a los corruptos de Central Corp. Voy por ti, Lila." }
+    ],
+    "matones": [
+      { "style": "action", "text": "Al doblar la esquina, dos Matones de Celestia le cortan el paso. Visores rojos. Garrotes electrificados." },
+      { "speaker": "MATÓN 1", "text": "¡Miren quién despertó! El hermanito héroe que sobrevivió a la jefa." },
+      { "speaker": "MATÓN 2", "text": "La jefa Celestia fue clara: no debía quedar ningún testigo en este sector de Light City. Acabemos con esto." },
+      { "style": "action", "text": "El Matón 1 levanta la barra electrificada para el golpe final. La visión de Aka se llena de código binario y estática azul." },
+      { "speaker": "AKA", "text": "¡No... me... toques!" },
+      { "style": "tutorial", "text": "SALTO FRAME DESBLOQUEADO. Haz DASH contra un enemigo: Aka desaparece y reaparece a su espalda con el tiempo ralentizado. Golpéalo por detrás." }
+    ],
+    "matones_huida": [
+      { "speaker": "MATÓN 2", "text": "¿¡Qué demonios fue eso!? ¡Eso no es un implante común! ¡El mocoso es un exo!" },
+      { "style": "action", "text": "El Matón 2 huye hacia la penumbra de la ciudad." }
+    ],
+    "capataz": [
+      { "style": "action", "text": "Un ciborg callejero enorme bloquea la zona de carga. Su porra electrificada zumba a máxima potencia." },
+      { "style": "tutorial", "text": "EL CAPATAZ BRUTAL. Su frente está blindado. Atraviesa su carga con el SALTO FRAME y golpea la batería de su espalda. Cuando golpee el suelo, salta la onda eléctrica." }
+    ],
+    "datapad": [
+      { "style": "action", "text": "Aka cae de rodillas, respirando con dificultad. Su mano izquierda parpadea con descargas eléctricas azules." },
+      { "speaker": "AKA", "text": "¿Qué me pasó cuando me golpeó...? Mi cuerpo está respondiendo de otra forma." },
+      { "style": "action", "text": "Junto al Capataz derribado hay un DATAPAD ENCRIPTADO. Aka lo recoge." },
+      { "speaker": "DATAPAD", "style": "datapad", "text": "Ruta de transporte: Sector de Suministro Industrial - Central Corp.\nAutorización: CELESTIA_NET" },
+      { "speaker": "AKA", "text": "El sector industrial de Central Corp... Allá es donde te escondes, Celestia. Resiste, Lila, voy en camino." }
+    ]
+  }
+}

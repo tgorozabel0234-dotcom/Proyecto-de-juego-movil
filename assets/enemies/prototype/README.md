@@ -32,5 +32,8 @@ Las reglas obligatorias de stun estan en `docs/gameplay/enemy-stun.md`.
 
 Comprobar con `gradlew.bat :lwjgl3:classes :core:check --offline`.
 
+## Matones y Capataz (nivel 1)
+`thug` define a los Matones de Celestia: usan la IA común, respetan el stun y huyen al caer su compañero (`squad`, `fleeWhenSquadFalls`). `foreman` define al Capataz Brutal: su patrón está en `ForemanBoss`, no en `EnemyAI`. Es `stunImmune` y su frente está blindado (`backArmor`). Detalles en [assets/story/README.md](../../story/README.md).
+
 ## Robot y Scorpius integrados
 El nivel incluye ROBOT en x=31 y x=39 (plataforma alta), y SCORP en x=46. Robot persigue y anuncia un golpe electrico durante 0.5 s; Scorpius avanza mas despacio y ataca con tenazas de mayor alcance tras 0.6 s. Ambos causan 1 punto de dano, respetan paredes, bordes, linea de vision y stun de 0.75 s. Son vulnerables a los ataques y compatibles con U y rebotes. R restaura sus estados. Los perfiles estan en types.json y las instancias en test_combat_targets.json. EnemySprites reproduce caminar, ataque, dolor y muerte desde los atlas originales. El disparo de Scorpius queda sin activar; esta version usa tenazas. Las clases preliminares de enemies/ no se instancian: el combate activo usa CombatSystem y EnemyAI.

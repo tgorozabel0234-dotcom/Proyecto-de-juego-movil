@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "contactMargin": 0.45,
+  "exitGap": 0.3,
+  "intangibility": 0.35,
+  "slowDuration": 0.5,
+  "slowScale": 0.35,
+  "unlockFlag": "frame"
+}

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "frameWidth": 240,
+  "frameHeight": 200,
+  "pixelsPerUnit": 36,
+  "facing": "right",
+  "pivot": "centro inferior: pies en el borde inferior, caderas centradas",
+  "clips": {
+    "idle":   { "frames": ["idle_00", "idle_01", "idle_02"], "frameTime": 0.18, "loop": true },
+    "walk":   { "frames": ["walk_00", "walk_01", "walk_02", "walk_03"], "frameTime": 0.08, "loop": true },
+    "windup": { "frames": ["windup_00"] },
+    "swing":  { "frames": ["swing_00", "swing_01"], "frameTime": 0.15 },
+    "slam":   { "frames": ["slam_00", "slam_01", "slam_02"] },
+    "hit":    { "frames": ["hit_00"] },
+    "death":  { "frames": ["death_00", "death_01"], "frameTime": 0.35 }
+  }
+}

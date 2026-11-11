@@ -61,6 +61,14 @@ public class TestLevelScreen extends ScreenAdapter {
     private Color meleeColor, flyingColor;
     private float animationTime;
     private Color attackColor, auraColor;
+    // Nivel 1 / guion: Salto Frame, Capataz Brutal, Matones y escenas.
+    private final FrameJump frameJump = new FrameJump();
+    private String frameUnlockFlag = "frame";
+    private ForemanBoss foreman;
+    private final StoryFoesRenderer foes = new StoryFoesRenderer();
+    private final DialoguePlayer dialogue = new DialoguePlayer();
+    private DialogueOverlay dialogueOverlay;
+    private java.util.Map<String, java.util.List<DialoguePlayer.Line>> scenes = new java.util.HashMap<>();
 
 
     public TestLevelScreen(Game game, MenuScreen menu) {
@@ -76,6 +84,7 @@ public class TestLevelScreen extends ScreenAdapter {
     private SaveStore.Snapshot checkpoint;
     private java.util.Set<String> flags = new java.util.HashSet<>();
     private JsonValue arrival;
+    private boolean arrivedByDoor;
 
     private boolean enterDoor(JsonValue door) {
         if (door == null || (door.has("requires") && !flags.contains(door.getString("requires")))) return false;
@@ -90,6 +99,7 @@ public class TestLevelScreen extends ScreenAdapter {
             recordRoom();
             TestLevelScreen destination = new TestLevelScreen(game, menu, next);
             destination.arrival = door.get("arrival");
+            destination.arrivedByDoor = true;
             destination.worldHealth = worldHealth;
             destination.flags = flags;
             game.setScreen(destination);
@@ -170,12 +180,25 @@ public class TestLevelScreen extends ScreenAdapter {
         loadEnemyProfile(enemyAI.scorp,enemyConfig.get("scorp"));
         loadEnemyProfile(enemyAI.melee,enemyConfig.get("melee"));
         loadEnemyProfile(enemyAI.flying,enemyConfig.get("flying"));
+        if (enemyConfig.has("thug")) {
+            loadEnemyProfile(enemyAI.thug,enemyConfig.get("thug"));
+            enemyAI.fleeDuration=enemyConfig.get("thug").getFloat("fleeDuration",enemyAI.fleeDuration);
+            enemyAI.fleeSpeedMultiplier=enemyConfig.get("thug").getFloat("fleeSpeedMultiplier",enemyAI.fleeSpeedMultiplier);
+            if (enemyConfig.get("thug").has("tint")) enemySprites.thugTint.set(Color.valueOf(enemyConfig.get("thug").getString("tint")));
+        }
         meleeColor=Color.valueOf(enemyConfig.get("melee").getString("color"));
         flyingColor=Color.valueOf(enemyConfig.get("flying").getString("color"));
         JsonValue targets = new JsonReader().parse(Gdx.files.internal("levels/test_combat_targets.json"));
         combat.enemies.clear();
+        foreman = null;
         for(JsonValue e=(map.has("targets")?map.get("targets"):targets.get("targets")).child;e!=null;e=e.next) {
             CombatSystem.Enemy enemy = new CombatSystem.Enemy(e.getFloat("x"),e.getFloat("y"),e.getFloat("radius"),e.getFloat("health"),e.getBoolean("stunImmune",false),CombatSystem.EnemyType.valueOf(e.getString("type","DUMMY")));
+            enemy.squad = e.getString("squad", "");
+            enemy.fleeWhenSquadFalls = e.getBoolean("fleeWhenSquadFalls", false);
+            if (enemy.type == CombatSystem.EnemyType.FOREMAN) {
+                foreman = new ForemanBoss(enemy);
+                loadForemanProfile(foreman, enemyConfig.get("foreman"));
+            }
             combat.enemies.add(enemy);
             enemyIds.put(enemy, e.has("id") ? levelJsonPath + "/" + e.getString("id") : legacyEnemyKey(enemy));
         }
@@ -219,6 +242,7 @@ public class TestLevelScreen extends ScreenAdapter {
         pixel = new Texture(p);
         p.dispose();
         createHud();
+        setupStory();
         input = new InputMultiplexer(hud, new InputAdapter() {
             @Override public boolean scrolled(float x, float y) {
                 if (!overview) inspectionZoom = MathUtils.clamp(inspectionZoom + y * 0.1f, 0.6f, 2f);
@@ -253,6 +277,66 @@ public class TestLevelScreen extends ScreenAdapter {
         return maxX < 0 ? new TextureRegion(texture) : new TextureRegion(texture, minX, minY, maxX - minX + 1, maxY - minY + 1);
     }
 
+    /** Guion del nivel 1: escenas, desbloqueo del Salto Frame y estado del Capataz. */
+    private void setupStory() {
+        if (Gdx.files.internal("combat/prototype/frame_jump.json").exists()) {
+            JsonValue fj = new JsonReader().parse(Gdx.files.internal("combat/prototype/frame_jump.json"));
+            frameJump.contactMargin = fj.getFloat("contactMargin", frameJump.contactMargin);
+            frameJump.exitGap = fj.getFloat("exitGap", frameJump.exitGap);
+            frameJump.intangibility = fj.getFloat("intangibility", frameJump.intangibility);
+            frameJump.slowDuration = fj.getFloat("slowDuration", frameJump.slowDuration);
+            frameJump.slowScale = fj.getFloat("slowScale", frameJump.slowScale);
+            frameUnlockFlag = fj.getString("unlockFlag", frameUnlockFlag);
+        }
+        JsonValue story = map.get("story");
+        boolean mapUnlocksFrame = false;
+        if (story != null) for (JsonValue t = story.child; t != null; t = t.next)
+            if (frameUnlockFlag.equals(t.getString("grant", ""))) mapUnlocksFrame = true;
+        // Fuera del mapa que lo desbloquea (otras salas, escenario 00), el Salto Frame ya se tiene.
+        if (!mapUnlocksFrame) flags.add(frameUnlockFlag);
+        if (story != null && Gdx.files.internal(map.getString("storyFile", "story/nivel_1.json")).exists())
+            scenes = DialoguePlayer.parse(new JsonReader().parse(Gdx.files.internal(map.getString("storyFile", "story/nivel_1.json"))));
+        boolean freshStart = checkpoint == null && !arrivedByDoor;
+        if (story != null) for (JsonValue t = story.child; t != null; t = t.next) {
+            String on = t.getString("on", "zone");
+            // Partidas cargadas o llegadas por puerta: lo ya recorrido no se repite.
+            boolean passed = on.equals("start") ? !freshStart
+                : on.equals("zone") && !freshStart && player.x > t.getFloat("x") + t.getFloat("width");
+            if (passed && !flags.contains(StoryTriggers.flagFor(t.getString("scene", "")))) StoryTriggers.consume(t, flags);
+        }
+        if (foreman != null) {
+            foreman.reset();
+            if (!foreman.body.alive()) flags.add("capataz");
+        }
+        frameJump.reset();
+        frameJump.enabled = flags.contains(frameUnlockFlag);
+        dialogueOverlay = new DialogueOverlay(hud, pixel, font, dialogue, this::advanceDialogue, this::skipDialogue);
+        if (freshStart) playStory("start");
+    }
+    private void playStory(String event) {
+        JsonValue trigger = StoryTriggers.find(map.get("story"), flags, event,
+            player.x + PlayerBody.WIDTH / 2, player.y + PlayerBody.HEIGHT / 2);
+        if (trigger == null) return;
+        StoryTriggers.consume(trigger, flags);
+        frameJump.enabled = flags.contains(frameUnlockFlag);
+        java.util.List<DialoguePlayer.Line> lines = scenes.get(trigger.getString("scene"));
+        if (lines == null || lines.isEmpty()) return;
+        gameHud.closePanels(); // cancela toques activos: ningun boton queda mantenido
+        dialogue.start(trigger.getString("scene"), lines);
+    }
+    private void advanceDialogue() { dialogue.advance(); if (!dialogue.isActive()) gameHud.cancelTouches(); }
+    private void skipDialogue() { dialogue.skip(); gameHud.cancelTouches(); }
+    private void loadForemanProfile(ForemanBoss boss, JsonValue d) {
+        if (d == null) return;
+        boss.aggroRange=d.getFloat("aggroRange",boss.aggroRange); boss.telegraph=d.getFloat("telegraph",boss.telegraph);
+        boss.chargeSpeed=d.getFloat("chargeSpeed",boss.chargeSpeed); boss.chargeDistance=d.getFloat("chargeDistance",boss.chargeDistance);
+        boss.exposedTime=d.getFloat("exposedTime",boss.exposedTime); boss.recoverTime=d.getFloat("recoverTime",boss.recoverTime);
+        boss.chargeDamage=d.getFloat("chargeDamage",boss.chargeDamage); boss.slamWindup=d.getFloat("slamWindup",boss.slamWindup);
+        boss.waveSpeed=d.getFloat("waveSpeed",boss.waveSpeed); boss.waveRange=d.getFloat("waveRange",boss.waveRange);
+        boss.waveHeight=d.getFloat("waveHeight",boss.waveHeight); boss.waveDamage=d.getFloat("waveDamage",boss.waveDamage);
+        boss.cycles=d.getInt("cycles",boss.cycles);
+    }
+
     private void createHud() {
         font=new BitmapFont();
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear,Texture.TextureFilter.Linear);
@@ -269,7 +353,8 @@ public class TestLevelScreen extends ScreenAdapter {
         cameraAheadX=cameraAheadY=0;motionZoom=1;overview=false;inspectionZoom=1;
         player.reset(arrival.getFloat("x"), arrival.getFloat("y"));
         playerAnimation.reset(life.getHealth());
-
+        frameJump.reset();
+        if (foreman != null) foreman.reset();
     }
     private void updateGame(float delta) {
         boolean left = Gdx.input.isKeyPressed(Input.Keys.A)||touch.aimX()<0;
@@ -327,12 +412,15 @@ public class TestLevelScreen extends ScreenAdapter {
             boolean alive=life.alive();
             player.update(dt,alive?direction:0,alive && step==0 && jump,
                 alive && step==0 && dash,alive && sprintHeld,alive && jumpHeld);
+            if(alive) frameJump.update(player,life,combat.enemies);
             if(alive) combat.update(dt,player,step==0 && attackPressed,attackHeld,up&&!down,down&&!up);
             else { combat.attack=CombatSystem.Attack.NONE;player.cancelCombatTravel(); }
             SteamVent.contact(map.get("vents"),animationTime+(step+1)*dt,player,life);
             enemyAI.update(dt,player,life,combat.enemies);
+            if(foreman!=null) foreman.update(dt,player,life);
             playerAnimation.update(dt,player,combat,life,shotTime);
         }
+        updateStoryEvents();
         combatStatus.setText(combat.auraRemaining>0 ? "AURA x"+combat.auraMultiplier : attackName());
         if(player.hasAttackAirJump()) combatStatus.setText("SALTO EXTRA LISTO");
         lifeStatus.setText("INTEGRIDAD");
@@ -365,18 +453,41 @@ public class TestLevelScreen extends ScreenAdapter {
         touch.syncSwing(player.isHooked(),firePendulum);
         touch.endFrame();
     }
+    private void updateStoryEvents() {
+        if (foreman != null && foreman.consumeDefeat()) { flags.add("capataz"); playStory("boss"); }
+        if (dialogue.isActive()) return;
+        for (CombatSystem.Enemy e : combat.enemies) if (e.fleeing && !e.fled) { playStory("flee"); break; }
+        if (!dialogue.isActive()) playStory("zone");
+    }
+    /** Durante una escena la simulacion se detiene como en la pausa. Devuelve true si la hay. */
+    private boolean updateDialogue(float realDelta) {
+        if (!dialogue.isActive()) { if (dialogueOverlay != null) dialogueOverlay.update(realDelta); return false; }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) || Gdx.input.isKeyJustPressed(Input.Keys.BACK)) skipDialogue();
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)
+            || Gdx.input.isKeyJustPressed(Input.Keys.K) || Gdx.input.isKeyJustPressed(Input.Keys.H)) advanceDialogue();
+        dialogue.update(realDelta);
+        dialogueOverlay.update(realDelta);
+        touch.endFrame();
+        return true;
+    }
+
     @Override public void render(float delta) {
         float hudDelta=delta;
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)||Gdx.input.isKeyJustPressed(Input.Keys.BACK)) gameHud.togglePause();
+        boolean inScene=updateDialogue(delta);
+        // Bullet-time del Salto Frame: escala solo la simulacion; el HUD sigue en tiempo real.
+        frameJump.updateRealTime(delta);
+        float simDelta=delta*frameJump.timeScale();
+        if(!inScene && (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)||Gdx.input.isKeyJustPressed(Input.Keys.BACK))) gameHud.togglePause();
         if(Gdx.input.isKeyJustPressed(Input.Keys.F1)) toggleHelp();
         if(Gdx.input.isKeyJustPressed(Input.Keys.F2)) toggleDebug();
         if(Gdx.input.isKeyJustPressed(Input.Keys.F3)) gameHud.toggleTouch();
         if(Gdx.input.isKeyJustPressed(Input.Keys.M)) overview=!overview;
-        if(Gdx.input.isKeyJustPressed(Input.Keys.R)) { gameHud.closePanels();restartLevel(); }
-        if(!gameHud.isPaused()) updateGame(delta);
+        if(!inScene && Gdx.input.isKeyJustPressed(Input.Keys.R)) { gameHud.closePanels();restartLevel(); }
+        if(inScene) delta=0;
+        else if(!gameHud.isPaused()) { updateGame(simDelta); delta=simDelta; }
         else { touch.endFrame();delta=0; }
         gameHud.update(player,life,combat);
-        if (!gameHud.isPaused() && life.alive() && menu != null) {
+        if (!inScene && !gameHud.isPaused() && life.alive() && menu != null) {
             if (enterDoor(map.get("exit"))) return;
             JsonValue portals = map.get("portals");
             if (portals != null)
@@ -422,6 +533,9 @@ public class TestLevelScreen extends ScreenAdapter {
         }
         }
         drawCombatTargets();
+        foes.begin(batch,pixel);
+        if(foreman!=null) foes.drawWave(foreman,animationTime);
+        foes.drawFrameJump(frameJump,animationTime);
         float centerX = player.x + PlayerBody.WIDTH / 2, centerY = player.y + PlayerBody.HEIGHT / 2;
         playerSprite.prepare(playerAnimation,player,aimX,aimY);
         float handX=playerSprite.getHandX(),handY=playerSprite.getHandY();
@@ -489,8 +603,11 @@ public class TestLevelScreen extends ScreenAdapter {
         }
     }
     private void drawCombatTargets() {
+        enemySprites.fleeDuration=enemyAI.fleeDuration;
         for(CombatSystem.Enemy e:combat.enemies) enemySprites.draw(batch,e,animationTime);
-        for(CombatSystem.Enemy e:combat.enemies) if(e.alive()) {
+        foes.begin(batch,pixel);
+        if(foreman!=null) foes.drawForeman(foreman,animationTime);
+        for(CombatSystem.Enemy e:combat.enemies) if(e.alive() && e.type!=CombatSystem.EnemyType.FOREMAN) {
             batch.setColor(e.flash>0?Color.WHITE:e.isStunned()?Color.valueOf("F4B95D"):e.type==CombatSystem.EnemyType.FLYING?flyingColor:e.type==CombatSystem.EnemyType.MELEE?meleeColor:Color.valueOf("CE568B"));
             if(e.isStunned()) {
                 drawArc(e.x,e.y,e.radius+0.18f,0,MathUtils.PI2*e.getStunRemaining()/Math.max(0.001f,combat.stunDuration));
@@ -499,7 +616,7 @@ public class TestLevelScreen extends ScreenAdapter {
                 batch.setColor(1,0.35f,0.1f,0.9f);
                 drawCircle(e.x,e.y,e.radius+0.3f);
             }
-            if(e.type==CombatSystem.EnemyType.ROBOT || e.type==CombatSystem.EnemyType.SCORP) {
+            if(e.type==CombatSystem.EnemyType.ROBOT || e.type==CombatSystem.EnemyType.SCORP || e.type==CombatSystem.EnemyType.THUG) {
                 // Animated sprites are drawn separately.
             } else if(e.type==CombatSystem.EnemyType.FLYING) {
                 drawCircle(e.x,e.y,e.radius);
@@ -579,6 +696,7 @@ public class TestLevelScreen extends ScreenAdapter {
     }
     @Override public void dispose() {
         enemySprites.dispose();
+        foes.dispose();
         if(levelScene!=null){levelScene.dispose();levelScene=null;}
         hide();
         if (hud != null) { hud.dispose(); hud = null; }
