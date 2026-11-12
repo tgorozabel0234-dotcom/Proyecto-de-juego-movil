@@ -29,7 +29,7 @@
       "asset": "platform",
       "role": "platform",
       "x": 54,
-      "y": 3,
+      "y": 2.7,
       "width": 16,
       "height": 1.5
     },
@@ -37,7 +37,7 @@
       "asset": "platform",
       "role": "platform",
       "x": 73,
-      "y": 5,
+      "y": 4.5,
       "width": 13,
       "height": 1.5
     },
@@ -127,7 +127,7 @@
       "x": -1,
       "y": -10,
       "width": 1,
-      "height": 46
+      "height": 170
     },
     {
       "asset": "wall",
@@ -135,7 +135,7 @@
       "x": 129,
       "y": -10,
       "width": 1,
-      "height": 46
+      "height": 170
     },
     {
       "asset": "platform",
@@ -159,7 +159,7 @@
       "asset": "platform",
       "role": "platform",
       "x": 87.6,
-      "y": 5,
+      "y": 4.5,
       "width": 4.4,
       "height": 1.5,
       "suspended": true
@@ -168,7 +168,7 @@
       "asset": "platform",
       "role": "pipe",
       "x": 22,
-      "y": 1.2,
+      "y": 1.35,
       "width": 6,
       "height": 0.65
     },
@@ -176,9 +176,72 @@
       "asset": "platform",
       "role": "pipe",
       "x": 90,
-      "y": 5.5,
+      "y": 5.35,
       "width": 5,
       "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 19,
+      "y": -0.6,
+      "width": 1.6,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 28,
+      "y": -0.6,
+      "width": 1,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 43,
+      "y": -0.1,
+      "width": 1.6,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 50.0,
+      "y": 0.75,
+      "width": 4.0,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 70,
+      "y": 2.55,
+      "width": 3,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 86,
+      "y": 3.4,
+      "width": 1.6,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 107,
+      "y": 1.05,
+      "width": 3,
+      "height": 1.0,
+      "suspended": true
     }
   ],
   "targets": [
@@ -194,7 +257,7 @@
       "id": "guard-1",
       "type": "SCORP",
       "x": 82,
-      "y": 7.05,
+      "y": 6.55,
       "health": 60,
       "radius": 0.55
     },
@@ -296,13 +359,13 @@
     {
       "sprite": "vessel",
       "x": 55,
-      "y": 4.5,
+      "y": 4.2,
       "width": 12
     },
     {
       "sprite": "pump_bank",
       "x": 73,
-      "y": 6.5,
+      "y": 6.0,
       "width": 18
     },
     {
@@ -320,7 +383,7 @@
   ],
   "vents": [
     {
-      "x": 48,
+      "x": 62,
       "y": 2.5,
       "width": 1.15,
       "height": 3.2,

@@ -16,3 +16,5 @@ render.json contiene rutas, tamaños visuales, intensidad del fondo, paralaje y 
 ## Verificación
 
 Pasaron :lwjgl3:classes, :core:check y :lwjgl3:sectionPreviewCheck --offline. Se exportaron 16 vistas (general, entrada, centro y salida de cada sala) a lwjgl3/build/reports/section-1; se inspeccionaron vistas cercanas de las cuatro salas. Los hashes de los cuatro niveles coinciden con el estado anterior al cambio visual. No se realizó una partida completa ni una prueba en hardware móvil.
+
+Nota: `layout-baseline.json` corresponde a la geometría previa. La revisión de recorrido posterior, descrita en `assets/environments/section_1/README.md`, modificó los mapas de forma intencionada.

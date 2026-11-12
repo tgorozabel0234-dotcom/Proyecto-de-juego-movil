@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "description": "Reglas de recorrido de las salas de campaña. Las verifica LevelFlowCheck (:core:levelFlowCheck, incluida en :core:check) con la física real de PlayerBody.",
+  "rooms": [
+    "levels/section_1.json",
+    "levels/section_1_room_2.json",
+    "levels/section_1_room_3.json",
+    "levels/section_1_room_4.json",
+    "levels/section_2.json",
+    "levels/section_2_room_2.json",
+    "levels/section_2_room_3.json",
+    "levels/section_2_room_4.json"
+  ],
+  "player": {
+    "jumpReach": 1.9,
+    "comfortableRise": 1.6,
+    "comfortableGap": 4.5
+  },
+  "surfaces": {
+    "lipTolerance": 0.01,
+    "lipMax": 0.9,
+    "note": "PlayerBody no sube escalones: cualquier borde entre 0.01 y 0.9 entre superficies contiguas del camino detiene al jugador. Se permiten solo en redes de recuperacion (suspended)."
+  },
+  "recovery": {
+    "netBelowLowerSide": 1.6,
+    "pendulumNetDepth": 3.2,
+    "maxHeadroomUnderBlockedSide": 0.95,
+    "note": "Una red en un hueco corto queda a 1.6 bajo el lado bajo (se vuelve a subir de un salto) y a menos de 1 bajo el lado alto (no cabe el jugador debajo). Bajo un péndulo queda a 3.2 para no poder cruzarlo caminando; los postes cierran el paso bajo las plataformas finas."
+  },
+  "walkOff": {
+    "seconds": 4,
+    "deathY": -10,
+    "note": "Salir caminando por cualquier borde de una superficie del recorrido no debe llevar al vacío (restartLevel)."
+  },
+  "boundaryWallMinTop": 150
+}

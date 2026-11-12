@@ -167,15 +167,7 @@
       "x": 54,
       "y": 7,
       "width": 2,
-      "height": 6
-    },
-    {
-      "asset": "wall",
-      "role": "wall",
-      "x": 108,
-      "y": 16,
-      "width": 2,
-      "height": 6
+      "height": 1.3
     },
     {
       "asset": "wall",
@@ -183,7 +175,7 @@
       "x": -1,
       "y": -10,
       "width": 1,
-      "height": 60
+      "height": 170
     },
     {
       "asset": "wall",
@@ -191,7 +183,7 @@
       "x": 198,
       "y": -10,
       "width": 1,
-      "height": 60
+      "height": 170
     },
     {
       "asset": "platform",
@@ -205,7 +197,7 @@
       "asset": "platform",
       "role": "platform",
       "x": 183,
-      "y": 26,
+      "y": 25.0,
       "width": 15,
       "height": 1.5
     },
@@ -256,7 +248,7 @@
       "asset": "platform",
       "role": "pipe",
       "x": 12,
-      "y": 1.3,
+      "y": 1.35,
       "width": 5,
       "height": 0.65
     },
@@ -264,9 +256,234 @@
       "asset": "platform",
       "role": "pipe",
       "x": 80,
-      "y": 9.4,
+      "y": 10.85,
       "width": 4,
       "height": 0.65
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 9,
+      "y": -0.6,
+      "width": 1.6,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 17,
+      "y": -0.45,
+      "width": 1,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 28,
+      "y": 1.05,
+      "width": 4,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 45.4,
+      "y": 5.0,
+      "width": 2.2,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 44,
+      "y": 3.05,
+      "width": 1.4,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 47.6,
+      "y": 3.4,
+      "width": 1.4,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 58,
+      "y": 4.4,
+      "width": 1.6,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 62.9,
+      "y": 7.5,
+      "width": 2.2,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 61.0,
+      "y": 5.55,
+      "width": 1.9,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 65.1,
+      "y": 6.05,
+      "width": 1.9,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 84,
+      "y": 9.05,
+      "width": 1,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 99.4,
+      "y": 13.5,
+      "width": 2.2,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 98,
+      "y": 11.55,
+      "width": 1.4,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 101.6,
+      "y": 12.05,
+      "width": 1.4,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 117.9,
+      "y": 16.5,
+      "width": 2.2,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 116,
+      "y": 14.55,
+      "width": 1.9,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 120.1,
+      "y": 15.05,
+      "width": 1.9,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 132,
+      "y": 16.4,
+      "width": 1.6,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 137.9,
+      "y": 19.5,
+      "width": 2.2,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 136.0,
+      "y": 17.55,
+      "width": 1.9,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 140.1,
+      "y": 18.05,
+      "width": 1.9,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 153.9,
+      "y": 22.5,
+      "width": 2.2,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 152,
+      "y": 20.55,
+      "width": 1.9,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 156.1,
+      "y": 21.05,
+      "width": 1.9,
+      "height": 1.0,
+      "suspended": true
+    },
+    {
+      "asset": "platform",
+      "role": "platform",
+      "x": 180,
+      "y": 23.05,
+      "width": 3,
+      "height": 1.0,
+      "suspended": true
     }
   ],
   "targets": [
@@ -309,7 +526,7 @@
     {
       "id": "robot-05",
       "type": "ROBOT",
-      "x": 112,
+      "x": 112.5,
       "y": 16.55,
       "radius": 0.55,
       "health": 50,
@@ -336,7 +553,7 @@
   ],
   "exit": {
     "x": 192,
-    "y": 27.5,
+    "y": 26.5,
     "width": 2.5,
     "height": 4,
     "next": "levels/section_2.json",
@@ -458,7 +675,7 @@
   ],
   "vents": [
     {
-      "x": 115,
+      "x": 106.3,
       "y": 16,
       "width": 1.15,
       "height": 3.2,
