@@ -102,7 +102,8 @@ public final class DialogueOverlay {
         DialoguePlayer.Line line = player.current();
         String who = line.speaker;
         Color accent = cyan;
-        if (line.is("narration")) { who = who.isEmpty() ? "VOZ EN OFF" : who + " (VOZ EN OFF)"; accent = Color.valueOf("9467FF"); }
+        // Narracion: solo el nombre del personaje; el color morado la distingue del dialogo.
+        if (line.is("narration")) accent = Color.valueOf("9467FF");
         else if (line.is("glitch")) { who = "FLASHBACK"; accent = pink; }
         else if (line.is("action")) { who = ""; accent = Color.valueOf("A5BAC9"); }
         else if (line.is("datapad")) { who = "DATAPAD ENCRIPTADO"; accent = Color.valueOf("36F29B"); }
