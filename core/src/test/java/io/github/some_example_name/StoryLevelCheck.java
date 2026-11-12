@@ -281,8 +281,12 @@ public final class StoryLevelCheck {
         StoryTriggers.consume(start, flags);
         check(StoryTriggers.find(story, flags, "start", 4, 3) == null, "Cada escena se ve una vez");
         check(StoryTriggers.find(story, flags, "zone", 40, 5) == null, "Sin escena fuera de las zonas");
-        JsonValue matones = StoryTriggers.find(story, flags, "zone", 69, 4);
-        check(matones != null && matones.getString("scene").equals("matones"), "Llegar a los Matones abre la escena 1.2");
+        check(StoryTriggers.find(story, flags, "zone", 69, 4, true) == null, "Acercarse sin pisar su plataforma no dispara la escena");
+        check(StoryTriggers.find(story, flags, "zone", 76, 3.9f, false) == null, "En el aire (salto o gancho) no se dispara la escena");
+        JsonValue matones = StoryTriggers.find(story, flags, "zone", 76, 3.9f, true);
+        check(matones != null && matones.getString("scene").equals("matones"), "De pie en la plataforma de los Matones se abre la escena 1.2");
+        check(StoryTriggers.find(story, flags, "zone", 150, 6.7f, false) == null
+            && StoryTriggers.find(story, flags, "zone", 150, 6.7f, true) != null, "La escena del Capataz exige estar de pie en su plataforma");
         check(!flags.contains("frame"), "El Salto Frame no esta antes de la escena 1.2");
         StoryTriggers.consume(matones, flags);
         check(flags.contains("frame") && flags.contains("scene:matones"), "La escena 1.2 desbloquea el Salto Frame");
@@ -310,6 +314,17 @@ public final class StoryLevelCheck {
         }
         check(thugs == 2 && foremen == 1, "Dos Matones y un Capataz en el Callejon 42");
         check("capataz".equals(map.get("exit").getString("requires", "")), "La salida espera la derrota del Capataz");
+        // Zonas "grounded": su borde inferior es la superficie de la plataforma de los enemigos,
+        // y los ids de "focus" existen en el mapa.
+        for (JsonValue t = map.get("story").child; t != null; t = t.next) {
+            if (t.getBoolean("grounded", false)) {
+                float zx = t.getFloat("x"), zy = t.getFloat("y"), zw = t.getFloat("width");
+                check(!solids.isAreaFree(zx + .1f, zy - .05f, zw - .2f, .05f) && solids.isAreaFree(zx + .1f, zy + .01f, zw - .2f, .5f),
+                    "La zona de " + t.getString("scene") + " debe estar sobre la plataforma de sus enemigos");
+            }
+            if (t.has("focus")) for (JsonValue f = t.get("focus").child; f != null; f = f.next)
+                check(ids.contains(f.asString()), "focus de " + t.getString("scene") + " no existe: " + f.asString());
+        }
         // Sprites del Capataz (hoja del usuario): cada cuadro citado existe y comparte lienzo.
         JsonValue anim = new JsonReader().parse(read("enemies/Capataz/animations.json"));
         int w = anim.getInt("frameWidth"), h = anim.getInt("frameHeight");

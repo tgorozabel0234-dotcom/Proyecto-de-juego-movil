@@ -20,10 +20,12 @@ Los disparadores viven en el campo `story` del mapa (`levels/section_1.json`):
 | Escena | Guion | Evento |
 |---|---|---|
 | `intro` | 1.1 Cinemática de apertura | `start`: solo en partida nueva |
-| `matones` | 1.2 Encuentro y despertar del Salto Frame | `zone` antes del Taller de Aka; concede `frame` |
+| `matones` | 1.2 Encuentro y despertar del Salto Frame | `zone` de pie en la plataforma del Taller de Aka; cámara en los Matones; concede `frame` |
 | `matones_huida` | 1.2 El Matón 2 huye | `flee`: cae un Matón y su compañero escapa |
-| `capataz` | Tutorial del mini jefe | `zone` antes de la zona de carga |
-| `datapad` | 1.3 Outro y pista al Sector Industrial | `boss`: derrota del Capataz; concede `capataz` |
+| `capataz` | Tutorial del mini jefe | `zone` de pie en la plataforma de la zona de carga; cámara en el Capataz |
+| `datapad` | 1.3 Outro y pista al Sector Industrial | `boss`: derrota del Capataz; cámara en el Capataz; concede `capataz` |
+
+Por decisión del usuario, las escenas de encuentro usan `"grounded": true`: se disparan solo cuando el jugador está de pie dentro de la zona, que cubre la superficie de la plataforma de los enemigos. Nunca se disparan en mitad de un salto o con el gancho. `"focus"` lista los ids de los enemigos: durante la escena la cámara se desplaza en tiempo real hasta ellos y, al terminar, vuelve a seguir al jugador.
 
 Cada escena se ve una sola vez. La bandera `scene:<id>` se guarda con las demás en el guardado manual, sin cambiar el formato v3. Si cargas una partida o llegas por una puerta, las escenas de zonas que ya quedaron atrás se marcan como vistas sin reproducirse. Durante una escena la simulación se detiene, como en la pausa. Tocar la pantalla, Enter, Espacio, K o H avanzan; SALTAR, Esc o Atrás la saltan. Al abrirse, la escena cancela los toques activos.
 

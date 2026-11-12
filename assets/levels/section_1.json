@@ -539,10 +539,15 @@
     {
       "scene": "matones",
       "on": "zone",
-      "x": 67,
-      "y": 0,
-      "width": 4,
-      "height": 16,
+      "x": 73,
+      "y": 3.4,
+      "width": 13,
+      "height": 1.6,
+      "grounded": true,
+      "focus": [
+        "thug-01",
+        "thug-02"
+      ],
       "grant": "frame"
     },
     {
@@ -552,15 +557,22 @@
     {
       "scene": "capataz",
       "on": "zone",
-      "x": 143,
-      "y": 2,
-      "width": 4,
-      "height": 16
+      "x": 148,
+      "y": 6.2,
+      "width": 9,
+      "height": 1.6,
+      "grounded": true,
+      "focus": [
+        "foreman-01"
+      ]
     },
     {
       "scene": "datapad",
       "on": "boss",
-      "grant": "capataz"
+      "grant": "capataz",
+      "focus": [
+        "foreman-01"
+      ]
     }
   ]
 }

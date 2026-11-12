@@ -66,6 +66,9 @@ public class TestLevelScreen extends ScreenAdapter {
     private String frameUnlockFlag = "frame";
     /** Segundos que se ve la derrota antes de reiniciar solo (types.json, player.respawnDelay). */
     private float respawnDelay = 1.5f, deathTimer;
+    /** Punto al que mira la camara durante una escena con "focus" (enemigos de la escena). */
+    private boolean cameraFocusActive;
+    private float cameraFocusX, cameraFocusY;
     private ForemanBoss foreman;
     private final StoryFoesRenderer foes = new StoryFoesRenderer();
     private final DialoguePlayer dialogue = new DialoguePlayer();
@@ -318,7 +321,7 @@ public class TestLevelScreen extends ScreenAdapter {
     }
     private void playStory(String event) {
         JsonValue trigger = StoryTriggers.find(map.get("story"), flags, event,
-            player.x + PlayerBody.WIDTH / 2, player.y + PlayerBody.HEIGHT / 2);
+            player.x + PlayerBody.WIDTH / 2, player.y + PlayerBody.HEIGHT / 2, player.isGrounded());
         if (trigger == null) return;
         StoryTriggers.consume(trigger, flags);
         frameJump.enabled = flags.contains(frameUnlockFlag);
@@ -326,9 +329,25 @@ public class TestLevelScreen extends ScreenAdapter {
         if (lines == null || lines.isEmpty()) return;
         gameHud.closePanels(); // cancela toques activos: ningun boton queda mantenido
         dialogue.start(trigger.getString("scene"), lines);
+        focusCameraOn(trigger.get("focus"));
     }
-    private void advanceDialogue() { dialogue.advance(); if (!dialogue.isActive()) gameHud.cancelTouches(); }
-    private void skipDialogue() { dialogue.skip(); gameHud.cancelTouches(); }
+    /** Centra la camara entre los enemigos indicados (por id del mapa) mientras dura la escena. */
+    private void focusCameraOn(JsonValue ids) {
+        cameraFocusActive = false;
+        if (ids == null) return;
+        float minX = Float.MAX_VALUE, maxX = -Float.MAX_VALUE, feet = Float.MAX_VALUE;
+        for (JsonValue id = ids.child; id != null; id = id.next)
+            for (CombatSystem.Enemy e : combat.enemies)
+                if (!e.fled && (levelJsonPath + "/" + id.asString()).equals(enemyIds.get(e))) {
+                    minX = Math.min(minX, e.x); maxX = Math.max(maxX, e.x); feet = Math.min(feet, e.y - e.radius);
+                }
+        if (minX > maxX) return;
+        cameraFocusActive = true;
+        cameraFocusX = (minX + maxX) / 2;
+        cameraFocusY = feet + 3.5f; // misma altura relativa que cuando sigue al jugador
+    }
+    private void advanceDialogue() { dialogue.advance(); if (!dialogue.isActive()) { gameHud.cancelTouches(); cameraFocusActive = false; } }
+    private void skipDialogue() { dialogue.skip(); gameHud.cancelTouches(); cameraFocusActive = false; }
     private void loadForemanProfile(ForemanBoss boss, JsonValue d) {
         if (d == null) return;
         boss.aggroRange=d.getFloat("aggroRange",boss.aggroRange); boss.telegraph=d.getFloat("telegraph",boss.telegraph);
@@ -502,7 +521,13 @@ public class TestLevelScreen extends ScreenAdapter {
                     if (enterDoor(door)) return;
         }
 
-        if (!overview) {
+        boolean focusing = inScene && cameraFocusActive;
+        if (!overview && focusing) {
+            // Escena con enfoque: la camara se desplaza en tiempo real hacia los enemigos.
+            float follow = 1f-(float)Math.exp(-3f*Math.min(hudDelta,0.1f));
+            camera.position.x = MathUtils.lerp(camera.position.x,cameraFocusX,follow);
+            camera.position.y = MathUtils.lerp(camera.position.y,cameraFocusY,follow);
+        } else if (!overview) {
             float frame = Math.min(delta,0.1f);
             float anticipation = 1f-(float)Math.exp(-5f*frame);
             float maxAhead = Math.min(3.5f,camera.viewportWidth*0.18f);
