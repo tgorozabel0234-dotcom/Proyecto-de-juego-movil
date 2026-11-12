@@ -30,7 +30,7 @@
   "walkOff": {
     "seconds": 4,
     "deathY": -10,
-    "note": "Salir caminando por cualquier borde de una superficie del recorrido no debe llevar al vacío (restartLevel)."
+    "note": "Salir caminando por cualquier borde de una superficie del recorrido no debe llevar al vacío (restartLevel). Los mapas con traversal=jumpGaps verifican los cruces entre plataformas principales con salto normal o salto con dash, según la revisión marcada por el usuario del 12 de noviembre."
   },
   "boundaryWallMinTop": 150
 }

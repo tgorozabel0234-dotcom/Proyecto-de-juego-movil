@@ -45,3 +45,7 @@ Por sala:
 - **Retorno de servicio.** El suelo inferior tiene escalera de vuelta hacia adelante y un poste cierra el vacío. Las tuberías quedan a ras y el vapor ya no está sobre la plataforma de 3,4.
 
 Se conservan los atajos (compuerta y retorno al barrio), los puntos de llegada, las escenas y el bloqueo del Capataz. `layout-baseline.json` de `cyberpunk_v1` registra los hashes anteriores a esta revisión.
+
+## Pilares del Callejón 42
+
+La revisión del 12 de noviembre aplica las marcas rojas, amarillas y verdes de la captura del usuario. Las pequeñas islas amarillas se integran en sus plataformas contiguas. Los soportes con rol `pillar` llenan el ancho de cada plataforma principal desde su cara inferior hasta y=-38, por debajo del límite de caída. Comparten las colisiones del mapa y reciben su textura desde `foundationTexture`. La plataforma elevada del refugio tiene sus anclajes de acceso.

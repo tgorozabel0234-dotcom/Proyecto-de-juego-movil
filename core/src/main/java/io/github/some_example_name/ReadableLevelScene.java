@@ -19,6 +19,7 @@ public final class ReadableLevelScene implements Disposable {
     private final JsonValue config;
     private final IndustrialAtmosphere atmosphere = new IndustrialAtmosphere();
     private final Texture city,metal,door,anchor;
+    private final Texture foundation;
     private final ObjectMap<String, Texture> scenerySheets = new ObjectMap<>();
     private final Array<Landmark> landmarks = new Array<>();
 
@@ -77,6 +78,7 @@ public final class ReadableLevelScene implements Disposable {
         batch.setColor(Color.WHITE);
     }
     public ReadableLevelScene(JsonValue map){
+        foundation = map.has("foundationTexture") ? loadTexture(map.getString("foundationTexture")) : null;
         config=new JsonReader().parse(Gdx.files.internal("environments/cyberpunk_v1/render.json"));
         lettering.setUseIntegerPositions(false);
         loadScenery(map.get("scenery"));
@@ -126,9 +128,14 @@ public final class ReadableLevelScene implements Disposable {
         atmosphere.air(b,p,camera,time,map.getFloat("height"));
         drawLandmarks(b,p,camera,time,flags);
         float height=map.getFloat("height");
+        for (JsonValue q=map.get("pieces").child;q!=null;q=q.next) {
+            if (!q.getString("role","").equals("pillar")) continue;
+            drawFoundation(b,q,camera);
+        }
         // Soportes en sombra y cables decorativos bajo las superficies.
         for(JsonValue q=map.get("pieces").child;q!=null;q=q.next){
             if(!q.getString("role", "").equals("platform"))continue;
+            if(q.getBoolean("foundation",false)) continue;
             float x=q.getFloat("x"),y=q.getFloat("y"),w=q.getFloat("width");
             if(!visible(x,y-2,w,3,camera))continue;
             atmosphere.underDeck(b,p,x,y,w);
@@ -137,6 +144,7 @@ public final class ReadableLevelScene implements Disposable {
         for(JsonValue q=map.get("pieces").child;q!=null;q=q.next){
             float x=q.getFloat("x"),y=q.getFloat("y"),w=q.getFloat("width"),h=q.getFloat("height");
             String role=q.getString("role", "platform");
+            if(role.equals("pillar")) continue;
             if(role.equals("anchor")){
                 float cx=x+w/2,cy=y+h/2;
                 if(!visible(cx-1,cy-1,2,height-cy+2,camera))continue;
@@ -198,8 +206,26 @@ public final class ReadableLevelScene implements Disposable {
         b.draw(door,dx,dy,dw,dh);
         b.setColor(Color.WHITE);
     }
+    private void drawFoundation(SpriteBatch batch,JsonValue piece,OrthographicCamera camera) {
+        if (foundation == null) return;
+        float x=piece.getFloat("x"),y=piece.getFloat("y"),w=piece.getFloat("width"),h=piece.getFloat("height");
+        float tileHeight=8f, tileWidth=tileHeight*foundation.getWidth()/foundation.getHeight();
+        batch.setColor(.68f,.76f,.86f,1);
+        for(float dx=0;dx<w;dx+=tileWidth) {
+            for(float dy=0;dy<h;dy+=tileHeight) {
+                float dw=Math.min(tileWidth,w-dx),dh=Math.min(tileHeight,h-dy);
+                float bottom=y+h-dy-dh;
+                if (!visible(x+dx,bottom,dw,dh,camera)) continue;
+                batch.draw(foundation,x+dx,bottom,dw,dh,0,0,
+                    Math.max(1,(int)(foundation.getWidth()*dw/tileWidth)),
+                    Math.max(1,(int)(foundation.getHeight()*dh/tileHeight)),false,false);
+            }
+        }
+        batch.setColor(Color.WHITE);
+    }
     void foreground(SpriteBatch b,Texture p,OrthographicCamera camera){atmosphere.foreground(b,p,camera);}
     @Override public void dispose(){
+        if (foundation != null) foundation.dispose();
         atmosphere.dispose();
         for (Texture sheet : scenerySheets.values()) sheet.dispose();
         lettering.dispose();city.dispose();metal.dispose();door.dispose();anchor.dispose();

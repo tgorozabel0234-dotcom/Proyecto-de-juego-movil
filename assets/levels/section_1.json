@@ -14,8 +14,9 @@
       "role": "platform",
       "x": 0,
       "y": 0,
-      "width": 12,
-      "height": 2
+      "width": 19,
+      "height": 2,
+      "foundation": true
     },
     {
       "asset": "platform",
@@ -23,7 +24,8 @@
       "x": 19,
       "y": 1.4,
       "width": 13,
-      "height": 2
+      "height": 2,
+      "foundation": true
     },
     {
       "asset": "platform",
@@ -31,7 +33,8 @@
       "x": 36,
       "y": 2.8,
       "width": 12,
-      "height": 2
+      "height": 2,
+      "foundation": true
     },
     {
       "asset": "platform",
@@ -39,7 +42,8 @@
       "x": 52,
       "y": 2.8,
       "width": 11,
-      "height": 2
+      "height": 2,
+      "foundation": true
     },
     {
       "asset": "platform",
@@ -47,7 +51,8 @@
       "x": 73,
       "y": 1.4,
       "width": 13,
-      "height": 2
+      "height": 2,
+      "foundation": true
     },
     {
       "asset": "platform",
@@ -55,23 +60,26 @@
       "x": 91,
       "y": 2.8,
       "width": 14,
-      "height": 2
+      "height": 2,
+      "foundation": true
     },
     {
       "asset": "platform",
       "role": "platform",
       "x": 108.5,
       "y": 4.2,
-      "width": 12.5,
-      "height": 2
+      "width": 19.5,
+      "height": 2,
+      "foundation": true
     },
     {
       "asset": "platform",
       "role": "platform",
       "x": 128,
       "y": 2.8,
-      "width": 16.5,
-      "height": 2
+      "width": 20,
+      "height": 2,
+      "foundation": true
     },
     {
       "asset": "platform",
@@ -79,7 +87,8 @@
       "x": 148,
       "y": 4.2,
       "width": 20,
-      "height": 2
+      "height": 2,
+      "foundation": true
     },
     {
       "asset": "platform",
@@ -180,14 +189,6 @@
     {
       "asset": "platform",
       "role": "platform",
-      "x": 33,
-      "y": 7.6,
-      "width": 5,
-      "height": 1.5
-    },
-    {
-      "asset": "platform",
-      "role": "platform",
       "x": 40,
       "y": 10,
       "width": 9,
@@ -196,18 +197,11 @@
     {
       "asset": "platform",
       "role": "platform",
-      "x": 86,
-      "y": 0.35,
-      "width": 7,
-      "height": 1.5
-    },
-    {
-      "asset": "platform",
-      "role": "platform",
       "x": 172,
       "y": 3,
-      "width": 9,
-      "height": 1.5
+      "width": 12,
+      "height": 1.5,
+      "foundation": true
     },
     {
       "asset": "platform",
@@ -215,7 +209,8 @@
       "x": 184,
       "y": 2,
       "width": 10,
-      "height": 1.5
+      "height": 1.5,
+      "foundation": true
     },
     {
       "asset": "platform",
@@ -234,147 +229,92 @@
       "height": 0.9
     },
     {
-      "asset": "platform",
-      "role": "platform",
-      "x": 13.6,
-      "y": 0,
-      "width": 2.4,
-      "height": 2,
-      "suspended": true
+      "asset": "pillar",
+      "role": "pillar",
+      "x": 0,
+      "y": -38,
+      "width": 19,
+      "height": 38
     },
     {
-      "asset": "platform",
-      "role": "platform",
-      "x": 64.6,
-      "y": 2.8,
-      "width": 3.4,
-      "height": 2,
-      "suspended": true
+      "asset": "pillar",
+      "role": "pillar",
+      "x": 19,
+      "y": -38,
+      "width": 13,
+      "height": 39.4
     },
     {
-      "asset": "platform",
-      "role": "platform",
-      "x": 122.6,
-      "y": 4.2,
-      "width": 2.4,
-      "height": 2,
-      "suspended": true
+      "asset": "pillar",
+      "role": "pillar",
+      "x": 36,
+      "y": -38,
+      "width": 12,
+      "height": 40.8
     },
     {
-      "asset": "platform",
-      "role": "pipe",
-      "x": 14,
-      "y": 1.35,
-      "width": 4,
-      "height": 0.65
+      "asset": "pillar",
+      "role": "pillar",
+      "x": 52,
+      "y": -38,
+      "width": 11,
+      "height": 40.8
     },
     {
-      "asset": "platform",
-      "role": "platform",
-      "x": 12,
-      "y": -0.6,
-      "width": 1.6,
-      "height": 1.0,
-      "suspended": true
+      "asset": "pillar",
+      "role": "pillar",
+      "x": 73,
+      "y": -38,
+      "width": 13,
+      "height": 39.4
     },
     {
-      "asset": "platform",
-      "role": "platform",
-      "x": 32,
-      "y": 0.85,
-      "width": 4,
-      "height": 1.0,
-      "suspended": true
+      "asset": "pillar",
+      "role": "pillar",
+      "x": 91,
+      "y": -38,
+      "width": 14,
+      "height": 40.8
     },
     {
-      "asset": "platform",
-      "role": "platform",
-      "x": 48,
-      "y": 2.2,
-      "width": 4,
-      "height": 1.0,
-      "suspended": true
+      "asset": "pillar",
+      "role": "pillar",
+      "x": 108.5,
+      "y": -38,
+      "width": 19.5,
+      "height": 42.2
     },
     {
-      "asset": "platform",
-      "role": "platform",
-      "x": 63,
-      "y": 2.2,
-      "width": 1.6,
-      "height": 1.0,
-      "suspended": true
+      "asset": "pillar",
+      "role": "pillar",
+      "x": 128,
+      "y": -38,
+      "width": 20,
+      "height": 40.8
     },
     {
-      "asset": "platform",
-      "role": "platform",
-      "x": 68.0,
-      "y": 0.85,
-      "width": 5.0,
-      "height": 1.0,
-      "suspended": true
+      "asset": "pillar",
+      "role": "pillar",
+      "x": 148,
+      "y": -38,
+      "width": 20,
+      "height": 42.2
     },
     {
-      "asset": "platform",
-      "role": "platform",
-      "x": 105,
-      "y": 2.25,
-      "width": 3.5,
-      "height": 1.0,
-      "suspended": true
+      "asset": "pillar",
+      "role": "pillar",
+      "x": 172,
+      "y": -38,
+      "width": 12,
+      "height": 41
     },
     {
-      "asset": "platform",
-      "role": "platform",
-      "x": 121.0,
-      "y": 3.6,
-      "width": 1.6,
-      "height": 1.0,
-      "suspended": true
-    },
-    {
-      "asset": "platform",
-      "role": "platform",
-      "x": 125.0,
-      "y": 2.25,
-      "width": 3.0,
-      "height": 1.0,
-      "suspended": true
-    },
-    {
-      "asset": "platform",
-      "role": "platform",
-      "x": 144.5,
-      "y": 2.25,
-      "width": 3.5,
-      "height": 1.0,
-      "suspended": true
-    },
-    {
-      "asset": "platform",
-      "role": "platform",
-      "x": 168,
-      "y": 2.25,
-      "width": 4,
-      "height": 1.0,
-      "suspended": true
-    },
-    {
-      "asset": "platform",
-      "role": "platform",
-      "x": 181,
-      "y": 1.05,
-      "width": 3,
-      "height": 1.0,
-      "suspended": true
-    },
-    {
-      "asset": "platform",
-      "role": "platform",
-      "x": 18,
-      "y": -0.55,
-      "width": 1,
-      "height": 1.0,
-      "suspended": true
+      "asset": "pillar",
+      "role": "pillar",
+      "x": 184,
+      "y": -38,
+      "width": 10,
+      "height": 40
     }
   ],
   "targets": [
@@ -674,5 +614,7 @@
         "foreman-01"
       ]
     }
-  ]
+  ],
+  "foundationTexture": "environments/act_1/support_pier.png",
+  "traversal": "jumpGaps"
 }

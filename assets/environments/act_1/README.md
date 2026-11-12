@@ -14,3 +14,10 @@ Plantilla común enviada para cada hoja, sustituyendo {motivos} por la lista cor
 - Archivo — medical records server rack with violet biometrics screen; dna compatibility analyzer glass chamber double helix; master breaker lever and ceramic fuses; power distributor with bank of glowing cyan relays; private communications dish and console; wall intercom projecting glitchy violet female silhouette; high collector header tank with large downpipe; open glowing ramen lantern bowl sign; warm lit shelter beacon; glowing green motorized gate beacon; tram station route board with large numerals 42; workshop tool trolley.
 
 La hoja de archivo contiene once motivos. Los armarios de conmutación de la hoja central representan también la distribución eléctrica del retorno de servicio.
+
+## Módulo de pilar
+
+`support_pier.png` es un módulo opaco generado con ImageGen para los pilares sólidos del Callejón 42. Se repite a su proporción original y se recorta en los límites de cada sólido.
+
+Prompt empleado
+> Seamless rectangular industrial support pier wall texture for 2D side scrolling pixel art cyberpunk game. Entire image filled edge to edge with solid load bearing blue gray steel and aged concrete, large diagonal I beam braces, vertical recessed ribbed columns, bundled copper conduits, sparse thin cyan status lights, rivets, chipped edges, grime. Front orthographic elevation, sharp detailed pixel art, dark muted navy steel matching a nighttime industrial city, subdued amber rust, moderate contrast. Tileable vertically and horizontally. No text, no floor, no perspective, no empty background. This is a solid rectangular infrastructure wall tile used to fill large support columns underneath walkable metal platforms.

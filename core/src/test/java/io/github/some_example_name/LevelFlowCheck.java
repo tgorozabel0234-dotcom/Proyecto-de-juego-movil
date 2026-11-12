@@ -44,11 +44,12 @@ public final class LevelFlowCheck {
             for (JsonValue q = map.get("pieces").child; q != null; q = q.next) {
                 String role = q.getString("role", "");
                 float x = q.getFloat("x"), w = q.getFloat("width"), top = q.getFloat("y") + q.getFloat("height");
-                if (role.equals("anchor")) continue;
+                if (role.equals("anchor") || role.equals("pillar")) continue;
                 if (role.equals("wall")) {
                     if (x <= 0 || x >= width - .01f) check(top >= wallTop, room + ": muro lateral bajo (" + top + "), el gancho permite salir del mapa");
                     continue;
                 }
+                if ("jumpGaps".equals(map.getString("traversal", ""))) continue;
                 for (int dir : new int[]{-1, 1}) {
                     float sx = dir < 0 ? x + .05f : x + w - PlayerBody.WIDTH - .05f;
                     if (w < PlayerBody.WIDTH + .1f || !probe.isAreaFree(sx, top + .02f, PlayerBody.WIDTH, PlayerBody.HEIGHT)) continue;
@@ -61,6 +62,7 @@ public final class LevelFlowCheck {
                     edges++;
                 }
             }
+            if ("jumpGaps".equals(map.getString("traversal", ""))) checkJumps(map,room);
             // 2. Bordes pequeños entre superficies contiguas (las redes de recuperación se exceptúan).
             for (JsonValue a = map.get("pieces").child; a != null; a = a.next)
                 for (JsonValue b = a.next; b != null; b = b.next) {
@@ -81,10 +83,36 @@ public final class LevelFlowCheck {
             JsonValue exit = map.get("exit");
             if (exit.has("arrival")) stands(body(json(exit.getString("next"))), exit.get("arrival"), exit.getString("next") + " llegada desde " + room);
         }
-        System.out.println("PASS: 8 salas, " + edges + " bordes sin caidas al vacio, sin bordes que atasquen, entradas y llegadas apoyadas");
+        System.out.println("PASS: 8 salas, " + edges + " bordes seguros y cruces de salto verificados, sin bordes que atasquen, entradas y llegadas apoyadas");
     }
 
-    static boolean skip(JsonValue q) { String r = q.getString("role", ""); return r.equals("anchor") || r.equals("wall"); }
+    static void checkJumps(JsonValue map,String room) {
+        java.util.List<JsonValue> floors=new java.util.ArrayList<>();
+        for(JsonValue q=map.get("pieces").child;q!=null;q=q.next)
+            if(q.getBoolean("foundation",false)) floors.add(q);
+        floors.sort(java.util.Comparator.comparingDouble(q->q.getFloat("x")));
+        for(int i=1;i<floors.size();i++) {
+            JsonValue from=floors.get(i-1),to=floors.get(i);
+            boolean landed=false;
+            for(int attempt=0;attempt<6;attempt++) {
+                float back=new float[]{.2f,1f,2f}[attempt%3];
+                PlayerBody p=body(map);
+                p.reset(from.getFloat("x")+from.getFloat("width")-PlayerBody.WIDTH-back,
+                    from.getFloat("y")+from.getFloat("height"));
+                for(int step=0;step<8;step++)p.update(DT,0,false,false,false,true);
+                for(int step=0;step<480;step++) {
+                    p.update(DT,1,step==0,step==0 && attempt>=3,attempt>=3,true);
+                    float top=to.getFloat("y")+to.getFloat("height");
+                    if(p.x>=to.getFloat("x") && p.x+PlayerBody.WIDTH<=to.getFloat("x")+to.getFloat("width")
+                        && Math.abs(p.y-top)<.03f) {landed=true;break;}
+                }
+                if(landed)break;
+            }
+            check(landed,room+": salto entre "+from.getFloat("x")+" y "+to.getFloat("x")+" inaccesible");
+        }
+    }
+
+    static boolean skip(JsonValue q) { String r = q.getString("role", ""); return r.equals("anchor") || r.equals("wall") || r.equals("pillar"); }
 
     static void stands(PlayerBody p, JsonValue at, String what) {
         float x = at.getFloat("x"), y = at.getFloat("y");
