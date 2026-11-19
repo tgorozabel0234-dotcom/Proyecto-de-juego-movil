@@ -2,6 +2,7 @@ package io.github.some_example_name;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -145,6 +146,11 @@ public final class ReadableLevelScene implements Disposable {
             float x=q.getFloat("x"),y=q.getFloat("y"),w=q.getFloat("width"),h=q.getFloat("height");
             String role=q.getString("role", "platform");
             if(role.equals("pillar")) continue;
+            if(role.equals("barrier")){
+                float top=Math.min(y+h,height+2);
+                if(visible(x-1,y,w+2,top-y,camera)) drawBarrier(b,p,x,y,w,top-y,time,camera);
+                continue;
+            }
             if(role.equals("anchor")){
                 float cx=x+w/2,cy=y+h/2;
                 if(!visible(cx-1,cy-1,2,height-cy+2,camera))continue;
@@ -197,6 +203,34 @@ public final class ReadableLevelScene implements Disposable {
             lettering.draw(b,label,x+.35f,y+.1f);
         }
         for(float x=0;x<map.getFloat("width");x+=2)if(visible(x,-2,1,1,camera))line(b,p,x,-2,x+.7f,-1.5f,.07f,"713149");
+        b.setColor(Color.WHITE);
+    }
+    /**
+     * Barrera electromagnetica del nivel 2: campo morado entre dos emisores. Solo dibuja;
+     * el paso con el Salto Frame Doble lo decide PlayerBody.
+     */
+    private void drawBarrier(SpriteBatch b,Texture p,float x,float y,float w,float h,float time,OrthographicCamera camera){
+        float hh=camera.viewportHeight*camera.zoom/2;
+        float from=Math.max(y,camera.position.y-hh-2),to=Math.min(y+h,camera.position.y+hh+2);
+        float pulse=.5f+.5f*MathUtils.sin(time*7f);
+        rect(b,p,x-.22f,from,w+.44f,to-from,"A35BFF1C");
+        rect(b,p,x,from,w,to-from,pulse>.5f?"B77BFF55":"9E5CFF48");
+        // Nucleo con chispas que se desplazan en zigzag
+        float cx=x+w/2;
+        for(float yy=from;yy<to;yy+=.55f){
+            float j=MathUtils.sin(yy*3.1f+time*19f)*w*.38f, k=MathUtils.sin((yy+.55f)*3.1f+time*19f)*w*.38f;
+            line(b,p,cx+j,yy,cx+k,Math.min(to,yy+.55f),.07f,"E7D2FFE6");
+        }
+        // Bandas que suben por el campo
+        for(float yy=from-(from%1.6f)+((time*2.4f)%1.6f);yy<to;yy+=1.6f)
+            if(yy>=from) rect(b,p,x-.1f,yy,w+.2f,.08f,"D8B6FF99");
+        rect(b,p,x-.04f,from,.06f,to-from,"C89BFFAA");rect(b,p,x+w-.02f,from,.06f,to-from,"C89BFFAA");
+        // Emisor sobre el suelo, con luz de advertencia
+        if(y>=from-1){
+            rect(b,p,x-.14f,y,w+.28f,.42f,"2B2238");
+            rect(b,p,x-.14f,y+.42f,w+.28f,.07f,"F2A93B");
+            rect(b,p,x-.06f,y+.12f,w+.12f,.12f,pulse>.5f?"D7A6FF":"8F55E8");
+        }
         b.setColor(Color.WHITE);
     }
     private void drawDoor(SpriteBatch b, JsonValue e, boolean open) {

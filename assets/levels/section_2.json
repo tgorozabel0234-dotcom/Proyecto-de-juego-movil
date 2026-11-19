@@ -392,5 +392,12 @@
       "blast": 1.1,
       "warning": 0.85
     }
+  ],
+  "storyFile": "story/nivel_2.json",
+  "story": [
+    {
+      "scene": "intro2",
+      "on": "enter"
+    }
   ]
 }

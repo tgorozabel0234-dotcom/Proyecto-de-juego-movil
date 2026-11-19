@@ -20,6 +20,10 @@ Si no es posible ejecutar la verificacion, informar de esa limitacion.
 
 Antes de tocar escenas, Salto Frame, Matones (`THUG`) o el Capataz Brutal (`FOREMAN`), leer [assets/story/README.md](assets/story/README.md). Decisiones del usuario: el Salto Frame es una mejora del dash, sin botón nuevo; los Matones usan los sprites del Robot tintados en rojo; el Capataz usa la hoja de sprites del usuario (`assets/enemies/Capataz`, dibujada por `ForemanSprites`); el Capataz está al final del Callejón 42 y bloquea la salida hasta su derrota. Los textos de las escenas están en `assets/story/nivel_1.json`. Mantener la lógica sin gráficos (`FrameJump`, `ForemanBoss`, `DialoguePlayer`, `StoryTriggers`) separada del dibujo (`ForemanSprites`, `StoryFoesRenderer`, `DialogueOverlay`).
 
+## Historia del nivel 2 (guion, fase 1)
+
+Antes de tocar las escenas 2.1/2.2, el Salto Frame Doble o las barreras electromagnéticas, leer la sección del nivel 2 de [assets/story/README.md](assets/story/README.md). El Salto Frame Doble también es una mejora del dash, sin botón nuevo: un segundo dash en el aire por salto y paso por las piezas `"role": "barrier"` durante el dash. Los textos están en `assets/story/nivel_2.json`. La escena 2.2 bloquea la salida de la Cámara de conmutación hasta verse. `:core:level2StoryCheck` lo verifica.
+
 ## Mapas de las salas
 
 Antes de editar la geometría de las salas, leer la sección "Revisión de recorrido" de [assets/environments/section_1/README.md](assets/environments/section_1/README.md) y respetar `assets/levels/traversal_rules.json`. `PlayerBody` no sube escalones: no dejar bordes entre superficies contiguas del camino. Ninguna salida por un borde debe llevar al vacío. `:core:levelFlowCheck` lo verifica.

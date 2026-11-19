@@ -64,6 +64,14 @@ public class TestLevelScreen extends ScreenAdapter {
     // Nivel 1 / guion: Salto Frame, Capataz Brutal, Matones y escenas.
     private final FrameJump frameJump = new FrameJump();
     private String frameUnlockFlag = "frame";
+    // Nivel 2: Salto Frame Doble (segundo dash en el aire y paso por barreras electromagneticas).
+    private String doubleFrameFlag = "frame2";
+    private float airDashLift;
+    /** Escena con holograma en curso ("hologram" en el disparador) y su opacidad en tiempo real. */
+    private JsonValue sceneTrigger;
+    private float hologramAlpha;
+    /** Reloj en tiempo real: los efectos de las escenas se animan aunque la simulacion este detenida. */
+    private float realTime;
     /** Segundos que se ve la derrota antes de reiniciar solo (types.json, player.respawnDelay). */
     private float respawnDelay = 1.5f, deathTimer;
     /** Punto al que mira la camara durante una escena con "focus" (enemigos de la escena). */
@@ -160,7 +168,9 @@ public class TestLevelScreen extends ScreenAdapter {
         worldHeight = map.getFloat("height");
         if(map.getString("style", "").equals("readable")) levelScene=new ReadableLevelScene(map);
         for (JsonValue piece = map.get("pieces").child; piece != null; piece = piece.next) {
-            player.addSolid(piece.getFloat("x"), piece.getFloat("y"), piece.getFloat("width"), piece.getFloat("height"), "pipe".equals(piece.getString("role", "")));
+            if ("barrier".equals(piece.getString("role", "")))
+                player.addBarrier(piece.getFloat("x"), piece.getFloat("y"), piece.getFloat("width"), piece.getFloat("height"));
+            else player.addSolid(piece.getFloat("x"), piece.getFloat("y"), piece.getFloat("width"), piece.getFloat("height"), "pipe".equals(piece.getString("role", "")));
         }
         if (arrival == null) arrival = map.get("spawn");
         player.reset(arrival.getFloat("x"), arrival.getFloat("y"));
@@ -293,13 +303,21 @@ public class TestLevelScreen extends ScreenAdapter {
             frameJump.slowDuration = fj.getFloat("slowDuration", frameJump.slowDuration);
             frameJump.slowScale = fj.getFloat("slowScale", frameJump.slowScale);
             frameUnlockFlag = fj.getString("unlockFlag", frameUnlockFlag);
+            doubleFrameFlag = fj.getString("doubleUnlockFlag", doubleFrameFlag);
+            airDashLift = fj.getFloat("airDashLift", airDashLift);
         }
         JsonValue story = map.get("story");
-        boolean mapUnlocksFrame = false;
-        if (story != null) for (JsonValue t = story.child; t != null; t = t.next)
+        boolean mapUnlocksFrame = false, mapUnlocksDouble = false, mapHasBarriers = false;
+        if (story != null) for (JsonValue t = story.child; t != null; t = t.next) {
             if (frameUnlockFlag.equals(t.getString("grant", ""))) mapUnlocksFrame = true;
+            if (doubleFrameFlag.equals(t.getString("grant", ""))) mapUnlocksDouble = true;
+        }
+        for (JsonValue piece = map.get("pieces").child; piece != null; piece = piece.next)
+            if ("barrier".equals(piece.getString("role", ""))) mapHasBarriers = true;
         // Fuera del mapa que lo desbloquea (otras salas, escenario 00), el Salto Frame ya se tiene.
         if (!mapUnlocksFrame) flags.add(frameUnlockFlag);
+        // Una sala con barreras nunca deja al jugador sin el Salto Frame Doble (partidas antiguas).
+        if (mapHasBarriers && !mapUnlocksDouble) flags.add(doubleFrameFlag);
         if (story != null && Gdx.files.internal(map.getString("storyFile", "story/nivel_1.json")).exists())
             scenes = DialoguePlayer.parse(new JsonReader().parse(Gdx.files.internal(map.getString("storyFile", "story/nivel_1.json"))));
         boolean freshStart = checkpoint == null && !arrivedByDoor;
@@ -307,6 +325,7 @@ public class TestLevelScreen extends ScreenAdapter {
             String on = t.getString("on", "zone");
             // Partidas cargadas o llegadas por puerta: lo ya recorrido no se repite.
             boolean passed = on.equals("start") ? !freshStart
+                : on.equals("enter") ? checkpoint != null
                 : on.equals("zone") && !freshStart && player.x > t.getFloat("x") + t.getFloat("width");
             if (passed && !flags.contains(StoryTriggers.flagFor(t.getString("scene", "")))) StoryTriggers.consume(t, flags);
         }
@@ -316,8 +335,11 @@ public class TestLevelScreen extends ScreenAdapter {
         }
         frameJump.reset();
         frameJump.enabled = flags.contains(frameUnlockFlag);
+        player.setDoubleFrame(flags.contains(doubleFrameFlag), airDashLift);
         dialogueOverlay = new DialogueOverlay(hud, pixel, font, dialogue, this::advanceDialogue, this::skipDialogue);
         if (freshStart) playStory("start");
+        // "enter": al llegar a la sala por una puerta o en partida nueva (no al cargar un guardado).
+        if (checkpoint == null && !dialogue.isActive()) playStory("enter");
     }
     private void playStory(String event) {
         JsonValue trigger = StoryTriggers.find(map.get("story"), flags, event,
@@ -325,11 +347,32 @@ public class TestLevelScreen extends ScreenAdapter {
         if (trigger == null) return;
         StoryTriggers.consume(trigger, flags);
         frameJump.enabled = flags.contains(frameUnlockFlag);
+        player.setDoubleFrame(flags.contains(doubleFrameFlag), airDashLift);
         java.util.List<DialoguePlayer.Line> lines = scenes.get(trigger.getString("scene"));
         if (lines == null || lines.isEmpty()) return;
         gameHud.closePanels(); // cancela toques activos: ningun boton queda mantenido
         dialogue.start(trigger.getString("scene"), lines);
+        sceneTrigger = trigger; hologramAlpha = 0;
         focusCameraOn(trigger.get("focus"));
+        JsonValue point = trigger.get("focusPoint");
+        if (point != null && point.size >= 2) {
+            // Punto fijo del mapa (terminal, holograma): pies en y, misma altura relativa que al seguir al jugador.
+            cameraFocusActive = true;
+            cameraFocusX = point.getFloat(0);
+            cameraFocusY = point.getFloat(1) + 3.5f;
+        }
+    }
+    /**
+     * Holograma de la escena: visible desde la linea "from" hasta la linea "until" del guion,
+     * donde se disipa. Solo cambia la opacidad del dibujo; no afecta a la simulacion.
+     */
+    private void updateHologram(float realDelta) {
+        JsonValue h = sceneTrigger == null ? null : sceneTrigger.get("hologram");
+        boolean showing = h != null && dialogue.isActive() && sceneTrigger.getString("scene", "").equals(dialogue.getSceneId())
+            && dialogue.getIndex() >= h.getInt("from", 0) && dialogue.getIndex() < h.getInt("until", Integer.MAX_VALUE);
+        float speed = realDelta / Math.max(.05f, h == null ? .8f : h.getFloat("fade", .8f));
+        hologramAlpha = MathUtils.clamp(hologramAlpha + (showing ? speed : -speed), 0, 1);
+        if (hologramAlpha == 0 && !dialogue.isActive()) sceneTrigger = null;
     }
     /** Centra la camara entre los enemigos indicados (por id del mapa) mientras dura la escena. */
     private void focusCameraOn(JsonValue ids) {
@@ -499,7 +542,9 @@ public class TestLevelScreen extends ScreenAdapter {
 
     @Override public void render(float delta) {
         float hudDelta=delta;
+        realTime+=Math.min(delta,.25f);
         boolean inScene=updateDialogue(delta);
+        updateHologram(delta);
         // Bullet-time del Salto Frame: escala solo la simulacion; el HUD sigue en tiempo real.
         frameJump.updateRealTime(delta);
         float simDelta=delta*frameJump.timeScale();
@@ -568,6 +613,11 @@ public class TestLevelScreen extends ScreenAdapter {
         foes.begin(batch,pixel);
         if(foreman!=null) foes.drawWave(foreman,animationTime);
         foes.drawFrameJump(frameJump,animationTime);
+        if (hologramAlpha > 0 && sceneTrigger != null && sceneTrigger.has("hologram")) {
+            JsonValue h = sceneTrigger.get("hologram");
+            foes.drawHologram(h.getFloat("x"), h.getFloat("y"), h.getFloat("facing", -1), realTime, hologramAlpha);
+        }
+        if (player.isPhasing()) foes.drawPhase(player.x, player.y, player.isExtraDashActive());
         float centerX = player.x + PlayerBody.WIDTH / 2, centerY = player.y + PlayerBody.HEIGHT / 2;
         playerSprite.prepare(playerAnimation,player,aimX,aimY);
         float handX=playerSprite.getHandX(),handY=playerSprite.getHandY();

@@ -5,5 +5,7 @@
   "intangibility": 0.35,
   "slowDuration": 0.5,
   "slowScale": 0.35,
-  "unlockFlag": "frame"
+  "unlockFlag": "frame",
+  "doubleUnlockFlag": "frame2",
+  "airDashLift": 2.5
 }

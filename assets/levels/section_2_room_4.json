@@ -222,6 +222,14 @@
       "width": 3,
       "height": 1.0,
       "suspended": true
+    },
+    {
+      "asset": "wall",
+      "role": "barrier",
+      "x": 106.2,
+      "y": 5.5,
+      "width": 0.6,
+      "height": 154.5
     }
   ],
   "targets": [
@@ -274,6 +282,11 @@
       "x": 102,
       "y": 10,
       "text": "COLECTOR ALTO >"
+    },
+    {
+      "x": 88,
+      "y": 11.5,
+      "text": "BARRERA ELECTROMAGNETICA >"
     }
   ],
   "background": "environments/industrial_v1/background_hangar_v1.png",

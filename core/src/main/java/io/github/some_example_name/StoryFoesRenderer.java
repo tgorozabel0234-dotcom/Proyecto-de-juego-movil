@@ -202,6 +202,78 @@ public final class StoryFoesRenderer {
         batch.setColor(Color.WHITE);
     }
 
+    // ---------------------------------------------------------------- Nivel 2
+    private static final Color HOLO = Color.valueOf("6FB8FF"), HOLO_BRIGHT = Color.valueOf("D6EEFF");
+    private static final Color PHASE = Color.valueOf("B77BFF");
+
+    /**
+     * Holograma provisional de Celestia (escena 2.2): silueta azulada con abrigo largo y
+     * protesis robotica, proyectada desde el terminal. feetY es la superficie; facing 1 o -1.
+     */
+    public void drawHologram(float cx, float feetY, float facing, float time, float alpha) {
+        if (alpha <= 0) return;
+        float f = facing < 0 ? -1 : 1;
+        float flicker = .82f + .12f * MathUtils.sin(time * 23f) + (MathUtils.random() < .05f ? -.35f : 0);
+        float a = MathUtils.clamp(alpha * flicker, 0, 1);
+        float jitter = MathUtils.random() < .07f ? MathUtils.random(-.12f, .12f) : 0;
+        float x = cx + jitter;
+        // Cono de luz desde el proyector del terminal
+        batch.setColor(HOLO.r, HOLO.g, HOLO.b, .10f * a);
+        for (int i = 0; i < 9; i++) {
+            float t = i / 8f - .5f;
+            line(x + t * .5f, feetY + .05f, x + t * 1.9f, feetY + 2.75f, .09f);
+        }
+        batch.setColor(HOLO_BRIGHT.r, HOLO_BRIGHT.g, HOLO_BRIGHT.b, .7f * a);
+        rect(x - .8f, feetY, 1.6f, .06f);
+        batch.setColor(HOLO.r, HOLO.g, HOLO.b, .35f * a);
+        rect(x - .55f, feetY + .06f, 1.1f, .05f);
+        // Figura
+        batch.setColor(HOLO.r, HOLO.g, HOLO.b, .55f * a);
+        part(x, f, -.2f, feetY + .05f, .15f, .95f);   // piernas
+        part(x, f, .05f, feetY + .05f, .15f, .95f);
+        float[][] coat = {{-.36f, .45f, .74f}, {-.32f, .7f, .66f}, {-.29f, .95f, .6f}, {-.28f, 1.2f, .56f}, {-.27f, 1.45f, .54f}};
+        for (float[] c : coat) part(x, f, c[0], feetY + c[1], c[2], .27f); // abrigo largo que se abre abajo
+        part(x, f, -.31f, feetY + 1.7f, .62f, .16f);  // hombros
+        part(x, f, -.08f, feetY + 1.84f, .16f, .1f);  // cuello
+        part(x, f, -.16f, feetY + 1.93f, .32f, .36f); // cabeza
+        batch.setColor(HOLO.r * .8f, HOLO.g * .8f, HOLO.b, .5f * a);
+        part(x, f, -.21f, feetY + 1.86f, .1f, .46f);  // cabello corto
+        part(x, f, -.18f, feetY + 2.22f, .38f, .1f);
+        // Brazo natural a lo largo del abrigo
+        batch.setColor(HOLO.r, HOLO.g, HOLO.b, .5f * a);
+        part(x, f, .27f, feetY + 1.1f, .12f, .6f);
+        // Protesis robotica, mas brillante, ajustando el guante tactico sobre el pecho
+        batch.setColor(HOLO_BRIGHT.r, HOLO_BRIGHT.g, HOLO_BRIGHT.b, .85f * a);
+        float sx = x - f * .3f, sy = feetY + 1.72f, ex = x - f * .42f, ey = feetY + 1.3f;
+        float hx = x + f * (.06f + .04f * MathUtils.sin(time * 2.2f)), hy = feetY + 1.42f;
+        line(sx, sy, ex, ey, .1f);
+        line(ex, ey, hx, hy, .09f);
+        rect(hx - .07f, hy - .07f, .14f, .14f);
+        batch.setColor(1, .3f, .45f, .9f * a);           // ojo optico
+        part(x, f, .05f, feetY + 2.1f, .07f, .04f);
+        // Lineas de escaneo que suben por la figura
+        batch.setColor(HOLO_BRIGHT.r, HOLO_BRIGHT.g, HOLO_BRIGHT.b, .22f * a);
+        for (int i = 0; i < 4; i++) {
+            float sy2 = feetY + ((time * .9f + i * .25f) % 1f) * 2.35f;
+            rect(x - .45f, sy2, .9f, .03f);
+        }
+        batch.setColor(Color.WHITE);
+    }
+    /** Rectangulo de la figura reflejado segun la orientacion (dx medido hacia el frente). */
+    private void part(float cx, float f, float dx, float y, float w, float h) {
+        rect(f > 0 ? cx + dx : cx - dx - w, y, w, h);
+    }
+
+    /** Estatica morada al atravesar barreras con el Salto Frame Doble (cian en el segundo dash). */
+    public void drawPhase(float px, float py, boolean extraDash) {
+        Color c = extraDash ? BATTERY : PHASE;
+        for (int i = 0; i < 8; i++) {
+            batch.setColor(c.r, c.g, c.b, MathUtils.random(.35f, .8f));
+            rect(px + MathUtils.random(-.35f, .75f), py + MathUtils.random(0, 1.9f), MathUtils.randomBoolean() ? .16f : .08f, .06f);
+        }
+        batch.setColor(Color.WHITE);
+    }
+
     // ---------------------------------------------------------------- utilidades
     private void set(Color base, CombatSystem.Enemy e, float alpha) {
         if (e.flash > 0) batch.setColor(1, 1, 1, alpha);

@@ -59,3 +59,11 @@ tasks.register('levelFlowCheck', JavaExec) {
     mainClass = 'io.github.some_example_name.LevelFlowCheck'
 }
 tasks.named('check') { dependsOn 'levelFlowCheck' }
+
+// Nivel 2 / guion (fase 1): escenas 2.1 y 2.2, Salto Frame Doble y barreras electromagneticas.
+tasks.register('level2StoryCheck', JavaExec) {
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'io.github.some_example_name.Level2StoryCheck'
+}
+tasks.named('check') { dependsOn 'level2StoryCheck' }

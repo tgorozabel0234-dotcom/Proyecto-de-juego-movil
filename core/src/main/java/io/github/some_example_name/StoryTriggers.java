@@ -8,10 +8,13 @@ import java.util.Set;
  * Cada escena se ve una vez por partida: al dispararse se agrega la bandera
  * "scene:<id>", que viaja con las demas banderas en el guardado manual (SaveStore v3).
  *
- * Formato: {"scene": "id", "on": "start" | "zone" | "boss" | "flee", "x","y","width","height",
+ * Formato: {"scene": "id", "on": "start" | "enter" | "zone" | "boss" | "flee", "x","y","width","height",
  *           "grounded": true si el jugador debe estar de pie dentro de la zona (no en el aire),
  *           "focus": ["id de enemigo", ...] para centrar la camara en ellos durante la escena,
+ *           "focusPoint": [x, y] para centrar la camara en un punto del mapa (pies en y),
+ *           "hologram": {"x","y","facing","from","until","fade"} holograma de la escena (solo dibujo),
  *           "grant": "bandera opcional al iniciar la escena"}.
+ * "start": partida nueva; "enter": al llegar a la sala por una puerta o en partida nueva.
  */
 public final class StoryTriggers {
     private StoryTriggers() {}

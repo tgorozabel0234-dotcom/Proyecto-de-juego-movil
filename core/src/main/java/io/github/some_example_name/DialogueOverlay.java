@@ -60,6 +60,13 @@ public final class DialogueOverlay {
                         b.draw(pixel, MathUtils.random(-40, w), MathUtils.random(0, h), MathUtils.random(60, w * .6f), MathUtils.random(2, 7));
                     }
                 }
+                if (line != null && line.is("hologram")) {
+                    // Transmision holografica: lineas de escaneo azules que suben
+                    for (int i = 0; i < 5; i++) {
+                        b.setColor(.42f, .72f, 1, .07f);
+                        b.draw(pixel, 0, (time * 60 + i * h / 5) % h, w, 3);
+                    }
+                }
                 b.setColor(Color.WHITE);
             }
         };
@@ -108,10 +115,13 @@ public final class DialogueOverlay {
         else if (line.is("action")) { who = ""; accent = Color.valueOf("A5BAC9"); }
         else if (line.is("datapad")) { who = "DATAPAD ENCRIPTADO"; accent = Color.valueOf("36F29B"); }
         else if (line.is("tutorial")) { who = "TUTORIAL"; accent = Color.valueOf("FFE066"); }
+        else if (line.is("hologram")) { who = who + " / HOLOGRAMA"; accent = Color.valueOf("6FB8FF"); }
         speaker.setText(who);
         speaker.setColor(accent);
         body.setText(player.visibleText());
-        body.setColor(line.is("action") ? Color.valueOf("C9D6DF") : line.is("datapad") ? Color.valueOf("8CFFC6") : Color.valueOf("ECF5F8"));
+        body.setColor(line.is("action") ? Color.valueOf("C9D6DF") : line.is("datapad") ? Color.valueOf("8CFFC6")
+            : line.is("hologram") ? Color.valueOf("B9DCFF") : Color.valueOf("ECF5F8"));
+        if (line.is("hologram") && MathUtils.random() < .04f) body.setColor(Color.valueOf("6FB8FF"));
         if (line.is("glitch") && MathUtils.random() < .08f) body.setColor(pink);
         hint.setVisible(player.isLineComplete() && MathUtils.sin(time * 5) > -.3f);
         float worldWidth = root.getStage() == null ? Gdx.graphics.getWidth() : root.getStage().getViewport().getWorldWidth();

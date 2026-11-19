@@ -289,7 +289,8 @@
     "width": 2.5,
     "height": 4,
     "next": "levels/section_2_room_4.json",
-    "grant": "power"
+    "grant": "power",
+    "requires": "scene:transmision"
   },
   "portals": [],
   "signs": [
@@ -322,6 +323,13 @@
       "x": 1,
       "y": 27,
       "text": "RESTABLECER RED >"
+    },
+    {
+      "x": 1,
+      "y": 24.6,
+      "text": "TERMINAL / CELESTIA_NET",
+      "flag": "scene:transmision",
+      "lit": "CANAL INTERCEPTADO"
     }
   ],
   "background": "environments/industrial_v1/background_hangar_v1.png",
@@ -385,6 +393,31 @@
       "phase": 1.29,
       "blast": 1.1,
       "warning": 0.85
+    }
+  ],
+  "storyFile": "story/nivel_2.json",
+  "story": [
+    {
+      "scene": "transmision",
+      "on": "zone",
+      "x": 0,
+      "y": 19.2,
+      "width": 13,
+      "height": 1.6,
+      "grounded": true,
+      "focusPoint": [
+        8,
+        19.2
+      ],
+      "hologram": {
+        "x": 7,
+        "y": 19.2,
+        "facing": 1,
+        "from": 1,
+        "until": 4,
+        "fade": 0.8
+      },
+      "grant": "frame2"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "title": "Nivel 2 / Conductos y Sombras",
+  "source": "Guion Narrativo Completo (Niveles 1 a 5), escenas 2.1 y 2.2; Guion Técnico, nivel 2 (Salto Frame Doble)",
+  "scenes": {
+    "intro2": [
+      { "style": "action", "text": "Conductos industriales de Central Corp. Noche. Aka entra forzando una rejilla de ventilación. El aire huele a aceite quemado y ozono." },
+      { "speaker": "AKA", "style": "narration", "text": "El rastro de Celestia me trajo a las arterias de Central Corp." },
+      { "speaker": "AKA", "style": "narration", "text": "Si los fixers operan aquí con impunidad, es porque la corporación más grande de Light City les abrió la puerta." }
+    ],
+    "transmision": [
+      { "style": "action", "text": "Aka encuentra un terminal de datos de alta velocidad y lo hackea usando la estática de su mano." },
+      { "style": "action", "text": "Un holograma azulado de CELESTIA se despliega en la sala. Fría, distante, se ajusta un guante táctico." },
+      { "speaker": "CELESTIA", "style": "hologram", "text": "Aseguren a la chica en el núcleo del Nivel 5. Su firma genética es la clave para desmantelar el Kernel de Central Corp." },
+      { "speaker": "CELESTIA", "style": "hologram", "text": "Si el hermano tonto sobrevivió e intenta seguirla... elimínenlo sin piedad." },
+      { "style": "action", "text": "El holograma se disipa. Aka golpea la consola con furia. La estática de su mano se vuelve morada." },
+      { "speaker": "AKA", "text": "No soy el mismo muchacho indefenso de anoche, Celestia. Voy a subir nivel por nivel hasta alcanzarte." },
+      { "style": "tutorial", "text": "SALTO FRAME DOBLE DESBLOQUEADO. En el aire puedes hacer un segundo DASH sin esperar la recarga. Durante el DASH atraviesas las barreras electromagnéticas moradas." }
+    ]
+  }
+}

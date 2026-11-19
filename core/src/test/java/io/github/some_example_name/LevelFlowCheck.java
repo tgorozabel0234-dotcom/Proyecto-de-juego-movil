@@ -44,7 +44,7 @@ public final class LevelFlowCheck {
             for (JsonValue q = map.get("pieces").child; q != null; q = q.next) {
                 String role = q.getString("role", "");
                 float x = q.getFloat("x"), w = q.getFloat("width"), top = q.getFloat("y") + q.getFloat("height");
-                if (role.equals("anchor") || role.equals("pillar")) continue;
+                if (role.equals("anchor") || role.equals("pillar") || role.equals("barrier")) continue; // la barrera no es un apoyo (la verifica Level2StoryCheck)
                 if (role.equals("wall")) {
                     if (x <= 0 || x >= width - .01f) check(top >= wallTop, room + ": muro lateral bajo (" + top + "), el gancho permite salir del mapa");
                     continue;
@@ -112,7 +112,7 @@ public final class LevelFlowCheck {
         }
     }
 
-    static boolean skip(JsonValue q) { String r = q.getString("role", ""); return r.equals("anchor") || r.equals("wall") || r.equals("pillar"); }
+    static boolean skip(JsonValue q) { String r = q.getString("role", ""); return r.equals("anchor") || r.equals("wall") || r.equals("pillar") || r.equals("barrier"); }
 
     static void stands(PlayerBody p, JsonValue at, String what) {
         float x = at.getFloat("x"), y = at.getFloat("y");

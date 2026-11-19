@@ -36,6 +36,15 @@ public final class PlayerBody {
     private final List<float[]> solids = new ArrayList<>();
 
     private final List<float[]> pipeSurfaces = new ArrayList<>();
+    /** Barreras electromagneticas (nivel 2): solidas, salvo durante un dash con el Salto Frame Doble. */
+    private final List<float[]> barriers = new ArrayList<>();
+    /** Salto Frame Doble: un segundo dash en el aire sin esperar la recarga y paso por las barreras. */
+    private boolean doubleFrame;
+    private boolean airDashUsed, extraDashActive;
+    /** El paso fisico actual comenzo en fase: el dash cuenta aunque termine durante este paso. */
+    private boolean phasingStep;
+    /** Velocidad vertical minima al iniciar el segundo dash en el aire (frame_jump.json, airDashLift). */
+    private float airDashLift;
     private RopePath ropePath = new RopePath(solids);
 
     public void addSolid(float x, float y, float width, float height) {
@@ -47,6 +56,19 @@ public final class PlayerBody {
         if (pipe) pipeSurfaces.add(bounds);
         ropePath = new RopePath(solids);
     }
+    /** Barrera electromagnetica: bloquea como un muro, salvo a un dash con el Salto Frame Doble. */
+    public void addBarrier(float x, float y, float width, float height) {
+        float[] bounds = {x,y,width,height};
+        solids.add(bounds);
+        barriers.add(bounds);
+        ropePath = new RopePath(solids);
+    }
+    public void setDoubleFrame(boolean enabled, float lift) { doubleFrame = enabled; airDashLift = Math.max(0,lift); }
+    public boolean hasDoubleFrame() { return doubleFrame; }
+    /** Durante el dash con el Salto Frame Doble se atraviesan las barreras. */
+    public boolean isPhasing() { return doubleFrame && isDashing(); }
+    /** El segundo dash en el aire del Salto Frame Doble esta en curso (para efectos visuales). */
+    public boolean isExtraDashActive() { return extraDashActive && isDashing(); }
     public void reset(float x, float y) {
         this.x = x; this.y = y;
         velocityX = velocityY = dashRemaining = cooldownRemaining = 0;
@@ -56,6 +78,7 @@ public final class PlayerBody {
         ropeTargetLength = reelSpeed = 0;
         upperPassConsumed = false; upperSwingBoostCount = 0;
         attackAirJump=false;
+        airDashUsed = extraDashActive = false;
         accumulator = 0; queuedDash = false; combatBrakeRemaining = 0;
         coyoteRemaining = variableJumpRemaining = 0;
         facing = dashDirection = 1;
@@ -69,7 +92,9 @@ public final class PlayerBody {
     public boolean isDashing() { return dashRemaining > 0; }
     public boolean hasPendingDash() { return queuedDash && canDash(); }
     public boolean isBoosted() { return boosted && !isDashing(); }
-    public boolean canDash() { return cooldownRemaining <= 0 && !isDashing(); }
+    public boolean canDash() { return !isDashing() && (cooldownRemaining <= 0 || canExtraAirDash()); }
+    /** Segundo impulso en el aire: solo con el Salto Frame Doble, una vez hasta volver a tocar el suelo. */
+    private boolean canExtraAirDash() { return doubleFrame && !grounded && !airDashUsed && !hooked; }
     public float getDashCooldownRemaining() { return Math.max(0,cooldownRemaining); }
     public float getDashRecoveryFraction() { return Math.max(0,Math.min(1,1-cooldownRemaining/DASH_COOLDOWN)); }
     public boolean isHooked() { return hooked; }
@@ -332,6 +357,7 @@ public final class PlayerBody {
     }
 
     private void step(float dt, float direction, boolean sprintHeld, boolean jumpHeld) {
+        if (!isPhasing()) ejectFromBarrier();
         if(combatBrakeRemaining>0) {
             combatBrakeRemaining=Math.max(0,combatBrakeRemaining-dt);
             direction=0; velocityX=0; queuedDash=false; dashRemaining=0; boosted=false;
@@ -341,6 +367,13 @@ public final class PlayerBody {
         else coyoteRemaining = Math.max(0,coyoteRemaining-dt);
         if (queuedDash) {
             if (canDash()) {
+                boolean extra = cooldownRemaining > 0;
+                if (extra) {
+                    airDashUsed = true;
+                    velocityY = Math.max(velocityY, airDashLift);
+                    variableJumpRemaining = 0;
+                }
+                extraDashActive = extra;
                 propelling = false; propulsionRemaining = 0;
                 dashDirection = facing;
                 dashSpeed = Math.max(DASH_SPEED,velocityX * dashDirection);
@@ -371,6 +404,7 @@ public final class PlayerBody {
             if (velocityY > 0) velocityY *= 0.5f;
             variableJumpRemaining = 0;
         }
+        phasingStep = isPhasing();
         float oldX = x, oldY = y, oldLength = ropeLength;
         if (hooked && ropeLength > ropeTargetLength) {
             reelSpeed = Math.min(18f,reelSpeed+90f*dt);
@@ -432,8 +466,11 @@ public final class PlayerBody {
             constrainRope(dt,oldX,oldY,oldLength,wasGrounded);
             applyUpperSwingImpulse();
         }
-        if (grounded) { variableJumpRemaining = 0; attackAirJump=false; }
+        if (grounded) { variableJumpRemaining = 0; attackAirJump=false; airDashUsed=false; }
         if (dashing && velocityX == 0) { dashRemaining = 0; boosted = sprintHeld; }
+        // Un dash que termina dentro de una barrera continua hasta salir de ella.
+        if (dashing && doubleFrame && dashRemaining == 0 && velocityX != 0 && overlapsBarrier() != null) dashRemaining = dt;
+        phasingStep = false;
     }
 
     private float approach(float value, float target, float amount) {
@@ -539,7 +576,7 @@ public final class PlayerBody {
     private void moveX(float dx) { moveX(dx,true); }
     private void moveX(float dx, boolean cancelVelocity) {
         x += dx;
-        for (float[] s:solids) if(overlaps(s)) {
+        for (float[] s:solids) if(overlaps(s) && !(phasingStep && barriers.contains(s))) {
             if(dx>0)x=s[0]-WIDTH;
             else if(dx<0)x=s[0]+s[2];
             if(cancelVelocity && dx!=0)velocityX=0;
@@ -548,12 +585,26 @@ public final class PlayerBody {
     private void moveY(float dy) { moveY(dy,true); }
     private void moveY(float dy, boolean cancelVelocity) {
         y += dy;
-        for (float[] s:solids) if(overlaps(s)) {
+        for (float[] s:solids) if(overlaps(s) && !(phasingStep && barriers.contains(s))) {
             if(dy<0){y=s[1]+s[3];grounded=true;}
             else if(dy>0)y=s[1]-HEIGHT;
             if(cancelVelocity && dy!=0)velocityY=0;
         }
-    }    private boolean overlaps(float[] s) {
+    }
+    private float[] overlapsBarrier() {
+        for (float[] b : barriers) if (overlaps(b)) return b;
+        return null;
+    }
+    /** Nunca queda dentro de una barrera: sale por el lado hacia el que avanzaba el dash. */
+    private void ejectFromBarrier() {
+        float[] b = overlapsBarrier();
+        if (b == null) return;
+        float ahead = dashDirection > 0 ? b[0] + b[2] : b[0] - WIDTH;
+        float behind = dashDirection > 0 ? b[0] - WIDTH : b[0] + b[2];
+        x = isAreaFree(ahead, y, WIDTH, HEIGHT) ? ahead : behind;
+        velocityX = 0;
+    }
+    private boolean overlaps(float[] s) {
         return x < s[0] + s[2] && x + WIDTH > s[0] && y < s[1] + s[3] && y + HEIGHT > s[1];
     }
 }
